@@ -12,6 +12,13 @@ Le README explique la marche à suivre et contient le modèle de demande pour cl
   (contrôles datés du plus proche au plus lointain, puis les révisions sans date) et « Déjà passés ».
 - `catalogue.js` : la seule liste des révisions et des matières. Ajouter une révision = un bloc ici.
 - `revisions/*.html` : une révision par fichier, autonome (CSS et JS dans le fichier).
+- `defi.html` et `suivi.js` : le défi du jour (5 questions par jour, série de jours d'affilée,
+  questions ratées qui reviennent). `suivi.js` est partagé avec l'accueil pour l'encart du défi.
+- `exercices/` : un fichier de questions par révision, plus `moteur.js` et `moteur.css` (affichage
+  commun des questions, repris de la page de maths). Un fichier de questions appelle
+  `Moteur.banque("<nom du fichier sans .js>", { generateur() { return Moteur.QCM({...}) } })`
+  et enferme tout son code dans une fonction `(function () { … })()` : sans ça, deux révisions qui
+  déclarent la même variable cassent le défi.
 - `manifest.webmanifest` et `icones/` : installation sur l'écran d'accueil du téléphone.
 
 ## Règles
@@ -29,11 +36,17 @@ Le README explique la marche à suivre et contient le modèle de demande pour cl
   - a sur son propre accueil un lien `<a href="../">← Toutes les révisions</a>` ;
   - porte dans son `<head>` les trois lignes manifest, apple-touch-icon et
     apple-mobile-web-app-title (voir les pages existantes).
+- Les fichiers de questions des deux premières révisions sont des **copies** du code de leurs pages,
+  faites pour ne pas toucher aux pages juste avant les contrôles (les questions sur carte de
+  l'histoire restent dans la page). Une correction dans une page n'est pas reportée dans le défi.
+- Le défi utilise un hasard réglé sur la date : même série toute la journée. La liste des questions
+  à revoir n'est mise à jour qu'à la fin du défi, sinon la série du jour changerait en cours de route.
 - Les progrès restent sur l'appareil utilisé : il n'y a ni compte ni serveur, et c'est voulu.
 - Annoncer les fichiers et le message avant chaque commit, et attendre l'accord.
 
 ## Prochaines étapes
 
-- [ ] Renseigner les dates des deux contrôles dans `catalogue.js`.
-- [ ] Défi du jour : 5 questions qui mélangent les matières, avec un compteur de jours d'affilée.
-  Il faudra sortir les banques de questions des pages actuelles vers des fichiers communs.
+- [x] Renseigner les dates des deux contrôles dans `catalogue.js`.
+- [x] Défi du jour : 5 questions qui mélangent les matières, avec un compteur de jours d'affilée.
+- [ ] Première révision générée avec le nouveau modèle (page + fichier de questions) : vérifier
+  que claude.ai respecte bien le format de `Moteur.banque`.

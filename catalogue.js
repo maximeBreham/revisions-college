@@ -12,6 +12,7 @@
  *   date        jour du contrôle, au format "AAAA-MM-JJ" (laisser "" si inconnu)
  *               après cette date, la révision passe dans « Déjà passés »
  *   score       facultatif : où la page range son meilleur score, et sur combien
+ *   exercices   facultatif : le fichier de questions dans exercices/, pour le défi du jour
  */
 
 window.MATIERES = {
@@ -31,6 +32,7 @@ window.REVISIONS = [
     fichier: "histoire-debuts-humanite.html",
     date: "2026-10-08",
     score: { cle: "rh6:best", sur: 20 },
+    exercices: "histoire-debuts-humanite.js",
   },
   {
     matiere: "maths",
@@ -39,5 +41,6 @@ window.REVISIONS = [
     fichier: "maths-ds1-decimaux-geometrie.html",
     date: "2026-10-12",
     score: { cle: "m6:best", sur: 20 },
+    exercices: "maths-ds1-decimaux-geometrie.js",
   },
 ];

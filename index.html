@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F5F3EE;--card:#fff;--ink:#1F2433;--soft:#5D6475;--line:#DDD8CC;--chip:#EFEBE2}
-@media (prefers-color-scheme:dark){:root{--bg:#16181F;--card:#21242E;--ink:#ECEDF2;--soft:#A7ACBA;--line:#343846;--chip:#2C303C}}
+:root{--bg:#F5F3EE;--card:#fff;--ink:#1F2433;--soft:#5D6475;--line:#DDD8CC;--chip:#EFEBE2;--defi:#1F2433;--defi-ink:#F5F3EE}
+@media (prefers-color-scheme:dark){:root{--bg:#16181F;--card:#21242E;--ink:#ECEDF2;--soft:#A7ACBA;--line:#343846;--chip:#2C303C;--defi:#F4CF4A;--defi-ink:#16181F}}
 *,*::before,*::after{box-sizing:border-box}
 html{height:100%;-webkit-text-size-adjust:100%}
 body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"Lexend","Segoe UI",system-ui,sans-serif;line-height:1.5;
@@ -41,15 +41,25 @@ details{margin-top:28px}
 summary{font-family:"Fredoka","Trebuchet MS",sans-serif;font-weight:600;font-size:20px;cursor:pointer;margin-bottom:12px}
 details .grid{opacity:.8}
 .vide{color:var(--soft);background:var(--card);border:2px dashed var(--line);border-radius:18px;padding:18px}
+a.defi{display:block;text-decoration:none;color:var(--defi-ink);background:var(--defi);border-radius:18px;padding:18px 20px;margin-bottom:8px}
+a.defi:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.defi .t{margin:0 0 2px}
+.defi .d{color:inherit;opacity:.85}
+.semaine{display:flex;gap:6px;margin-top:12px}
+.semaine span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;border:2px solid currentColor;opacity:.55}
+.semaine span.fait{background:var(--defi-ink);color:var(--defi);border-color:var(--defi-ink);opacity:1}
+.semaine span.auj{opacity:1}
 </style>
 </head>
 <body>
 <main class="wrap">
   <h1>Mes révisions</h1>
   <p class="sub">Classe de 6e</p>
+  <div id="defi"></div>
   <div id="liste"></div>
 </main>
 <script src="catalogue.js"></script>
+<script src="suivi.js"></script>
 <script>
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const JOUR = 86400000;
@@ -102,6 +112,19 @@ let html = "<h2>À réviser</h2>" + (aVenir.length
   : `<p class="vide">Rien à réviser pour l'instant. Profites-en !</p>`);
 if (passes.length) html += `<details><summary>Déjà passés (${passes.length})</summary><div class="grid">${passes.map(x => carte(x.r)).join("")}</div></details>`;
 document.getElementById("liste").innerHTML = html;
+
+// Encart du défi du jour, s'il y a des questions dans au moins une révision.
+if (window.REVISIONS.some(r => r.exercices)) {
+  const etat = Suivi.etatDuJour(), serie = Suivi.serie();
+  let titre = "Défi du jour", detail = "5 questions, quelques minutes";
+  if (etat && etat.fini) { titre = `Défi terminé : ${etat.bons}/${etat.resultats.length}`; detail = "Reviens demain pour le suivant. Tu peux aussi en refaire pour le plaisir."; }
+  else if (etat && etat.k > 0) detail = `Reprends où tu en étais (${etat.k} sur 5)`;
+  const flamme = serie ? `🔥 ${serie} jour${serie > 1 ? "s" : ""} d'affilée` : "Commence ta série aujourd'hui !";
+  document.getElementById("defi").innerHTML = `<a class="defi" href="defi.html">
+    <span class="t">${titre}</span><span class="d">${detail}</span><br><span class="d">${flamme}</span>
+    <span class="semaine" aria-label="Les 7 derniers jours">${Suivi.semaine().map(j => `<span class="${j.fait ? "fait" : ""} ${j.aujourdhui ? "auj" : ""}">${j.lettre}</span>`).join("")}</span>
+  </a>`;
+}
 </script>
 </body>
 </html>
