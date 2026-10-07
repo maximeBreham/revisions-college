@@ -20,6 +20,9 @@ Le README explique la marche à suivre et contient le modèle de demande pour cl
   et enferme tout son code dans une fonction `(function () { … })()` : sans ça, deux révisions qui
   déclarent la même variable cassent le défi.
 - `manifest.webmanifest` et `icones/` : installation sur l'écran d'accueil du téléphone.
+- `a-traiter/` : photos et scans des feuilles à transformer en révision. Exclu de git, car ils portent
+  des noms. La commande `/nouvelle-revision` (`.claude/skills/nouvelle-revision/`) en fait une
+  révision, avec ses pages de test dans `outils/` (non publiées : Pages ignore les dossiers en point).
 
 ## Règles
 
@@ -36,7 +39,8 @@ Le README explique la marche à suivre et contient le modèle de demande pour cl
   - a sur son propre accueil un lien `<a href="../">← Toutes les révisions</a>` ;
   - porte dans son `<head>` les trois lignes manifest, apple-touch-icon et
     apple-mobile-web-app-title (voir les pages existantes).
-- Les fichiers de questions des deux premières révisions sont des **copies** du code de leurs pages,
+- À partir de maintenant, une page de révision **réutilise** son fichier de questions au lieu de les
+  recopier (voir `/nouvelle-revision`). Les fichiers de questions des deux premières révisions sont des **copies** du code de leurs pages,
   faites pour ne pas toucher aux pages juste avant les contrôles (les questions sur carte de
   l'histoire restent dans la page). Une correction dans une page n'est pas reportée dans le défi.
 - Le défi utilise un hasard réglé sur la date : même série toute la journée. La liste des questions
@@ -48,5 +52,6 @@ Le README explique la marche à suivre et contient le modèle de demande pour cl
 
 - [x] Renseigner les dates des deux contrôles dans `catalogue.js`.
 - [x] Défi du jour : 5 questions qui mélangent les matières, avec un compteur de jours d'affilée.
-- [ ] Première révision générée avec le nouveau modèle (page + fichier de questions) : vérifier
-  que claude.ai respecte bien le format de `Moteur.banque`.
+- [ ] Première révision faite avec `/nouvelle-revision` : ajuster la commande d'après ce qu'on apprend.
+- [ ] Après deux ou trois révisions de plus : voir ce qui revient tout le temps et en faire une page
+  commune à laquelle on donne seulement le contenu (le sur-mesure reste possible).

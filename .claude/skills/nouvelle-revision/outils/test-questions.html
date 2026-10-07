@@ -1,0 +1,42 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>en cours</title>
+<!--
+  Teste tous les fichiers de questions déclarés dans le catalogue : chaque générateur est lancé
+  30 fois et sa question affichée. Vérifie aussi que l'id de la banque est le nom du fichier
+  et qu'aucun fichier ne laisse de variable globale (ce qui casserait le défi).
+  Résultat en JSON dans le titre de la page (voir SKILL.md pour la commande).
+-->
+<body><div id="z"></div>
+<script>const erreurs = []; window.onerror = (m, s, l) => erreurs.push(`global ${m} ${s}:${l}`);</script>
+<script src="/catalogue.js"></script>
+<script src="/exercices/moteur.js"></script>
+<script>
+const avant = new Set(Object.keys(window));
+const fichiers = REVISIONS.filter(r => r.exercices).map(r => r.exercices);
+const charger = f => new Promise(ok => { const s = document.createElement("script"); s.src = "/exercices/" + f; s.onload = ok; s.onerror = () => { erreurs.push("introuvable " + f); ok(); }; document.head.append(s); });
+(async () => {
+  for (const f of fichiers) await charger(f);
+  const fuites = Object.keys(window).filter(k => !avant.has(k));
+  const res = {};
+  for (const f of fichiers) {
+    const id = f.replace(/\.js$/, ""), gens = Moteur.banques[id];
+    if (!gens) { erreurs.push(`${f} : pas de Moteur.banque("${id}", …)`); continue; }
+    for (const [g, fn] of Object.entries(gens)) {
+      let ok = 0;
+      for (let i = 0; i < 30; i++) {
+        try {
+          const q = fn();
+          if (!q || typeof q.run !== "function") throw Error("ne renvoie pas une question { cat, run }");
+          if (!q.cat) throw Error("pas de cat");
+          const z = document.getElementById("z"); q.run(z, "test", () => {});
+          if (!z.textContent.trim()) throw Error("affichage vide");
+          ok++;
+        } catch (e) { erreurs.push(`${id}:${g} ${e.message}`); break; }
+      }
+      res[`${id}:${g}`] = ok;
+    }
+  }
+  document.title = JSON.stringify({ ok: !erreurs.length && !fuites.length, erreurs, fuites, generateurs: res });
+})();
+</script>

@@ -1,0 +1,19 @@
+<!doctype html>
+<meta charset="utf-8">
+<!--
+  Trois écrans de téléphone (390 px) côte à côte : l'accueil, une page, le défi.
+  Chrome sans fenêtre refuse les fenêtres de moins de 500 px : d'où les iframes.
+  captures.html?page=revisions/xxx.html   (sans paramètre : la dernière révision du catalogue)
+  chrome --headless=new --hide-scrollbars --window-size=1222,780 --virtual-time-budget=5000 --screenshot=x.png <url>
+  ajouter --blink-settings=preferredColorScheme=0 pour le mode sombre, =1 pour le clair.
+-->
+<body style="margin:0;display:flex;gap:16px;background:#888;padding:10px">
+<script src="/catalogue.js"></script>
+<script>
+const page = new URLSearchParams(location.search).get("page") || "revisions/" + REVISIONS[REVISIONS.length - 1].fichier;
+for (const src of ["/", "/" + page, "/defi.html"]) {
+  const f = document.createElement("iframe");
+  f.src = src; f.style.cssText = "width:390px;height:760px;border:0";
+  document.body.append(f);
+}
+</script>

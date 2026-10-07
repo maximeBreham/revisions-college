@@ -1,0 +1,61 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>en cours</title>
+<!--
+  Joue le défi du jour de bout en bout dans une iframe : même série après rechargement,
+  arrêt puis reprise, fin, série de jours, questions à revoir, encart de l'accueil, mode « pour le plaisir ».
+  À lancer uniquement en local : la page met de côté puis restaure les clés « defi: » de ce navigateur.
+  Résultat dans le titre de la page, mis à jour à chaque étape (le dernier état dit où ça bloque).
+-->
+<body>
+<iframe id="f" style="width:390px;height:800px"></iframe>
+<script>
+const sauvegarde = Object.keys(localStorage).filter(k => k.startsWith("defi:")).map(k => [k, localStorage.getItem(k)]);
+sauvegarde.forEach(([k]) => localStorage.removeItem(k));
+const restaurer = () => { Object.keys(localStorage).filter(k => k.startsWith("defi:")).forEach(k => localStorage.removeItem(k)); sauvegarde.forEach(([k, v]) => localStorage.setItem(k, v)); };
+
+const log = [];
+const note = x => { log.push(x); document.title = JSON.stringify(log); };
+const f = document.getElementById("f");
+const charge = src => new Promise(r => { f.onload = () => setTimeout(r, 400); f.src = src; });
+const premiere = () => f.contentDocument.querySelector(".prompt")?.textContent + " | " + f.contentDocument.querySelector(".muted.small")?.textContent;
+
+// Répond à n'importe quelle question : choisit une option, remplit les champs, pose les cartes…
+function joue(max) {
+  return new Promise(fin => {
+    let n = 0;
+    const tick = () => {
+      const d = f.contentDocument;
+      if (d.querySelector(".score")) return fin("fini");
+      const suite = [...d.querySelectorAll(".main-btn")].find(b => /suivante|Terminer|Voir/.test(b.textContent) && !b.disabled);
+      if (suite) { suite.click(); if (max !== undefined && ++n >= max) return setTimeout(() => fin("arrêté"), 100); return setTimeout(tick, 60); }
+      const opt = d.querySelector(".opt:not(:disabled)"); if (opt) { opt.click(); return setTimeout(tick, 60); }
+      const champ = [...d.querySelectorAll("input")].find(i => !i.disabled && !i.value); if (champ) { champ.value = "1"; return setTimeout(tick, 30); }
+      const carte = d.querySelector(".cardrow:not(.built) .ncard:not(:disabled)"); if (carte) { carte.click(); return setTimeout(tick, 30); }
+      const pas = d.querySelector(".step button"); if (pas && !pas.dataset.t) { pas.dataset.t = 1; pas.click(); return setTimeout(tick, 30); }
+      const svg = d.querySelector(".fig svg");
+      if (svg && !svg.dataset.t) { svg.dataset.t = 1; const r = svg.getBoundingClientRect(); svg.dispatchEvent(new MouseEvent("click", { bubbles: true, clientX: r.x + r.width / 2, clientY: r.y + r.height / 2 })); return setTimeout(tick, 60); }
+      const bouton = [...d.querySelectorAll(".main-btn")].find(b => !b.disabled); if (bouton) { bouton.click(); return setTimeout(tick, 60); }
+      note("BLOQUÉ (question que ce test ne sait pas jouer) : " + d.body.innerText.slice(0, 150)); fin("bloqué");
+    };
+    tick();
+  });
+}
+
+(async () => {
+  await charge("/defi.html"); const a = premiere();
+  await charge("/defi.html"); note(`même série après rechargement : ${a === premiere()} [${a}]`);
+  note("arrêt après 2 questions : " + await joue(2));
+  await charge("/defi.html"); note("reprise : " + premiere());
+  note("fin : " + await joue());
+  const d = f.contentDocument;
+  note(`écran : ${d.querySelector(".score").innerText.replace(/\n/g, " ")} / ${d.querySelector(".flamme").innerText} / ratées : ${d.querySelectorAll(".recap .it").length}`);
+  note(`jours=${localStorage.getItem("defi:jours")} revoir=${localStorage.getItem("defi:revoir")}`);
+  await charge("/defi.html"); note("rechargé après la fin : " + (f.contentDocument.querySelector(".score") ? "écran de fin" : "PAS l'écran de fin"));
+  await charge("/"); note("accueil : " + f.contentDocument.querySelector("a.defi").innerText.replace(/\n/g, " | "));
+  await charge("/defi.html");
+  [...f.contentDocument.querySelectorAll(".main-btn")].find(b => /plaisir/.test(b.textContent)).click();
+  note(`pour le plaisir : ${await joue()} ; jours=${localStorage.getItem("defi:jours")}`);
+  note("TERMINÉ");
+})().catch(e => note("ERREUR " + e.stack)).finally(restaurer);
+</script>

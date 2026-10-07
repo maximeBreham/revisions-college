@@ -12,6 +12,14 @@ Le site s'ouvre alors comme une appli. Les scores et les progrès sont gardés s
 
 ## Ajouter une révision
 
+**Le plus simple, avec Claude Code sur le Mac** : scanner la feuille (app Notes de l'iPhone :
+« + » → « Scanner des documents »), l'envoyer par AirDrop dans le dossier `a-traiter/` du projet,
+puis demander `/nouvelle-revision` en donnant la matière et la date du contrôle. Claude écrit la
+page, les questions et la ligne du catalogue, teste le tout et propose l'envoi. Le dossier
+`a-traiter/` n'est jamais envoyé sur GitHub.
+
+**Sans le Mac**, avec claude.ai :
+
 1. Générer la révision avec claude.ai (voir le modèle de demande plus bas) et récupérer les deux fichiers :
    la page HTML et le fichier de questions `.js`.
 2. Déposer la page dans `revisions/` et le fichier de questions dans `exercices/`, avec un nom simple
