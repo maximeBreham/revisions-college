@@ -29,7 +29,7 @@ window.REVISIONS = [
     titre: "Les débuts de l'humanité",
     description: "Dates, définitions, carte, frise, Lascaux",
     fichier: "histoire-debuts-humanite.html",
-    date: "",
+    date: "2026-10-08",
     score: { cle: "rh6:best", sur: 20 },
   },
   {
@@ -37,7 +37,7 @@ window.REVISIONS = [
     titre: "Premier DS de maths",
     description: "Nombres décimaux et géométrie",
     fichier: "maths-ds1-decimaux-geometrie.html",
-    date: "",
+    date: "2026-10-12",
     score: { cle: "m6:best", sur: 20 },
   },
 ];
