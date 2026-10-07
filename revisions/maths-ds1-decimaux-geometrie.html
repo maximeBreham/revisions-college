@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Premier DS de maths · 6e</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F7F4; --grid:rgba(60,100,170,.10); --card:#FFFFFF; --ink:#1E2740; --ink-soft:#56607A;
+  --blue:#2457C5; --red:#C52F27; --green:#2C7A4B; --hl:#F4CF4A; --line:#D5DBE5;
+  --ok-bg:#DDF0E3; --bad-bg:#F8DDD9; --on-ink:#FFFFFF;
+  --r-lg:20px; --r-md:14px; --r-sm:10px;
+  --head:"Fredoka","Trebuchet MS",system-ui,sans-serif; --body:"Lexend","Segoe UI",system-ui,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#141A26; --grid:rgba(140,170,230,.08); --card:#1E2636; --ink:#E8ECF5; --ink-soft:#A3ADC2;
+  --blue:#7FA6F5; --red:#F28A80; --green:#7CCB97; --hl:#E9C341; --line:#334058; --ok-bg:#1E3A2A; --bad-bg:#45231F; --on-ink:#141A26; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#141A26; --grid:rgba(140,170,230,.08); --card:#1E2636; --ink:#E8ECF5; --ink-soft:#A3ADC2;
+  --blue:#7FA6F5; --red:#F28A80; --green:#7CCB97; --hl:#E9C341; --line:#334058; --ok-bg:#1E3A2A; --bad-bg:#45231F; --on-ink:#141A26; color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100%;color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;-webkit-tap-highlight-color:transparent;
+  background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.wrap{max-width:640px;margin:0 auto;padding:16px 16px 48px}
+h1,h2,h3{font-family:var(--head);line-height:1.15;margin:0}
+p{margin:.4em 0}
+.muted{color:var(--ink-soft)} .small{font-size:14px}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.1;margin:0 2px;font-variant-numeric:tabular-nums}
+.fr>span:last-child{border-top:2px solid currentColor;padding-top:1px}
+.arcn{position:relative;display:inline-block;padding-top:.25em}
+.arcn::before{content:"";position:absolute;left:5%;right:5%;top:0;height:.4em;border:2px solid currentColor;border-bottom:0;border-radius:50% 50% 0 0/100% 100% 0 0}
+
+/* HOME */
+.hero{padding:26px 2px 14px}
+.hero h1{font-size:clamp(36px,10.5vw,54px);font-weight:700;letter-spacing:-.01em}
+.hero h1 span{background:linear-gradient(transparent 62%,var(--hl) 62%,var(--hl) 92%,transparent 92%)}
+.hero .sub{color:var(--ink-soft);margin-top:8px}
+.hero svg{display:block;width:100%;max-width:420px;height:auto;margin-top:12px}
+.menu{list-style:none;margin:8px 0 0;padding:0;background:var(--card);border-radius:var(--r-lg);border:2px solid var(--line);overflow:hidden}
+.menu li+li{border-top:2px solid var(--line)}
+.menu button{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;width:100%;padding:14px 14px;background:none;border:0;text-align:left;cursor:pointer}
+.menu .ic{font-family:var(--head);font-weight:700;font-size:18px;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--paper);color:var(--blue);border:2px solid var(--line)}
+.menu .t{font-family:var(--head);font-weight:600;font-size:19px;display:block}
+.menu .d{font-size:14px;color:var(--ink-soft);display:block}
+.menu .chev{font-size:22px;color:var(--ink-soft)}
+.exam-btn{display:block;width:100%;margin-top:18px;padding:18px 20px;border:0;border-radius:var(--r-lg);background:var(--blue);color:var(--on-ink);text-align:left;cursor:pointer}
+.exam-btn .t{font-family:var(--head);font-weight:700;font-size:25px;display:block}
+.exam-btn .d{font-size:14px;opacity:.9}
+.foot{margin-top:22px;font-size:14px;color:var(--ink-soft)}
+
+/* CHROME */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);display:flex;align-items:center;gap:10px;padding:10px 0;margin:-16px 0 8px}
+.back{border:2px solid var(--line);background:var(--card);border-radius:999px;width:44px;height:44px;font-size:22px;cursor:pointer;flex:none}
+.top h2{font-size:21px;font-weight:600}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:4px 0 14px}
+.bar i{display:block;height:100%;background:var(--blue);width:0;transition:width .3s}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 14px}
+.tabs button{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font-size:15px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.prompt{font-family:var(--head);font-weight:600;font-size:22px;line-height:1.3;margin:6px 0 14px}
+.prompt .num{color:var(--blue)}
+.opts{display:grid;gap:10px}
+.opts.grid2{grid-template-columns:1fr 1fr}
+.opt{display:block;width:100%;text-align:left;padding:13px 15px;background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);cursor:pointer;font-size:17px;min-height:52px}
+.opt.c{text-align:center;font-family:var(--head);font-size:26px;font-weight:600}
+.opt svg{display:block;width:100%;height:auto}
+.opt.ok{background:var(--ok-bg);border-color:var(--green)}
+.opt.bad{background:var(--bad-bg);border-color:var(--red)}
+.opt:disabled{cursor:default}
+.fb{margin-top:14px;padding:13px 15px;border-radius:var(--r-md);border-left:6px solid var(--green);background:var(--card)}
+.fb.bad{border-left-color:var(--red)}
+.fb>b:first-child{font-family:var(--head);font-size:19px;display:block;margin-bottom:2px}
+.fb.bad>b:first-child{color:var(--red)}
+.main-btn{display:block;width:100%;margin-top:16px;padding:15px;border:0;border-radius:var(--r-md);background:var(--ink);color:var(--paper);font-family:var(--head);font-weight:600;font-size:20px;cursor:pointer}
+.main-btn:disabled{opacity:.35;cursor:default}
+.ghost-btn{display:block;width:100%;margin-top:10px;padding:12px;border:2px solid var(--line);border-radius:var(--r-md);background:var(--card);font-size:16px;cursor:pointer}
+.score{text-align:center;padding:22px 0 6px}
+.score .n{font-family:var(--head);font-weight:700;font-size:72px;line-height:1;color:var(--blue)}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);padding:14px}
+.fig{background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);overflow:hidden;touch-action:manipulation}
+.fig svg{display:block;width:100%;height:auto}
+
+/* inputs */
+.fields{display:grid;gap:10px}
+.field{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:17px}
+.field input{width:var(--w,9em);max-width:100%;padding:11px 12px;border-radius:var(--r-sm);border:2px solid var(--line);background:var(--card);font-size:20px;font-variant-numeric:tabular-nums}
+.field input.ok{border-color:var(--green);background:var(--ok-bg)}
+.field input.bad{border-color:var(--red);background:var(--bad-bg)}
+.fracin{display:inline-flex;flex-direction:column;gap:4px;align-items:center}
+.fracin input{width:7em;text-align:center}
+.fracin i{display:block;width:7.5em;height:3px;background:var(--ink);border-radius:2px}
+
+/* flashcards */
+.face{display:block;width:100%;min-height:230px;border-radius:var(--r-lg);padding:26px 20px;text-align:center;border:2px solid var(--line);cursor:pointer}
+.face.front{background:var(--card);padding-top:64px}
+.face.back{display:none;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fcard.on .front{display:none}.fcard.on .back{display:block}
+.face .w{display:block;font-family:var(--head);font-weight:700;font-size:28px;line-height:1.2}
+.face .hint{display:block;margin-top:36px;font-size:14px;opacity:.7}
+.face .lab{display:block;font-family:var(--head);font-weight:600;font-size:19px;margin-bottom:10px;opacity:.85}
+.face .def{display:block;font-size:18px;line-height:1.5;text-align:left}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.two button{padding:14px;border-radius:var(--r-md);border:0;font-family:var(--head);font-weight:600;font-size:19px;cursor:pointer}
+.b-bad{background:var(--bad-bg);color:var(--red)} .b-ok{background:var(--ok-bg);color:var(--green)}
+.counter{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+
+/* tableau */
+.tscroll{overflow-x:auto;border-radius:var(--r-md);border:2px solid var(--line);background:var(--card)}
+table.tn{border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:100%}
+.tn th,.tn td{border:1px solid var(--line);text-align:center;padding:4px 6px;font-size:12px}
+.tn th.cls{font-family:var(--head);font-size:14px}
+.tn td.d{font-size:24px;font-family:var(--head);font-weight:600;min-width:30px;height:44px}
+.tn td.d.empty{color:transparent}
+.tn .dec{background:color-mix(in srgb,var(--blue) 8%,transparent)}
+.tn .comma{border-left:4px solid var(--red)}
+.vert{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;height:92px}
+.tinput{display:flex;gap:8px;margin-bottom:12px}
+.tinput input{flex:1;padding:11px 12px;border-radius:var(--r-sm);border:2px solid var(--line);background:var(--card);font-size:20px}
+
+/* cartes nombre */
+.cardrow{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;min-height:70px;padding:10px;border-radius:var(--r-md)}
+.built{background:var(--card);border:2px dashed var(--line);margin-bottom:10px}
+.ncard{width:52px;height:66px;border-radius:10px;border:2px solid var(--ink);background:var(--card);font-family:var(--head);font-weight:700;font-size:32px;cursor:pointer;box-shadow:0 3px 0 var(--ink)}
+.ncard.comma{color:var(--red);border-color:var(--red);box-shadow:0 3px 0 var(--red)}
+.ncard:disabled{visibility:hidden}
+
+/* egypt */
+.eg{display:flex;flex-wrap:wrap;gap:4px 2px;align-items:flex-end;justify-content:center;padding:16px;background:var(--card);border-radius:var(--r-md);border:2px solid var(--line);color:var(--ink)}
+.eg svg{width:28px;height:38px}
+.egtab{display:grid;grid-template-columns:auto 1fr auto;gap:6px 12px;align-items:center}
+.egtab svg{width:28px;height:38px;color:var(--ink)}
+.step{display:flex;align-items:center;gap:6px}
+.step button{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:20px;cursor:pointer}
+.step b{min-width:1.5em;text-align:center;font-family:var(--head);font-size:22px}
+
+/* order */
+.order-list{display:grid;gap:8px;min-height:10px;margin-bottom:12px}
+.placed{padding:10px 14px;border-radius:var(--r-sm);background:var(--ok-bg);border:2px solid var(--green);font-size:18px;font-family:var(--head)}
+.rule{font-family:var(--head);font-size:20px;text-align:center;margin:4px 0 10px;color:var(--ink-soft)}
+
+/* checklist */
+.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.check input{width:24px;height:24px;flex:none;margin-top:2px;accent-color:var(--green)}
+ol.prog{padding-left:1.4em;margin:8px 0}
+ol.prog li{margin:6px 0}
+.recap .it{padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.recap .it b{display:block}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icones/icone-180.png">
+<meta name="apple-mobile-web-app-title" content="Révisions">
+</head>
+<body>
+<main class="wrap" id="app"></main>
+<script>
+/* ===== utilitaires ===== */
+const $=(s,el=document)=>el.querySelector(s);
+const app=$('#app');
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=(a,n)=>shuffle(a).slice(0,n);
+const one=a=>a[Math.floor(Math.random()*a.length)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem('m6:'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('m6:'+k,JSON.stringify(v))}catch(e){}}};
+function h(html){const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild}
+const NB='\u202f';
+function grp(s){return s.replace(/\B(?=(\d{3})+(?!\d))/g,NB)}
+function fmt(c){const [i,d]=String(c).split('.');return grp(i)+(d!==undefined?','+d:'')}
+function N(c){return `<span class="num">${fmt(c)}</span>`}
+function canon(s){s=String(s).replace(/[\s\u202f\u00a0]/g,'').replace(',','.');if(!/^\d*(\.\d*)?$/.test(s)||s===''||s==='.')return null;let [i,d='']=s.split('.');i=i.replace(/^0+/,'')||'0';d=d.replace(/0+$/,'');return d?i+'.'+d:i}
+function toMap(c){const [i,d='']=c.split('.');const m={};[...i].forEach((ch,k)=>{if(+ch)m[i.length-1-k]=+ch});[...d].forEach((ch,k)=>{if(+ch)m[-(k+1)]=+ch});return m}
+function fromMap(m){const ps=Object.keys(m).map(Number).filter(p=>m[p]);const maxP=Math.max(0,...ps),minP=Math.min(0,...ps);let i='',d='';for(let p=maxP;p>=0;p--)i+=m[p]||0;for(let p=-1;p>=minP;p--)d+=m[p]||0;return canon(i+(d?'.'+d:''))}
+function genNum(il,dl,zp=.25){let i='',d='';for(let k=0;k<il;k++)i+=(k===0?R(1,9):(Math.random()<zp?0:R(1,9)));for(let k=0;k<dl;k++)d+=(k===dl-1?R(1,9):(Math.random()<zp?0:R(1,9)));return canon((i||'0')+(d?'.'+d:''))}
+function cmp(a,b){let [ai,ad='']=a.split('.'),[bi,bd='']=b.split('.');if(ai.length!==bi.length)return ai.length<bi.length?-1:1;if(ai!==bi)return ai<bi?-1:1;const L=Math.max(ad.length,bd.length);ad=ad.padEnd(L,'0');bd=bd.padEnd(L,'0');return ad===bd?0:ad<bd?-1:1}
+function shiftDiv(intStr,k){let s=intStr.padStart(k+1,'0');return canon(s.slice(0,s.length-k)+'.'+s.slice(s.length-k))}
+const frac=(n,d)=>`<span class="fr"><span>${n}</span><span>${d}</span></span>`;
+const RN={11:'centaine de milliards',10:'dizaine de milliards',9:'unité de milliards',8:'centaine de millions',7:'dizaine de millions',6:'unité de millions',5:'centaine de mille',4:'dizaine de mille',3:'unité de mille',2:'centaine',1:'dizaine',0:'unité','-1':'dixième','-2':'centième','-3':'millième','-4':'dix-millième'};
+function rn(p,pl){const s=RN[p];if(!pl)return s;return s.replace(/^(\S+)/,w=>w+'s')}
+function powStr(p){return p>=0?grp('1'+'0'.repeat(p)):'0,'+'0'.repeat(-p-1)+'1'}
+function powDen(p){return grp('1'+'0'.repeat(-p))}
+
+function chrome(title){app.innerHTML='';const top=h(`<div class="top"><button class="back" aria-label="Retour au menu">‹</button><h2>${title}</h2></div>`);top.querySelector('.back').onclick=()=>{location.hash=''};app.append(top);const body=h('<div></div>');app.append(body);window.scrollTo(0,0);return body}
+function bar(el){const b=h('<div class="bar"><i></i></div>');el.prepend(b);return p=>b.firstChild.style.width=(p*100)+'%'}
+function tabs(el,items,onPick,initial){const t=h(`<div class="tabs">${items.map(([k,l])=>`<button data-k="${k}">${l}</button>`).join('')}</div>`);el.append(t);const set=k=>{t.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));onPick(k)};t.querySelectorAll('button').forEach(b=>b.onclick=()=>set(b.dataset.k));set(initial||items[0][0]);return t}
+function nextBtn(el,onDone,label='Question suivante'){const nx=h(`<button class="main-btn">${label}</button>`);nx.onclick=onDone;el.append(nx);return nx}
+function feedback(el,ok,title,body){el.append(h(`<div class="fb ${ok?'':'bad'}"><b>${title}</b>${body||''}</div>`))}
+
+/* ===== moteurs de questions ===== */
+// QCM : options en HTML, correct = index
+function QCM(q){return {cat:q.cat,run(el,sub,done){
+  el.innerHTML='';if(sub)el.append(h(`<p class="muted small">${sub}</p>`));
+  if(q.fig)el.append(h(`<div class="fig">${q.fig}</div>`));
+  el.append(h(`<p class="prompt">${q.prompt}</p>`));
+  const order=q.keep?q.options.map((o,i)=>i):shuffle(q.options.map((o,i)=>i));
+  const box=h(`<div class="opts ${q.grid?'grid2':''}"></div>`);el.append(box);
+  order.forEach(i=>{const b=h(`<button class="opt ${q.center?'c':''}">${q.options[i]}</button>`);
+    b.onclick=()=>{const ok=i===q.correct;box.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add(ok?'ok':'bad');if(!ok)box.children[order.indexOf(q.correct)].classList.add('ok');
+      feedback(el,ok,ok?'Bravo !':'Pas tout à fait.',(ok?'':`La bonne réponse : <strong>${q.options[q.correct]}</strong>. `)+(q.explain||''));
+      nextBtn(el,()=>done(ok,q.answerText||q.options[q.correct]),q.nextLabel).focus({preventScroll:true})};
+    box.append(b)});
+}}}
+// Saisie : fields [{label, after, w, frac}], check(values) -> bool, answer html
+function INPUT(q){return {cat:q.cat,run(el,sub,done){
+  el.innerHTML='';if(sub)el.append(h(`<p class="muted small">${sub}</p>`));
+  if(q.fig)el.append(h(`<div class="fig">${q.fig}</div>`));
+  el.append(h(`<p class="prompt">${q.prompt}</p>`));
+  const box=h('<div class="fields"></div>');el.append(box);const ins=[];
+  if(q.frac){const f=h(`<div class="field">${q.fracBefore||''}<span class="fracin"><input inputmode="numeric" aria-label="numérateur"><i></i><input inputmode="numeric" aria-label="dénominateur"></span></div>`);box.append(f);ins.push(...f.querySelectorAll('input'))}
+  else q.fields.forEach(f=>{const r=h(`<label class="field">${f.label?`<span>${f.label}</span>`:''}<input inputmode="decimal" autocomplete="off" style="--w:${f.w||'9em'}" aria-label="${esc((f.label||'réponse').replace(/<[^>]+>/g,''))}">${f.after?`<span>${f.after}</span>`:''}</label>`);box.append(r);ins.push(r.querySelector('input'))});
+  const go=h('<button class="main-btn">Vérifier</button>');el.append(go);
+  const submit=()=>{if(ins.some(i=>!i.value.trim())){go.classList.remove('shake');void go.offsetWidth;go.classList.add('shake');return}
+    const vals=ins.map(i=>i.value);const res=q.check(vals);const ok=res===true||(res&&res.ok);
+    ins.forEach(i=>{i.disabled=true;i.classList.add(ok?'ok':'bad')});go.remove();
+    feedback(el,ok,ok?'Exact !':'Pas tout à fait.',(ok?'':`La bonne réponse : <strong>${q.answer}</strong>. `)+((res&&res.note)||'')+(q.explain||''));
+    nextBtn(el,()=>done(ok,q.answer)).focus({preventScroll:true})};
+  go.onclick=submit;ins.forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();const k=ins.indexOf(i);if(k<ins.length-1)ins[k+1].focus();else submit()}}));
+}}}
+function serie(zone,n,gen,again){
+  zone.innerHTML='';let k=0,good=0;const setP=bar(zone);const inner=h('<div></div>');zone.append(inner);
+  const step=()=>{setP(k/n);window.scrollTo(0,0);
+    if(k===n){inner.innerHTML='';inner.append(h(`<div class="score"><div class="n">${good}/${n}</div><p class="prompt">${good===n?'Sans faute !':good>=n*.7?'Très bien !':'Continue, ça rentre !'}</p></div>`));nextBtn(inner,()=>serie(zone,n,gen),'Une autre série');return}
+    gen().run(inner,`Question ${k+1} sur ${n}`,ok=>{if(ok)good++;k++;step()})};step();
+}
+
+/* ===== 1. COURS EN CARTES ===== */
+const COURS=[
+ ["Nombre décimal",`Nombre qui peut s'écrire sous la forme d'une fraction décimale. On peut aussi l'écrire avec une virgule et un nombre fini de chiffres après la virgule. Exemple : 3,47 = ${frac(347,100)}. Les nombres entiers sont aussi des nombres décimaux.`],
+ ["Fraction décimale",`Fraction dont le dénominateur est 10, 100, 1 000… Exemples : ${frac(7,10)} ; ${frac(25,100)} ; ${frac(3,1000)}.`],
+ ["Partie entière","Ce qui est à gauche de la virgule. Dans 52,307, la partie entière est 52."],
+ ["Partie décimale","Ce qui est à droite de la virgule. Dans 52,307, la partie décimale est 0,307 (les chiffres 307). Vérifie comment l'écrit ton cours."],
+ ["Rang d'un chiffre","La place du chiffre dans le nombre : unités, dizaines, centaines… et après la virgule : dixièmes, centièmes, millièmes, dix-millièmes."],
+ ["Classe","Un groupe de 3 chiffres dans la partie entière : classe des unités, classe des mille, classe des millions, classe des milliards."],
+ ["Chiffre des centaines ou nombre de centaines ?","Dans 4 527 : le chiffre des centaines est 5. Le nombre de centaines est 45 (on garde tout ce qui est à gauche, jusqu'aux centaines)."],
+ ["1 dixième, 1 centième…",`1 dixième = 0,1 = ${frac(1,10)}. 1 centième = 0,01 = ${frac(1,100)}. 1 millième = 0,001. 1 dix-millième = 0,000 1.`],
+ ["1 unité = ?","1 unité = 10 dixièmes = 100 centièmes = 1 000 millièmes. Et 1 dixième = 10 centièmes."],
+ ["Abscisse","Le nombre qui repère la position d'un point sur une demi-droite graduée. On écrit A(3,5) : l'abscisse du point A est 3,5."],
+ ["Origine","Le point de départ de la demi-droite graduée. Son abscisse est 0. On l'appelle souvent O."],
+ ["Comparer deux décimaux","On compare d'abord les parties entières. Si elles sont égales, on compare les dixièmes, puis les centièmes, etc. On peut ajouter des zéros à la fin : 3,5 = 3,50."],
+ ["(AB)","La droite (AB) : elle passe par A et B et elle est illimitée des deux côtés."],
+ ["[AB]","Le segment [AB] : la partie de la droite limitée par A et B. A et B sont ses extrémités."],
+ ["[AB)","La demi-droite [AB) : elle commence en A (son origine), passe par B et ne s'arrête pas du côté de B."],
+ ["AB (sans crochets)","La longueur du segment [AB]. Exemple : AB = 5 cm."],
+ ["Cercle de centre O et de rayon 3 cm","L'ensemble des points situés à 3 cm du point O."],
+ ["Rayon et diamètre","Un rayon relie le centre à un point du cercle. Un diamètre relie deux points du cercle en passant par le centre. Diamètre = 2 × rayon."],
+ ["Arc de cercle",`Une partie d'un cercle comprise entre deux points. L'arc AB se note <span class="arcn">AB</span>.`],
+ ["∈ et ∉","∈ veut dire « appartient à », ∉ veut dire « n'appartient pas à ». Exemple : A ∈ (d) : le point A est sur la droite (d)."],
+];
+function cours(){
+  const body=chrome('Le cours en cartes');const zone=h('<div></div>');body.append(zone);start();
+  function start(){
+    let queue=shuffle(COURS.map((c,i)=>i)),done=0;const total=COURS.length;next();
+    function next(){zone.innerHTML='';
+      if(!queue.length){zone.append(h(`<div class="score"><div class="n">✓</div><p class="prompt">Toutes les cartes sont sues !</p></div>`));nextBtn(zone,start,'Recommencer');return}
+      const c=COURS[queue[0]];
+      zone.append(h(`<div class="counter"><span>Que veut dire…</span><span>${done} / ${total} sues</span></div>`));
+      const card=h(`<div class="fcard" role="button" tabindex="0" aria-label="Retourner la carte"><div class="face front"><span class="w">${c[0]}</span><span class="hint">Touche la carte pour voir la réponse</span></div><div class="face back"><span class="lab">${c[0]}</span><span class="def">${c[1]}</span></div></div>`);zone.append(card);
+      const btns=h(`<div class="two" style="visibility:hidden"><button class="b-bad">À revoir</button><button class="b-ok">Je savais</button></div>`);zone.append(btns);
+      const flip=()=>{card.classList.toggle('on');btns.style.visibility='visible'};card.onclick=flip;card.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}};
+      btns.children[0].onclick=()=>{const x=queue.shift();queue.splice(Math.min(queue.length,3),0,x);next()};
+      btns.children[1].onclick=()=>{queue.shift();done++;next()};
+    }
+  }
+}
+
+/* ===== 2. RANGS ET CLASSES ===== */
+const CLASSES=[['milliards',9],['millions',6],['mille',3],['unités',0]];
+function tableau(c){
+  const m=toMap(c),[ip,dp='']=c.split('.');const maxP=Math.max(ip.length-1,0);
+  const cols=[];for(let p=11;p>=-4;p--)cols.push(p);
+  const sub=['c','d','u'];
+  let th1=CLASSES.map(([n])=>`<th class="cls" colspan="3">${n}</th>`).join('')+`<th class="cls dec comma" colspan="4">partie décimale</th>`;
+  let th2=cols.map(p=>p>=0?`<th>${sub[2-(p%3)]}</th>`:`<th class="dec ${p===-1?'comma':''}"><span class="vert">${rn(p,true)}</span></th>`).join('');
+  let td=cols.map(p=>{const show=(p>=0&&p<=maxP)||(p<0&&-p<=dp.length);return `<td class="d ${p<0?'dec':''} ${p===-1?'comma':''} ${show?'':'empty'}">${show?(m[p]||0):'·'}</td>`}).join('');
+  return `<div class="tscroll"><table class="tn"><tr>${th1}</tr><tr>${th2}</tr><tr>${td}</tr></table></div><p class="muted small">c = centaines, d = dizaines, u = unités de chaque classe. Le trait rouge, c'est la virgule.</p>`;
+}
+function decompHTML(m,style){
+  const ts=Object.keys(m).map(Number).filter(p=>m[p]).sort((a,b)=>b-a);
+  if(style==='mul')return ts.map(p=>`(${m[p]} × ${powStr(p)})`).join(' + ');
+  if(style==='words')return ts.map(p=>`${m[p]} ${rn(p,m[p]>1)}`).join(' + ');
+  const ip=ts.filter(p=>p>=0),dp=ts.filter(p=>p<0);const intVal=fromMap(Object.fromEntries(ip.map(p=>[p,m[p]])));
+  return [ip.length?fmt(intVal):null,...dp.map(p=>frac(m[p],powDen(p)))].filter(Boolean).join(' + ');
+}
+function parClasse(c){
+  const [ip,dp='']=c.split('.');const parts=[];
+  for(const [n,p] of CLASSES){const v=Math.floor(Number(ip)/10**p)%1000;if(ip.length>p&&v)parts.push(`${v} ${n==='unités'?(v>1?'unités':'unité'):n==='mille'?'mille':(v>1?n:n.slice(0,-1))}`)}
+  let s=parts.join(' ');if(dp){const v=Number(dp);s+=(s?' et ':'')+`${v} ${rn(-dp.length,v>1)}`}return s||'0';
+}
+function rangs(){
+  const body=chrome('Chiffres, rangs et classes');const zone=h('<div></div>');
+  tabs(body,[['voir','Tableau de numération'],['quiz','Me tester']],k=>{zone.innerHTML='';k==='voir'?voir():serie(zone,10,genRang)});body.append(zone);
+  function voir(){
+    const inp=h(`<div class="tinput"><input inputmode="decimal" aria-label="Un nombre" placeholder="Tape un nombre, ex. 4 052 307,018"></div>`);zone.append(inp);
+    const out=h('<div></div>');zone.append(out);
+    const show=c=>{out.innerHTML=tableau(c)+`<div class="panel" style="margin-top:12px"><p><b>${N(c)}</b></p><p class="small"><b>Par rang :</b> ${decompHTML(toMap(c),'mul')}</p><p class="small"><b>En mots :</b> ${decompHTML(toMap(c),'words')}</p><p class="small"><b>Par classe :</b> ${parClasse(c)}</p></div>`};
+    const i=inp.firstChild;i.oninput=()=>{const c=canon(i.value);if(c&&c.split('.')[0].length<=12&&(c.split('.')[1]||'').length<=4)show(c)};
+    show('4052307.018');
+  }
+}
+function genChiffre(){const c=genNum(R(4,11),R(0,4));const m=toMap(c);const [ip,dp='']=c.split('.');const ps=[];for(let p=ip.length-1;p>=-dp.length;p--)ps.push(p);const p=one(ps);const d=m[p]||0;
+  return INPUT({cat:'Rangs',prompt:`Quel est le chiffre des <b>${rn(p,true)}</b> dans ${N(c)} ?`,fields:[{w:'4em'}],answer:String(d),check:v=>canon(v[0])===String(d),explain:` Astuce : place le nombre dans le tableau de numération.`})}
+function genNombreDe(){const c=genNum(R(3,7),R(0,3));const [ip,dp='']=c.split('.');const choices=[];for(let p=1;p<ip.length;p++)choices.push(p);for(let p=-1;p>=-dp.length;p--)choices.push(p);if(!choices.length)return genChiffre();const p=one(choices);
+  const digits=(ip+dp);const cut=ip.length+(p<0?-p:-p);const ans=canon(digits.slice(0,p>=0?ip.length-p:ip.length-p))||'0';
+  return INPUT({cat:'Rangs',prompt:`Quel est le <b>nombre</b> de ${rn(p,true)} dans ${N(c)} ?`,fields:[{w:'9em'}],answer:fmt(ans),check:v=>canon(v[0])===ans,explain:` Pour le nombre de ${rn(p,true)}, on garde tous les chiffres jusqu'au rang des ${rn(p,true)} (sans la virgule) : ${fmt(ans)}. Ne confonds pas avec le chiffre des ${rn(p,true)}.`})}
+function wrongMaps(m){
+  const out=[],seen=new Set([fromMap(m)]);
+  const add=w=>{const s=fromMap(w);if(s&&!seen.has(s)&&Object.keys(w).length){seen.add(s);out.push(w)}};
+  const ts=Object.keys(m).map(Number).filter(p=>m[p]);
+  const dec=ts.filter(p=>p<0);
+  if(dec.length){const w={};ts.forEach(p=>w[p<0?p-1:p]=m[p]);add(w)}
+  {const c=fromMap(m);const [ip,dp='']=c.split('.');const i2=ip.replace(/0/g,''),d2=dp.replace(/0/g,'');add(toMap(canon((i2||'0')+(d2?'.'+d2:''))))}
+  for(let t=0;t<30&&out.length<3;t++){const w={...m};const a=one(ts),b=one(ts);if(Math.random()<.5&&a!==b){[w[a],w[b]]=[w[b],w[a]]}else{const v=w[a];delete w[a];const np=a+(Math.random()<.5?1:-1);if(np<-4||w[np])continue;w[np]=v}add(w)}
+  return out.slice(0,3);
+}
+function genDecomp(){const c=genNum(R(3,5),R(1,3),.35);const m=toMap(c);const style=one(['mul','words','frac']);const wr=wrongMaps(m);if(wr.length<3)return genDecomp();
+  return QCM({cat:'Décomposer',prompt:`Quelle est la bonne décomposition de ${N(c)} ?`,options:[decompHTML(m,style),...wr.map(w=>decompHTML(w,style))],correct:0,explain:` Pense au tableau de numération : chaque chiffre a son rang. Les zéros ne s'écrivent pas dans la décomposition, mais ils gardent leur place !`})}
+function genEcriture(){let c=genNum(R(1,5),R(1,4),.35);const m=toMap(c);const style=one(['mul','words','words','frac']);
+  let ts=Object.keys(m).map(Number).filter(p=>m[p]).sort((a,b)=>b-a);let terms=ts.map(p=>({p,d:m[p]}));let note='';
+  if(style==='words'&&Math.random()<.25){const i=terms.findIndex((t,k)=>k<terms.length-1&&terms[k+1].p===t.p-1);if(i>=0){const a=terms[i],b=terms[i+1];terms.splice(i,2,{p:b.p,d:a.d*10+b.d});note=` Attention : ${a.d*10+b.d} ${rn(b.p,true)} = ${a.d} ${rn(a.p,a.d>1)} et ${b.d} ${rn(b.p,b.d>1)}.`}}
+  if(Math.random()<.3)terms=shuffle(terms);
+  const html=terms.map(t=>style==='mul'?`(${t.d} × ${powStr(t.p)})`:style==='frac'?(t.p<0?frac(t.d,powDen(t.p)):`${t.d} × ${powStr(t.p)}`):`${t.d} ${rn(t.p,t.d>1)}`).join(' + ');
+  return INPUT({cat:'Écriture décimale',prompt:`Écris ce nombre avec une virgule :<br><span style="font-weight:500">${html}</span>`,fields:[{w:'10em'}],answer:fmt(c),check:v=>canon(v[0])===c,explain:(note||'')+` Range chaque chiffre à son rang dans le tableau, sans oublier les zéros.`})}
+function genClasse(){
+  if(Math.random()<.6){const c=genNum(R(8,11),0,.3);const ip=c;const fields=[];
+    for(const [n,p] of CLASSES){if(ip.length>p)fields.push({n,p,v:String(Math.floor(Number(ip)/10**p)%1000)})}
+    return INPUT({cat:'Classes',prompt:`Complète la décomposition par classe de ${N(c)} :`,fields:fields.map(f=>({w:'5em',after:f.n})),answer:fields.map(f=>`${f.v} ${f.n}`).join(' '),check:v=>v.every((x,i)=>canon(x)===fields[i].v),explain:` On découpe le nombre par groupes de 3 chiffres en partant de la droite.`})}
+  const c=genNum(R(3,6),R(1,4),.3);const [ip,dp]=c.split('.');const k=dp.length;
+  const fields=[];for(const [n,p] of CLASSES){if(ip.length>p&&p<=3)fields.push({after:n,v:String(Math.floor(Number(ip)/10**p)%1000)})}
+  fields.push({label:'et',after:rn(-k,true),v:String(Number(dp))});
+  return INPUT({cat:'Classes',prompt:`Complète : ${N(c)} =`,fields:fields.map(f=>({w:'5em',label:f.label,after:f.after})),answer:parClasse(c),check:v=>v.every((x,i)=>canon(x)===fields[i].v),explain:` La partie décimale a ${k} chiffre${k>1?'s':''} : on compte en ${rn(-k,true)}.`});
+}
+const genRang=()=>one([genChiffre,genChiffre,genNombreDe,genDecomp,genEcriture,genEcriture,genClasse])();
+
+/* ===== 3. FRACTIONS ET PARTIES ===== */
+const DEC_OR_NOT=[[frac(3,4),true,'3 ÷ 4 = 0,75 : il y a un nombre fini de chiffres après la virgule.'],[frac(1,3),false,'1 ÷ 3 = 0,333… les 3 ne s\'arrêtent jamais.'],[frac(2,3),false,'2 ÷ 3 = 0,666… sans fin.'],[frac(7,10),true,'C\'est une fraction décimale : 0,7.'],[frac(1,5),true,'1 ÷ 5 = 0,2.'],['12',true,'Un nombre entier est aussi un nombre décimal : 12 = 12,0 = '+frac(120,10)+'.'],['0,000 7',true,'= '+frac(7,10000)+'.'],[frac(15,100),true,'C\'est une fraction décimale : 0,15.'],[frac(1,6),false,'1 ÷ 6 = 0,1666… sans fin.']];
+function genDecOuPas(){const [x,yes,e]=one(DEC_OR_NOT);return QCM({cat:'Nombre décimal',prompt:`${x} est-il un nombre décimal ?`,options:['Oui','Non'],correct:yes?0:1,keep:true,grid:true,center:true,explain:' '+e})}
+function genDefDec(){return QCM({cat:'Définition',prompt:'Qu\'est-ce qu\'un nombre décimal ?',options:['Un nombre qui peut s\'écrire sous la forme d\'une fraction décimale (dénominateur 10, 100, 1 000…)','Un nombre qui a forcément une virgule','Un nombre plus petit que 1','Un nombre qui a 10 chiffres'],correct:0,explain:' On peut aussi dire : un nombre qui s\'écrit avec un nombre fini de chiffres après la virgule. Les entiers en font partie.'})}
+function genVersFrac(){const c=genNum(R(0,1)?R(1,2):0,R(1,3),.3)||'0.5';const [ip,dp]=c.split('.');const k=dp.length;const num=String(Number(ip+dp));const den=grp('1'+'0'.repeat(k));
+  return INPUT({cat:'Fraction décimale',prompt:`Écris ${N(c)} sous la forme d'une fraction décimale :`,frac:true,fracBefore:`<span>${N(c)} =</span>`,answer:frac(grp(num),den),
+    check:v=>{const n=canon(v[0]),d=canon(v[1]);if(!n||!d||n.includes('.')||!/^10*$/.test(d))return {ok:false,note:/^10*$/.test(d||'')?'':' Le dénominateur doit être 10, 100, 1 000… '};return canon(shiftDiv(n,d.length-1))===c},
+    explain:` ${k} chiffre${k>1?'s':''} après la virgule → on divise par ${den} : ${N(c)} = ${frac(grp(num),den)}.`})}
+function genDepuisFrac(){const k=R(1,4);const num=String(R(1,k===1?99:R(0,1)?99999:999));const den=grp('1'+'0'.repeat(k));const c=shiftDiv(num,k);
+  return INPUT({cat:'Fraction décimale',prompt:`Écris ${frac(grp(num),den)} avec une virgule :`,fields:[{w:'9em'}],answer:fmt(c),check:v=>canon(v[0])===c,explain:` Diviser par ${den}, c'est décaler la virgule de ${k} rang${k>1?'s':''} vers la gauche (en ajoutant des zéros si besoin).`})}
+function genSommeFrac(){const c=genNum(R(1,2),R(2,4),.4);const m=toMap(c);return INPUT({cat:'Fraction décimale',prompt:`Écris avec une virgule : ${decompHTML(m,'frac')}`,fields:[{w:'9em'}],answer:fmt(c),check:v=>canon(v[0])===c,explain:` Chaque fraction donne un rang : ${frac(1,10)} les dixièmes, ${frac(1,100)} les centièmes, ${frac(1,1000)} les millièmes.`})}
+function genParties(){const c=genNum(R(1,5),R(1,4),.35);const [ip,dp]=c.split('.');
+  return INPUT({cat:'Parties',prompt:`Donne la partie entière et la partie décimale de ${N(c)} :`,fields:[{label:'Partie entière :',w:'8em'},{label:'Partie décimale :',w:'8em'}],answer:`${fmt(ip)} et ${fmt('0.'+dp)}`,
+    check:v=>{const e=canon(v[0])===canon(ip);const raw=v[1].replace(/[\s\u202f]/g,'');const d=canon(raw)==='0.'+dp||raw===dp;return e&&d},explain:` La partie décimale peut s'écrire 0,${dp} ou juste les chiffres ${dp} : suis la façon de faire de ton cours.`})}
+const genFrac=()=>one([genVersFrac,genVersFrac,genDepuisFrac,genDepuisFrac,genSommeFrac,genParties,genParties,genDecOuPas,genDefDec])();
+function fractions(){const body=chrome('Fractions décimales et parties');const zone=h('<div></div>');body.append(zone);serie(zone,10,genFrac)}
+
+/* ===== 4. DEMI-DROITE GRADUÉE ===== */
+const DD=[{d:100,m:5},{d:100,m:10},{d:50,m:2},{d:20,m:5},{d:10,m:10},{d:25,m:4},{d:1,m:10},{d:200,m:5},{d:500,m:2},{d:10,m:5}];
+function ddConfig(){const g=one(DD);const unit=g.d*g.m;const s=Math.random()<.35?0:unit*R(1,g.d<=10?30:8);const n=g.m===10?12:Math.max(8,2*g.m);return {...g,s,n}}
+const hv=v=>canon(String(v/100));
+function ddSVG(cfg,{point,letter}={}){
+  const W=360,x0=24,x1=330,dx=(x1-x0)/cfg.n,y=70;
+  let s=`<svg viewBox="0 0 ${W} 120" xmlns="http://www.w3.org/2000/svg"><g stroke="currentColor" style="color:var(--ink)">`;
+  s+=`<line x1="${x0}" y1="${y}" x2="${W-6}" y2="${y}" stroke-width="2.5"/>`;
+  s+=`<path d="M${W-6} ${y} l-10 -6 M${W-6} ${y} l-10 6" stroke-width="2.5" fill="none"/>`;
+  for(let k=0;k<=cfg.n;k++){const x=x0+k*dx;s+=`<line x1="${x}" y1="${y-(k===0||k===cfg.m?11:7)}" x2="${x}" y2="${y+(k===0||k===cfg.m?11:7)}" stroke-width="${k===0||k===cfg.m?2.5:1.6}"/>`}
+  s+='</g>';
+  [0,cfg.m].forEach(k=>{const x=x0+k*dx;s+=`<text x="${x}" y="${y+32}" text-anchor="middle" font-family="Lexend,sans-serif" font-size="17" font-weight="600" fill="var(--ink)">${fmt(hv(cfg.s+k*cfg.d))}</text>`});
+  if(cfg.s===0)s+=`<text x="${x0}" y="${y-18}" text-anchor="middle" font-family="Lexend,sans-serif" font-size="16" fill="var(--ink)">O</text>`;
+  if(point!==undefined){const x=x0+point*dx;s+=cross(x,y,'var(--blue)',8)+`<text x="${x}" y="${y-18}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="700" fill="var(--blue)">${letter}</text>`}
+  return s+'<g class="fx"></g></svg>';
+}
+function cross(x,y,col,r=6){return `<path d="M${x-r} ${y-r} L${x+r} ${y+r} M${x-r} ${y+r} L${x+r} ${y-r}" stroke="${col}" stroke-width="3" stroke-linecap="round"/>`}
+function ddExplain(cfg){return ` Entre ${fmt(hv(cfg.s))} et ${fmt(hv(cfg.s+cfg.m*cfg.d))}, il y a ${cfg.m} intervalles, donc une graduation vaut ${fmt(hv(cfg.m*cfg.d))} ÷ ${cfg.m} = ${fmt(hv(cfg.d))}.`}
+function genLire(){const cfg=ddConfig();let k;do{k=R(1,cfg.n)}while(k===cfg.m);const L=one(['A','B','C','E','M','R']);const ans=hv(cfg.s+k*cfg.d);
+  return INPUT({cat:'Abscisse',fig:ddSVG(cfg,{point:k,letter:L}),prompt:`Quelle est l'abscisse du point ${L} ?`,fields:[{label:`${L}(`,after:')',w:'7em'}],answer:`${L}(${fmt(ans)})`,check:v=>canon(v[0])===ans,explain:ddExplain(cfg)})}
+function genPlacer(){const cfg=ddConfig();let k;do{k=R(1,cfg.n)}while(k===cfg.m);const L=one(['A','B','C','E','M','R']);const ans=hv(cfg.s+k*cfg.d);
+  return {cat:'Abscisse',run(el,sub,done){el.innerHTML='';if(sub)el.append(h(`<p class="muted small">${sub}</p>`));
+    el.append(h(`<p class="prompt">Touche la graduation où se trouve le point ${L}(${fmt(ans)}).</p>`));
+    const f=h(`<div class="fig">${ddSVG(cfg)}</div>`);el.append(f);const svg=$('svg',f);let fin=false;
+    svg.addEventListener('click',e=>{if(fin)return;const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const q=pt.matrixTransform(svg.getScreenCTM().inverse());
+      const dx=(330-24)/cfg.n;const kk=Math.round((q.x-24)/dx);if(kk<0||kk>cfg.n)return;fin=true;const ok=kk===k;
+      let fx='';if(!ok)fx+=cross(24+kk*dx,70,'var(--red)',8);fx+=cross(24+k*dx,70,'var(--green)',9)+`<text x="${24+k*dx}" y="48" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" font-weight="700" fill="var(--green)">${L}</text>`;
+      $('.fx',svg).innerHTML=fx;feedback(el,ok,ok?'Bravo !':'Raté.',(ok?'':`Tu as touché ${fmt(hv(cfg.s+kk*cfg.d))}. Le point ${L} est en vert. `)+ddExplain(cfg));nextBtn(el,()=>done(ok,`${L}(${fmt(ans)})`))});
+  }}}
+function demidroite(){const body=chrome('La demi-droite graduée');const zone=h('<div></div>');
+  tabs(body,[['lire','Lire une abscisse'],['placer','Placer un point'],['mix','Les deux']],k=>serie(zone,10,k==='lire'?genLire:k==='placer'?genPlacer:()=>one([genLire,genPlacer])()));body.append(zone)}
+
+/* ===== 5. COMPARER, RANGER, CARTES ===== */
+function genPair(){const t=R(1,5);let a,b,da,db;
+  if(t===1){const i=R(0,30);a=`${i}.${R(1,9)}`;b=`${i}.${R(1,9)}${R(1,9)}`}
+  else if(t===2){const i=R(0,20),x=`${R(0,9)}${R(1,9)}`;a=`${i}.${x}`;b=a;da=fmt(a);db=fmt(a)+'0'.repeat(R(1,2))}
+  else if(t===3){const i=R(2,40);a=`${i}.${R(1,9)}`;b=`${i-R(1,2)}.${R(1,9)}${R(1,9)}${R(1,9)}`}
+  else if(t===4){a=`0.0${R(1,9)}`;b=`0.${R(1,9)}`}
+  else {const i=R(0,9);a=`${i}.${R(10,99)}`;b=`${i}.${R(1,9)}${R(0,9)}${R(1,9)}`}
+  a=canon(a);b=canon(b);if(Math.random()<.5){[a,b]=[b,a];[da,db]=[db,da]}return {a,b,da:da||fmt(a),db:db||fmt(b)}}
+function genCompare(){const {a,b,da,db}=genPair();const r=cmp(a,b);const opts=['&lt;','=','&gt;'];const correct=r<0?0:r===0?1:2;
+  return QCM({cat:'Comparer',prompt:`Complète avec &lt;, &gt; ou = :<br><span class="num">${da}</span> … <span class="num">${db}</span>`,options:opts,keep:true,center:true,correct,answerText:`${da} ${opts[correct]} ${db}`,
+    explain:` On compare d'abord les parties entières, puis les dixièmes, les centièmes… On peut ajouter des zéros pour avoir autant de chiffres après la virgule. Le nombre de chiffres après la virgule ne dit pas qui est le plus grand !`})}
+function genRanger(){const i=R(0,12);const set=new Set();while(set.size<5){const L=R(1,3);let d='';for(let k=0;k<L;k++)d+=k===L-1?R(1,9):R(0,9);set.add(canon(`${Math.random()<.2?i+1:i}.${d}`))}
+  const nums=[...set];const asc=Math.random()<.5;const sorted=[...nums].sort((x,y)=>asc?cmp(x,y):cmp(y,x));
+  return {cat:'Ranger',run(el,sub,done){el.innerHTML='';if(sub)el.append(h(`<p class="muted small">${sub}</p>`));
+    el.append(h(`<p class="prompt">Touche les nombres dans l'ordre <b>${asc?'croissant':'décroissant'}</b>.</p><p class="rule">${asc?'du plus petit au plus grand':'du plus grand au plus petit'}</p>`));
+    const placed=h('<div class="order-list"></div>');el.append(placed);const box=h('<div class="opts grid2"></div>');el.append(box);let i=0,err=0;
+    shuffle(nums).forEach(n=>{const b=h(`<button class="opt c">${fmt(n)}</button>`);b.onclick=()=>{if(n===sorted[i]){b.remove();placed.append(h(`<div class="placed">${fmt(n)} ${i<4?(asc?'&lt;':'&gt;'):''}</div>`));i++;if(i===5){const ok=err===0;feedback(el,ok,ok?'Parfait !':'Terminé.',ok?'':`${err} erreur${err>1?'s':''} en route. Compare d'abord les parties entières, puis chiffre par chiffre.`);nextBtn(el,()=>done(ok,sorted.map(fmt).join(asc?' < ':' > ')))}}else{err++;b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake','bad');setTimeout(()=>b.classList.remove('bad'),600)}};box.append(b)});
+  }}}
+function genCartes(){
+  const mode=one(['entier','entier','k','libre']);const goal=one(['grand','petit']);let digits,k=0,ans,rule;
+  if(mode==='entier'){const n=R(4,6);const pool=shuffle([0,1,2,3,4,5,6,7,8,9]);digits=pool.slice(0,n);if(!digits.includes(0)&&Math.random()<.7)digits[0]=0;
+    const s=[...digits].sort((a,b)=>goal==='grand'?b-a:a-b);if(goal==='petit'&&s[0]===0){const j=s.findIndex(x=>x);[s[0],s[j]]=[s[j],s[0]]}ans=s.join('');rule=`Utilise toutes les cartes pour former le plus ${goal} nombre entier possible.`}
+  else{const n=R(4,5);digits=shuffle([1,2,3,4,5,6,7,8,9]).slice(0,n);const s=[...digits].sort((a,b)=>goal==='grand'?b-a:a-b);
+    if(mode==='k'){k=R(1,2);ans=s.slice(0,n-k).join('')+','+s.slice(n-k).join('');rule=`Utilise toutes les cartes (et la virgule) pour former le plus ${goal} nombre possible avec <b>${k} chiffre${k>1?'s':''} après la virgule</b>.`}
+    else{ans=goal==='grand'?s.slice(0,n-1).join('')+','+s[n-1]:s[0]+','+s.slice(1).join('');rule=`Utilise toutes les cartes, virgule comprise, pour former le plus ${goal} nombre possible. Tu places la virgule où tu veux.`}}
+  const cards=[...digits.map(String),...(mode==='entier'?[]:[','])];
+  return {cat:'Cartes',run(el,sub,done){el.innerHTML='';if(sub)el.append(h(`<p class="muted small">${sub}</p>`));
+    el.append(h(`<p class="prompt">${rule}</p>`));const built=h('<div class="cardrow built" aria-label="Ton nombre"></div>');const pool=h('<div class="cardrow"></div>');el.append(built,pool);
+    const go=h('<button class="main-btn" disabled>Vérifier</button>');el.append(go);let seq=[];
+    const render=()=>{built.innerHTML=seq.length?'':'<span class="muted small" style="align-self:center">Touche les cartes pour former ton nombre</span>';seq.forEach((c,ix)=>{const b=h(`<button class="ncard ${c.v===','?'comma':''}">${c.v}</button>`);b.onclick=()=>{seq.splice(ix,1);c.btn.disabled=false;render()};built.append(b)});go.disabled=seq.length!==cards.length};
+    shuffle(cards).forEach(v=>{const b=h(`<button class="ncard ${v===','?'comma':''}">${v}</button>`);b.onclick=()=>{b.disabled=true;seq.push({v,btn:b});render()};pool.append(b)});render();
+    go.onclick=()=>{const s=seq.map(c=>c.v).join('');let ok=s===ans,why='';
+      if(!ok){if(s.startsWith(',')||s.endsWith(','))why='Un nombre ne commence pas et ne finit pas par une virgule. ';else if(/^0\d/.test(s))why='Un nombre entier ne s\'écrit pas avec un 0 au début : 0 3 5 7, ce serait juste 357 ! ';else if(mode==='k'&&s.split(',')[1]?.length!==k)why=`Il faut exactement ${k} chiffre${k>1?'s':''} après la virgule. `}
+      [...built.children,...pool.children].forEach(b=>b.disabled=true);go.remove();
+      const strat=goal==='grand'?'Pour le plus grand : on met les chiffres les plus grands devant.':'Pour le plus petit : on met les chiffres les plus petits devant'+(mode==='entier'&&digits.includes(0)?', mais jamais le 0 en premier.':'.');
+      feedback(el,ok,ok?'Bravo !':'Pas tout à fait.',(ok?'':`Le plus ${goal} était <strong>${fmt(canon(ans))}</strong>. `)+why+strat);nextBtn(el,()=>done(ok,fmt(canon(ans))))};
+  }}}
+function comparer(){const body=chrome('Comparer et ranger');const zone=h('<div></div>');
+  tabs(body,[['cmp','Comparer'],['ranger','Ranger'],['cartes','Cartes : plus grand / plus petit']],k=>serie(zone,k==='ranger'?5:8,k==='cmp'?genCompare:k==='ranger'?genRanger:genCartes));body.append(zone)}
+
+/* ===== 6. GÉOMÉTRIE ===== */
+const LET=['A','B','C','D','E','F','K','L','M','N','R','S','T'];
+function two(){const [a,b]=pick(LET.filter(x=>x!=='O'),2);return [a,b]}
+function lineGeom(){const A=[R(90,120),R(70,140)],B=[R(195,225),R(60,150)];const L=Math.hypot(B[0]-A[0],B[1]-A[1]);const u=[(B[0]-A[0])/L,(B[1]-A[1])/L];return {A,B,u,L}}
+function ptLabel(P,name,u,col='var(--ink)'){const n=[-u[1],u[0]];const x=P[0]+n[0]*18,y=P[1]+n[1]*18+6;return cross(P[0],P[1],col)+`<text x="${x}" y="${y}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="19" font-weight="600" fill="${col}">${name}</text>`}
+function objPath(g,type,col,w=3){const {A,B,u}=g;const far=500;let p1=A,p2=B;
+  if(type==='droite'){p1=[A[0]-u[0]*far,A[1]-u[1]*far];p2=[B[0]+u[0]*far,B[1]+u[1]*far]}
+  if(type==='dAB'){p2=[B[0]+u[0]*far,B[1]+u[1]*far]}
+  if(type==='dBA'){p1=[A[0]-u[0]*far,A[1]-u[1]*far]}
+  return `<line x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/>`}
+function figLine(g,type,a,b,{h:H=200,col='var(--red)'}={}){return `<svg viewBox="0 0 320 ${H}" xmlns="http://www.w3.org/2000/svg">${objPath(g,type,col)}${ptLabel(g.A,a,g.u)}${ptLabel(g.B,b,g.u)}</svg>`}
+const NOT={droite:(a,b)=>`(${a}${b})`,segment:(a,b)=>`[${a}${b}]`,dAB:(a,b)=>`[${a}${b})`,dBA:(a,b)=>`[${b}${a})`};
+const NOMS={droite:'la droite',segment:'le segment',dAB:'la demi-droite',dBA:'la demi-droite'};
+function genNotation(){const g=lineGeom();const [a,b]=two();const types=['droite','segment','dAB','dBA'];const t=one(types);
+  if(Math.random()<.6)return QCM({cat:'Notations',fig:figLine(g,t,a,b),prompt:'Comment note-t-on la figure en rouge ?',options:types.map(x=>NOT[x](a,b)),correct:types.indexOf(t),grid:true,center:true,
+    explain:` (${a}${b}) : droite, illimitée des deux côtés. [${a}${b}] : segment, limité par ${a} et ${b}. [${a}${b}) : demi-droite d'origine ${a}. Le crochet est du côté où ça s'arrête.`});
+  return QCM({cat:'Notations',prompt:`Quel dessin représente ${NOMS[t]} <b>${NOT[t](a,b)}</b> ?`,options:types.map(x=>figLine(g,x,a,b,{h:200})),correct:types.indexOf(t),grid:true,answerText:NOT[t](a,b),
+    explain:` Le crochet [ montre que le trait s'arrête au point ; la parenthèse montre qu'il continue sans fin.`})}
+function genCercle(){const O=[160,105],r=72;const [a,b]=two();const ang1=R(200,260)*Math.PI/180;const P=t=>[O[0]+r*Math.cos(t),O[1]-r*Math.sin(t)];const A=P(ang1);
+  const kind=one(['arc','rayon','diametre','cercle']);let B=kind==='diametre'?P(ang1+Math.PI):P(ang1+R(60,110)*Math.PI/180);
+  let red='';if(kind==='arc')red=`<path d="M${A[0]} ${A[1]} A ${r} ${r} 0 0 0 ${B[0]} ${B[1]}" stroke="var(--red)" stroke-width="4" fill="none"/>`;
+  if(kind==='rayon')red=`<line x1="${O[0]}" y1="${O[1]}" x2="${A[0]}" y2="${A[1]}" stroke="var(--red)" stroke-width="4"/>`;
+  if(kind==='diametre')red=`<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="var(--red)" stroke-width="4"/>`;
+  if(kind==='cercle')red=`<circle cx="${O[0]}" cy="${O[1]}" r="${r}" stroke="var(--red)" stroke-width="4" fill="none"/>`;
+  const lab=(P,n)=>{const v=[P[0]-O[0],P[1]-O[1]];const L=Math.hypot(...v)||1;return cross(P[0],P[1],'var(--ink)')+`<text x="${P[0]+v[0]/L*20}" y="${P[1]+v[1]/L*20+6}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="19" font-weight="600" fill="var(--ink)">${n}</text>`};
+  const fig=`<svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg"><circle cx="${O[0]}" cy="${O[1]}" r="${r}" stroke="var(--ink)" stroke-width="2" fill="none"/>${red}${cross(O[0],O[1],'var(--ink)')}<text x="${O[0]+12}" y="${O[1]-8}" font-family="Fredoka,sans-serif" font-size="19" font-weight="600" fill="var(--ink)">O</text>${lab(A,a)}${kind!=='rayon'?lab(B,b):''}</svg>`;
+  const opts={arc:`l'arc <span class="arcn">${a}${b}</span>`,rayon:`le segment [O${a}] : un rayon`,diametre:`le segment [${a}${b}] : un diamètre`,cercle:'le cercle de centre O'};const keys=Object.keys(opts);
+  return QCM({cat:'Cercle',fig,prompt:'Comment s\'appelle ce qui est en rouge ?',options:keys.map(k=>opts[k]),correct:keys.indexOf(kind),explain:' Rayon : du centre jusqu\'au cercle. Diamètre : d\'un bord à l\'autre en passant par le centre. Arc : un morceau du cercle.'})}
+function genAppart(){
+  if(Math.random()<.25){const O=[160,105],r=70;const [p]=pick(['M','N','P','K'],1);const where=one(['on','in','out']);const t=R(0,359)*Math.PI/180;const d=where==='on'?r:where==='in'?R(20,45):R(92,100);const P=[O[0]+d*Math.cos(t),O[1]-d*Math.sin(t)];
+    const fig=`<svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg"><circle cx="${O[0]}" cy="${O[1]}" r="${r}" stroke="var(--ink)" stroke-width="2.5" fill="none"/>${cross(O[0],O[1],'var(--ink)')}<text x="${O[0]+12}" y="${O[1]-8}" font-family="Fredoka,sans-serif" font-size="19" font-weight="600" fill="var(--ink)">O</text><text x="${O[0]+r*.72+6}" y="${O[1]+r*.72+16}" font-family="Fredoka,sans-serif" font-style="italic" font-size="19" fill="var(--ink)">(C)</text>${cross(P[0],P[1],'var(--blue)')}<text x="${P[0]+10}" y="${P[1]-8}" font-family="Fredoka,sans-serif" font-size="19" font-weight="700" fill="var(--blue)">${p}</text></svg>`;
+    return QCM({cat:'Appartenance',fig,prompt:`${p} … (C)`,options:['∈','∉'],keep:true,grid:true,center:true,correct:where==='on'?0:1,answerText:`${p} ${where==='on'?'∈':'∉'} (C)`,explain:` Un point appartient au cercle seulement s'il est <b>sur</b> le trait du cercle. À l'intérieur ou à l'extérieur, il n'appartient pas au cercle.`})}
+  const g=lineGeom();const [a,b]=two();const m=one(LET.filter(x=>x!==a&&x!==b));
+  const pos=one(['mid','afterB','beforeA','off','mid','afterB','beforeA']);const t=pos==='mid'?Math.random()*.5+.25:pos==='afterB'?1.3+Math.random()*.25:pos==='beforeA'?-(0.3+Math.random()*.25):Math.random()*.6+.2;
+  const off=pos==='off'?(Math.random()<.5?24:-24):0;const n=[-g.u[1],g.u[0]];const M=[g.A[0]+g.u[0]*g.L*t+n[0]*off,g.A[1]+g.u[1]*g.L*t+n[1]*off];
+  const objs=['droite','segment','dAB','dBA'];const o=one(objs);
+  const inside=off===0&&(o==='droite'||(o==='segment'&&t>=0&&t<=1)||(o==='dAB'&&t>=0)||(o==='dBA'&&t<=1));
+  const fig=`<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">${objPath(g,'droite','var(--ink)',2)}${ptLabel(g.A,a,g.u)}${ptLabel(g.B,b,g.u)}${cross(M[0],M[1],'var(--blue)')}<text x="${M[0]-n[0]*20}" y="${M[1]-n[1]*20+6}" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="19" font-weight="700" fill="var(--blue)">${m}</text></svg>`;
+  const expl={droite:`La droite (${a}${b}) est illimitée des deux côtés : tout point sur le trait lui appartient.`,segment:`Le segment [${a}${b}] s'arrête en ${a} et en ${b} : un point sur la droite mais en dehors de ${a} et ${b} n'appartient pas au segment.`,dAB:`La demi-droite [${a}${b}) commence en ${a} et part du côté de ${b}, sans fin.`,dBA:`La demi-droite [${b}${a}) commence en ${b} et part du côté de ${a}, sans fin.`};
+  return QCM({cat:'Appartenance',fig,prompt:`${m} … ${NOT[o](a,b)}`,options:['∈','∉'],keep:true,grid:true,center:true,correct:inside?0:1,answerText:`${m} ${inside?'∈':'∉'} ${NOT[o](a,b)}`,explain:' '+expl[o]+(off?` Ici, ${m} n'est même pas sur la droite.`:'')})}
+function genVocab(){const qs=[
+  {p:'Que désigne AB (sans crochets ni parenthèses) ?',o:['La longueur du segment [AB]','La droite qui passe par A et B','Le segment d\'extrémités A et B','La demi-droite d\'origine A'],e:'AB est un nombre : une longueur, par exemple AB = 4 cm.'},
+  {p:'Comment écrire « le point M appartient à la droite (d) » ?',o:['M ∈ (d)','M ∉ (d)','(d) ∈ M','M = (d)'],e:'∈ se lit « appartient à ».'},
+  {p:'Le rayon d\'un cercle mesure 4 cm. Combien mesure son diamètre ?',o:['8 cm','2 cm','4 cm','16 cm'],e:'Diamètre = 2 × rayon.'},
+  {p:'Quelle notation désigne la demi-droite d\'origine B passant par C ?',o:['[BC)','[CB)','(BC)','[BC]'],e:'Le crochet est du côté de l\'origine, la parenthèse du côté où ça continue.'},
+  {p:'Combien de droites passent par deux points A et B différents ?',o:['Une seule','Deux','Une infinité','Aucune'],e:'Par deux points distincts, il passe une seule droite : (AB).'},
+  {p:'Combien de droites passent par un seul point A ?',o:['Une infinité','Une seule','Deux','Aucune'],e:'On peut tracer autant de droites qu\'on veut passant par un point.'},
+ ];const q=one(qs);return QCM({cat:'Vocabulaire',prompt:q.p,options:q.o,correct:0,explain:' '+q.e})}
+const genGeo=()=>one([genNotation,genNotation,genCercle,genAppart,genAppart,genAppart,genVocab])();
+function geometrie(){const body=chrome('Géométrie : notations et ∈ / ∉');const zone=h('<div></div>');
+  tabs(body,[['mix','Tout mélangé'],['not','Notations'],['cer','Cercle'],['app','∈ ou ∉']],k=>serie(zone,10,k==='mix'?genGeo:k==='not'?()=>one([genNotation,genVocab])():k==='cer'?genCercle:genAppart));body.append(zone)}
+
+/* ===== 7. ÉGYPTIENS ===== */
+const EGV=[1000000,100000,10000,1000,100,10,1];
+const EGN={1:'bâton',10:'anse',100:'corde enroulée',1000:'fleur de lotus',10000:'doigt',100000:'têtard',1000000:'homme aux bras levés'};
+function glyph(v){const st='fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';let g='';
+  if(v===1)g=`<line x1="12" y1="6" x2="12" y2="30" ${st}/>`;
+  if(v===10)g=`<path d="M5 30 V16 A7 7 0 0 1 19 16 V30" ${st}/>`;
+  if(v===100)g=`<path d="M12 19 a2 2 0 1 1 2 2 a4.5 4.5 0 1 1 -4.5 -4.5 a7 7 0 1 1 7 7 M12 30 V26" ${st}/>`;
+  if(v===1000)g=`<path d="M12 31 V13 M12 22 q-6 -1 -7 -6 q6 0 7 6 M12 13 L7 5 Q12 8 12 3 Q12 8 17 5 Z" ${st}/>`;
+  if(v===10000)g=`<path d="M11 31 V10 Q11 4 16 5 Q19 6 17 11" ${st} stroke-width="3.6"/>`;
+  if(v===100000)g=`<ellipse cx="12" cy="10" rx="5" ry="6" fill="currentColor"/><path d="M12 16 Q7 20 12 24 Q17 28 12 31" ${st}/>`;
+  if(v===1000000)g=`<circle cx="12" cy="8" r="3.2" fill="currentColor"/><path d="M12 12 V21 M12 14 L5 6 M12 14 L19 6 M12 21 L7 27 L14 30" ${st}/>`;
+  return `<svg viewBox="0 0 24 34" aria-hidden="true">${g}</svg>`}
+function egWrite(n){let s='';for(const v of EGV){const c=Math.floor(n/v)%10;for(let i=0;i<c;i++)s+=glyph(v)}return `<div class="eg" role="img" aria-label="nombre en hiéroglyphes">${s}</div>`}
+function egNum(){const r=Math.random();return r<.4?R(11,999):r<.8?R(1000,99999):R(100000,2400000)}
+function genEgLire(){const n=egNum();return INPUT({cat:'Égyptiens',fig:egWrite(n),prompt:'Quel nombre est écrit ici ?',fields:[{w:'9em'}],answer:fmt(String(n)),check:v=>canon(v[0])===String(n),explain:` Chaque symbole vaut un nombre et on additionne tout. Il n'y a pas de zéro chez les Égyptiens : s'il n'y a pas de symbole d'un rang, ce rang vaut 0.`})}
+function genEgEcrire(){const n=egNum();return {cat:'Égyptiens',run(el,sub,done){el.innerHTML='';if(sub)el.append(h(`<p class="muted small">${sub}</p>`));
+  el.append(h(`<p class="prompt">Écris ${N(String(n))} en hiéroglyphes : choisis combien de fois chaque symbole.</p>`));
+  const cnt={};EGV.forEach(v=>cnt[v]=0);const tab=h('<div class="egtab panel"></div>');el.append(tab);const prev=h('<div style="margin-top:10px"></div>');el.append(prev);
+  const upd=()=>{prev.innerHTML=egWrite(EGV.reduce((s,v)=>s+v*cnt[v],0)||0)};
+  EGV.forEach(v=>{tab.append(h(`<span>${glyph(v)}</span>`),h(`<span class="small">${EGN[v]}<br><b>${grp(String(v))}</b></span>`));const st=h(`<span class="step"><button aria-label="moins">−</button><b>0</b><button aria-label="plus">+</button></span>`);tab.append(st);
+    st.children[0].onclick=()=>{cnt[v]=Math.max(0,cnt[v]-1);st.children[1].textContent=cnt[v];upd()};st.children[2].onclick=()=>{cnt[v]=Math.min(9,cnt[v]+1);st.children[1].textContent=cnt[v];upd()}});
+  upd();const go=h('<button class="main-btn">Vérifier</button>');el.append(go);
+  go.onclick=()=>{const tot=EGV.reduce((s,v)=>s+v*cnt[v],0);const ok=tot===n;tab.querySelectorAll('button').forEach(b=>b.disabled=true);go.remove();
+    feedback(el,ok,ok?'Bravo !':'Pas tout à fait.',(ok?'':`Ton écriture vaut ${fmt(String(tot))}. Voici la bonne : `)+(ok?'':egWrite(n))+` Pour ${fmt(String(n))} : `+EGV.filter(v=>Math.floor(n/v)%10).map(v=>`${Math.floor(n/v)%10} × ${grp(String(v))}`).join(' + ')+'.');nextBtn(el,()=>done(ok,fmt(String(n))))};
+}}}
+function egypte(){const body=chrome('Numération égyptienne');const zone=h('<div></div>');
+  tabs(body,[['voir','Les symboles'],['lire','Lire'],['ecrire','Écrire']],k=>{if(k==='voir'){zone.innerHTML='';const t=h('<div class="egtab panel"></div>');EGV.slice().reverse().forEach(v=>{t.append(h(`<span>${glyph(v)}</span>`),h(`<span>${EGN[v]}</span>`),h(`<b class="num">${grp(String(v))}</b>`))});zone.append(t,h(`<p class="muted small" style="margin-top:10px">Le système égyptien est <b>additif</b> : on répète chaque symbole (9 fois au maximum) et on additionne. Il n'y a pas de zéro, et l'ordre des symboles ne change pas la valeur. Les dessins sont simplifiés : ils peuvent être un peu différents de ceux de ton cours.</p>`))}else serie(zone,6,k==='lire'?genEgLire:genEgEcrire)});body.append(zone)}
+
+/* ===== 8. FIGURES À CONSTRUIRE ===== */
+const T=(x,y,s,c='var(--ink)')=>`<text x="${x}" y="${y}" font-family="Fredoka,sans-serif" font-size="18" font-weight="600" fill="${c}" text-anchor="middle">${s}</text>`;
+const LN=(a,b,c='var(--ink)',w=2)=>`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+const ext=(p,q,k)=>[p[0]+(q[0]-p[0])*k,p[1]+(q[1]-p[1])*k];
+const FIGS=[
+ {t:'Le milieu et le cercle',p:['Trace un segment [AB] de 6 cm.','Place le point M, milieu du segment [AB]. Code la figure.','Trace le cercle de centre M qui passe par A.','Que remarques-tu pour le point B ?'],
+  svg:()=>{const A=[60,120],B=[260,120],M=[160,120];return `<svg viewBox="0 0 320 240">${`<circle cx="160" cy="120" r="100" fill="none" stroke="var(--blue)" stroke-width="2"/>`}${LN(A,B)}${cross(60,120,'var(--ink)')}${cross(260,120,'var(--ink)')}${cross(160,120,'var(--ink)')}${T(52,108,'A')}${T(270,108,'B')}${T(160,106,'M')}${LN([106,113],[102,127],'var(--red)',2.5)}${LN([112,113],[108,127],'var(--red)',2.5)}${LN([206,113],[202,127],'var(--red)',2.5)}${LN([212,113],[208,127],'var(--red)',2.5)}</svg>`},
+  c:['Le segment mesure bien 6 cm','Les points sont marqués avec une croix et nommés','Le codage du milieu : les mêmes petits traits sur [AM] et [MB]','Le cercle a pour rayon 3 cm et passe aussi par B','Réponse à la question : B appartient au cercle (B ∈ au cercle), car MB = MA = 3 cm']},
+ {t:'Droite, demi-droite, segment',p:['Trace une droite (d).','Place deux points A et B sur la droite (d), et un point C qui n\'appartient pas à (d).','Trace la demi-droite [CA).','Trace le segment [CB].'],
+  svg:()=>{const P1=[20,150],P2=[300,90];const A=[80,137.1],B=[240,102.9],C=[150,40];return `<svg viewBox="0 0 320 240">${LN(P1,P2)}${T(296,80,'(d)')}${LN(C,ext(C,A,2.2),'var(--blue)',2.5)}${LN(C,B,'var(--red)',2.5)}${cross(A[0],A[1],'var(--ink)')}${cross(B[0],B[1],'var(--ink)')}${cross(C[0],C[1],'var(--ink)')}${T(96,160,'A')}${T(250,128,'B')}${T(150,26,'C')}</svg>`},
+  c:['La droite (d) dépasse des deux côtés et est nommée','A et B sont bien sur (d), C est en dehors','La demi-droite [CA) commence en C, passe par A et continue après A','Le segment [CB] s\'arrête en C et en B']},
+ {t:'Cercle, droite et arc',p:['Trace un cercle de centre O et de rayon 3 cm.','Place deux points E et F sur ce cercle.','Trace la droite (EF) et le segment [OE].','Repasse en couleur le petit arc de cercle EF.'],
+  svg:()=>{const O=[160,130],E=[90.7,90],F=[229.3,90];return `<svg viewBox="0 0 320 240"><circle cx="160" cy="130" r="80" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M${F[0]} ${F[1]} A 80 80 0 0 0 ${E[0]} ${E[1]}" fill="none" stroke="var(--red)" stroke-width="4"/>${LN([0,90],[320,90])}${LN(O,E,'var(--blue)',2.5)}${cross(O[0],O[1],'var(--ink)')}${cross(E[0],E[1],'var(--ink)')}${cross(F[0],F[1],'var(--ink)')}${T(172,148,'O')}${T(80,82,'E')}${T(240,82,'F')}</svg>`},
+  c:['Le rayon fait bien 3 cm (écartement du compas)','E et F sont sur le cercle','La droite (EF) dépasse des deux côtés','[OE] est un rayon, il s\'arrête en O et en E','Le petit arc EF est repassé en couleur']},
+ {t:'Trois points et appartenance',p:['Place trois points R, S et T non alignés.','Trace la droite (RS), la demi-droite [ST) et le segment [RT].','Place un point U tel que U ∈ [ST) mais U ∉ [ST].'],
+  svg:()=>{const Rr=[70,170],S=[170,60],Tt=[250,140],U=[295,185];return `<svg viewBox="0 0 320 240">${LN(ext(Rr,S,-.6),ext(Rr,S,1.8))}${LN(S,ext(S,Tt,2.2),'var(--blue)',2.5)}${LN(Rr,Tt,'var(--red)',2.5)}${cross(Rr[0],Rr[1],'var(--ink)')}${cross(S[0],S[1],'var(--ink)')}${cross(Tt[0],Tt[1],'var(--ink)')}${cross(U[0],U[1],'var(--green)')}${T(56,166,'R')}${T(186,56,'S')}${T(264,134,'T')}${T(280,206,'U','var(--green)')}</svg>`},
+  c:['R, S et T ne sont pas sur une même droite','(RS) dépasse des deux côtés','[ST) commence en S et continue après T','[RT] s\'arrête en R et en T','U est sur [ST) mais après T (donc pas sur le segment [ST])']},
+];
+function figures(){const body=chrome('Figures à construire');
+  body.append(h(`<p class="muted">Prends une feuille, un crayon bien taillé, une règle, une équerre et un compas. Fais la figure, puis compare avec la correction.</p>`));
+  const zone=h('<div></div>');tabs(body,FIGS.map((f,i)=>[String(i),`Figure ${i+1}`]),k=>{const f=FIGS[+k];zone.innerHTML='';
+    zone.append(h(`<div class="panel"><p class="prompt" style="margin:0 0 6px">${f.t}</p><ol class="prog">${f.p.map(x=>`<li>${x}</li>`).join('')}</ol></div>`));
+    const b=h('<button class="main-btn">J\'ai fini : voir la figure attendue</button>');zone.append(b);
+    b.onclick=()=>{b.remove();zone.append(h(`<div class="fig" style="margin-top:14px">${f.svg()}</div>`),h('<p class="muted small">La figure n\'est pas en vraie grandeur. Ce qui compte : les bonnes longueurs et les bons éléments.</p>'),h('<p class="prompt" style="margin-top:14px">Vérifie ta figure</p>'));const l=h('<div></div>');f.c.forEach(c=>l.append(h(`<label class="check"><input type="checkbox"><span>${c}</span></label>`)));zone.append(l)}});body.append(zone)}
+
+/* ===== EXAMEN BLANC ===== */
+function examen(){const body=chrome('Examen blanc');
+  const gens=[genDefDec,genDecOuPas,genChiffre,genChiffre,genNombreDe,genDecomp,genClasse,genEcriture,genEcriture,genVersFrac,genDepuisFrac,genParties,genLire,genPlacer,genCompare,genCompare,genCartes,genNotation,genAppart,genAppart,genCercle,genEgLire];
+  const list=shuffle(gens).slice(0,20).map(g=>g());let k=0,good=0;const miss=[];const setP=bar(body);const inner=h('<div></div>');body.append(inner);
+  const step=()=>{setP(k/20);window.scrollTo(0,0);
+    if(k===20){const best=store.get('best',null);if(best===null||good>best)store.set('best',good);inner.innerHTML='';
+      inner.append(h(`<div class="score"><div class="n">${good}/20</div><p class="prompt">${good>=18?'Excellent, tu es prête pour lundi !':good>=14?'Très bien ! Revois les quelques erreurs.':good>=10?'En bonne voie. Refais les exercices des points à revoir.':'Courage : refais les exercices un par un, puis retente.'}</p></div>`));
+      if(miss.length){const r=h('<div class="recap"><p class="prompt">À revoir</p></div>');miss.forEach(m=>r.append(h(`<div class="it"><b>${m.cat}</b>Réponse : ${m.a}</div>`)));inner.append(r)}
+      nextBtn(inner,examen,'Refaire un examen');const hm=h('<button class="ghost-btn">Retour au menu</button>');hm.onclick=()=>location.hash='';inner.append(hm);return}
+    const q=list[k];q.run(inner,`Question ${k+1} sur 20`,(ok,ans)=>{if(ok)good++;else miss.push({cat:q.cat,a:ans});k++;step()})};step()}
+
+/* ===== ACCUEIL ===== */
+const ACTS=[
+ {id:'cours',ic:'?',t:'Le cours en cartes',d:'Définitions et notations à savoir par cœur'},
+ {id:'rangs',ic:'1,2',t:'Chiffres, rangs et classes',d:'Tableau de numération, décomposer, écriture décimale'},
+ {id:'fractions',ic:'½',t:'Fractions décimales et parties',d:'Fraction décimale, partie entière et décimale'},
+ {id:'demidroite',ic:'↦',t:'La demi-droite graduée',d:'Lire une abscisse, placer un point'},
+ {id:'comparer',ic:'<',t:'Comparer et ranger',d:'Avec les cartes : le plus grand, le plus petit'},
+ {id:'geometrie',ic:'∈',t:'Géométrie : notations',d:'(AB), [AB], [AB), cercle, arc, ∈ et ∉'},
+ {id:'egypte',ic:'𓆼',t:'Numération égyptienne',d:'Lire et écrire avec les hiéroglyphes'},
+ {id:'figures',ic:'✎',t:'Figures à construire',d:'Des programmes à faire sur papier, avec la correction'},
+];
+function home(){app.innerHTML='';const best=store.get('best',null);
+  app.append(h(`<header class="hero"><h1>Premier <span>DS de maths</span></h1><p class="sub">Nombres décimaux et géométrie, 6e</p>
+   <svg viewBox="0 0 420 70" aria-hidden="true"><g stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"><line x1="14" y1="40" x2="406" y2="40"/><path d="M406 40 l-11 -7 M406 40 l-11 7" fill="none"/>${Array.from({length:21},(_,i)=>`<line x1="${14+i*18.5}" y1="${40-(i%10===0?11:i%5===0?8:5)}" x2="${14+i*18.5}" y2="${40+(i%10===0?11:i%5===0?8:5)}" stroke-width="${i%10===0?2.5:1.5}"/>`).join('')}</g>
+   <text x="14" y="66" text-anchor="middle" font-family="Lexend,sans-serif" font-size="13" fill="var(--ink)">2</text><text x="199" y="66" text-anchor="middle" font-family="Lexend,sans-serif" font-size="13" fill="var(--ink)">3</text>
+   ${cross(14+13*18.5,40,'var(--red)',7)}<text x="${14+13*18.5}" y="20" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="17" font-weight="700" fill="var(--red)">A(3,3)</text></svg></header>`));
+  const ul=h('<ul class="menu"></ul>');ACTS.forEach(a=>{const li=h(`<li><button><span class="ic">${a.id==='egypte'?glyph(1000).replace('<svg','<svg style="width:20px;height:26px;color:var(--blue)"'):a.ic}</span><span><span class="t">${a.t}</span><span class="d">${a.d}</span></span><span class="chev">›</span></button></li>`);li.firstChild.onclick=()=>location.hash=a.id;ul.append(li)});app.append(ul);
+  const ex=h(`<button class="exam-btn"><span class="t">Examen blanc</span><span class="d">20 questions mélangées, comme le vrai DS${best!==null?` · meilleur score : ${best}/20`:''}</span></button>`);ex.onclick=()=>location.hash='examen';app.append(ex);
+  app.append(h(`<p class="foot">Pour la partie décimale, certains cours écrivent 0,307 et d'autres 307 : les deux sont acceptés ici. Fais comme dans ton cahier le jour du DS.</p>`));
+  app.append(h(`<p class="foot"><a href="../" style="color:inherit">← Toutes les révisions</a></p>`));
+}
+const ROUTES={cours,rangs,fractions,demidroite,comparer,geometrie,egypte,figures,examen};
+function route(){const r=location.hash.slice(1);(ROUTES[r]||home)()}
+window.addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>

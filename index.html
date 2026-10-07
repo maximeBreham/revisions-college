@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mes révisions</title>
+<meta name="description" content="Révisions et exercices de 6e">
+<meta name="theme-color" content="#F5F3EE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16181F" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icones/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icones/icone-180.png">
+<meta name="apple-mobile-web-app-title" content="Révisions">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F3EE;--card:#fff;--ink:#1F2433;--soft:#5D6475;--line:#DDD8CC;--chip:#EFEBE2}
+@media (prefers-color-scheme:dark){:root{--bg:#16181F;--card:#21242E;--ink:#ECEDF2;--soft:#A7ACBA;--line:#343846;--chip:#2C303C}}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"Lexend","Segoe UI",system-ui,sans-serif;line-height:1.5;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.wrap{max-width:720px;margin:0 auto;padding:36px 16px 48px}
+h1{font-family:"Fredoka","Trebuchet MS",sans-serif;font-size:clamp(36px,10vw,52px);line-height:1.1;margin:0 0 6px}
+.sub{color:var(--soft);margin:0 0 28px}
+h2{font-family:"Fredoka","Trebuchet MS",sans-serif;font-weight:600;font-size:20px;margin:28px 0 12px}
+.grid{display:grid;gap:14px}
+@media (min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+a.card{--cc:var(--c);display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--card);border:2px solid var(--line);border-left:10px solid var(--cc);border-radius:18px;padding:16px 18px}
+@media (prefers-color-scheme:dark){a.card{--cc:var(--cn)}}
+a.card:focus-visible{outline:3px solid var(--cc);outline-offset:2px}
+@media (hover:hover){a.card:hover{border-color:var(--cc)}}
+.k{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cc)}
+.t{font-family:"Fredoka","Trebuchet MS",sans-serif;font-weight:600;font-size:23px;line-height:1.2;display:block;margin:2px 0 4px}
+.d{color:var(--soft);font-size:15px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{font-size:13px;background:var(--chip);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.chip.vite{background:var(--cc);color:var(--card);font-weight:600}
+details{margin-top:28px}
+summary{font-family:"Fredoka","Trebuchet MS",sans-serif;font-weight:600;font-size:20px;cursor:pointer;margin-bottom:12px}
+details .grid{opacity:.8}
+.vide{color:var(--soft);background:var(--card);border:2px dashed var(--line);border-radius:18px;padding:18px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Mes révisions</h1>
+  <p class="sub">Classe de 6e</p>
+  <div id="liste"></div>
+</main>
+<script src="catalogue.js"></script>
+<script>
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const JOUR = 86400000;
+const aujourdhui = new Date(); aujourdhui.setHours(0, 0, 0, 0);
+
+function jourDe(texte) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(texte || "");
+  return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+}
+
+function quand(jour) {
+  const n = Math.round((jour - aujourdhui) / JOUR);
+  if (n === 0) return "Contrôle aujourd'hui";
+  if (n === 1) return "Contrôle demain";
+  if (n > 1 && n <= 14) return `Contrôle dans ${n} jours`;
+  return "Contrôle le " + jour.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+}
+
+function meilleurScore(score) {
+  if (!score) return null;
+  try { const v = JSON.parse(localStorage.getItem(score.cle)); return v === null ? null : `${v}/${score.sur}`; }
+  catch (e) { return null; }
+}
+
+function carte(r) {
+  const m = MATIERES[r.matiere] || { nom: r.matiere, couleur: "#5D6475", couleurNuit: "#A7ACBA" };
+  const jour = jourDe(r.date);
+  const puces = [];
+  if (jour && jour >= aujourdhui) {
+    const proche = (jour - aujourdhui) / JOUR <= 3;
+    puces.push(`<span class="chip${proche ? " vite" : ""}">${esc(quand(jour))}</span>`);
+  }
+  const best = meilleurScore(r.score);
+  if (best) puces.push(`<span class="chip">Meilleur score : ${esc(best)}</span>`);
+  return `<a class="card" href="revisions/${encodeURI(r.fichier)}" style="--c:${esc(m.couleur)};--cn:${esc(m.couleurNuit)}">
+    <span class="k">${esc(m.nom)}</span>
+    <span class="t">${esc(r.titre)}</span>
+    <span class="d">${esc(r.description)}</span>
+    ${puces.length ? `<span class="meta">${puces.join("")}</span>` : ""}
+  </a>`;
+}
+
+const avecJour = window.REVISIONS.map(r => ({ r, jour: jourDe(r.date) }));
+const passes = avecJour.filter(x => x.jour && x.jour < aujourdhui).sort((a, b) => b.jour - a.jour);
+// Les contrôles datés d'abord, du plus proche au plus lointain ; les révisions sans date ensuite.
+const aVenir = avecJour.filter(x => !passes.includes(x)).sort((a, b) => (a.jour ?? Infinity) - (b.jour ?? Infinity));
+
+let html = "<h2>À réviser</h2>" + (aVenir.length
+  ? `<div class="grid">${aVenir.map(x => carte(x.r)).join("")}</div>`
+  : `<p class="vide">Rien à réviser pour l'instant. Profites-en !</p>`);
+if (passes.length) html += `<details><summary>Déjà passés (${passes.length})</summary><div class="grid">${passes.map(x => carte(x.r)).join("")}</div></details>`;
+document.getElementById("liste").innerHTML = html;
+</script>
+</body>
+</html>
