@@ -22,6 +22,7 @@ window.MATIERES = {
   anglais:  { nom: "Anglais",      couleur: "#B0225A", couleurNuit: "#F07AA6" },
   sciences: { nom: "Sciences",     couleur: "#1E7A4C", couleurNuit: "#6BCB97" },
   emc:      { nom: "EMC",          couleur: "#8A6A12", couleurNuit: "#E2C25E" },
+  musique:  { nom: "Musique",      couleur: "#0B7A75", couleurNuit: "#5CCFC7" },
 };
 
 window.REVISIONS = [
@@ -42,5 +43,14 @@ window.REVISIONS = [
     date: "2026-10-12",
     score: { cle: "m6:best", sur: 20 },
     exercices: "maths-ds1-decimaux-geometrie.js",
+  },
+  {
+    matiere: "musique",
+    titre: "Pulsation, tempo et mesure",
+    description: "Définitions, extraits écoutés, battre la mesure, orchestre et concerto",
+    fichier: "musique-pulsation-tempo-mesure.html",
+    date: "2026-10-09",
+    score: { cle: "mu6:best", sur: 20 },
+    exercices: "musique-pulsation-tempo-mesure.js",
   },
 ];

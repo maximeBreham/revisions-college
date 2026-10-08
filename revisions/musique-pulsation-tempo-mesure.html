@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pulsation, tempo et mesure · Révisions 6e</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../exercices/moteur.css">
+<style>
+/* la couleur de la musique remplace le bleu du moteur */
+:root{--blue:#0B7A75}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--blue:#5CCFC7}}
+:root[data-theme="dark"]{--blue:#5CCFC7}
+
+/* accueil */
+.hero{padding:26px 2px 14px}
+.hero h1{font-size:clamp(34px,10vw,52px);font-weight:700;letter-spacing:-.01em}
+.hero h1 span{background:linear-gradient(transparent 62%,var(--hl) 62%,var(--hl) 92%,transparent 92%)}
+.hero .sub{color:var(--ink-soft);margin-top:8px}
+.hero svg{display:block;width:100%;max-width:420px;height:auto;margin-top:14px}
+.menu{list-style:none;margin:8px 0 0;padding:0;background:var(--card);border-radius:var(--r-lg);border:2px solid var(--line);overflow:hidden}
+.menu li+li{border-top:2px solid var(--line)}
+.menu button{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;width:100%;padding:14px;background:none;border:0;text-align:left;cursor:pointer}
+.menu .ic{font-family:var(--head);font-weight:700;font-size:18px;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--paper);color:var(--blue);border:2px solid var(--line)}
+.menu .t{font-family:var(--head);font-weight:600;font-size:19px;display:block}
+.menu .d{font-size:14px;color:var(--ink-soft);display:block}
+.menu .chev{font-size:22px;color:var(--ink-soft)}
+.exam-btn{display:block;width:100%;margin-top:18px;padding:18px 20px;border:0;border-radius:var(--r-lg);background:var(--blue);color:var(--on-ink);text-align:left;cursor:pointer}
+.exam-btn .t{font-family:var(--head);font-weight:700;font-size:25px;display:block}
+.exam-btn .d{font-size:14px;opacity:.9}
+.foot{margin-top:22px;font-size:14px;color:var(--ink-soft)}
+
+/* cartes du cours */
+.face{display:block;width:100%;min-height:230px;border-radius:var(--r-lg);padding:26px 20px;text-align:center;border:2px solid var(--line);cursor:pointer}
+.face.front{background:var(--card);padding-top:64px}
+.face.back{display:none;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fcard.on .front{display:none}.fcard.on .back{display:block}
+.face .w{display:block;font-family:var(--head);font-weight:700;font-size:28px;line-height:1.2}
+.face .hint{display:block;margin-top:36px;font-size:14px;opacity:.7}
+.face .lab{display:block;font-family:var(--head);font-weight:600;font-size:19px;margin-bottom:10px;opacity:.85}
+.face .def{display:block;font-size:18px;line-height:1.5;text-align:left}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.two button{padding:14px;border-radius:var(--r-md);border:0;font-family:var(--head);font-weight:600;font-size:19px;cursor:pointer}
+.b-bad{background:var(--bad-bg);color:var(--red)} .b-ok{background:var(--ok-bg);color:var(--green)}
+.counter{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+
+/* extraits */
+.ext{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--r-md);overflow:hidden;font-size:15px}
+.ext th,.ext td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ext th{font-family:var(--head);font-weight:600;font-size:15px;color:var(--ink-soft)}
+.ext td:first-child{font-weight:600}
+.extbox{border:2px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+
+/* chef d'orchestre */
+.chef{position:relative;max-width:300px;margin:0 auto}
+.chef .dot{fill:var(--hl);stroke:var(--ink);stroke-width:2}
+.chef circle.on{stroke-width:6}
+.reglage{display:grid;gap:12px;margin-top:14px}
+.reglage label{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.reglage input[type=range]{flex:1;min-width:160px;accent-color:var(--blue)}
+.bpm{font-family:var(--head);font-weight:700;font-size:24px;color:var(--blue);min-width:4.5em}
+.compte{text-align:center;font-family:var(--head);font-weight:700;font-size:40px;height:52px;color:var(--ink-soft)}
+.compte.fort{color:var(--red)}
+.ecoute{display:block;width:100%;padding:18px;border:2px solid var(--blue);border-radius:var(--r-md);background:var(--card);color:var(--blue);font-family:var(--head);font-weight:600;font-size:21px;cursor:pointer}
+.recap .it{padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.recap .it b{display:block}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icones/icone-180.png">
+<meta name="apple-mobile-web-app-title" content="Révisions">
+</head>
+<body>
+<main class="wrap" id="app"></main>
+<script src="../exercices/moteur.js"></script>
+<script src="../exercices/musique-pulsation-tempo-mesure.js"></script>
+<script>
+const { h, esc, shuffle, pick } = Moteur;
+const B = Moteur.banques["musique-pulsation-tempo-mesure"];
+const $ = (s, el = document) => el.querySelector(s);
+const app = $("#app");
+const one = a => a[Math.floor(Math.random() * a.length)];
+const store = { get(k, d) { try { const v = localStorage.getItem("mu6:" + k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem("mu6:" + k, JSON.stringify(v)) } catch (e) {} } };
+
+function chrome(title) { arreter(); app.innerHTML = ""; const top = h(`<div class="top"><button class="back" aria-label="Retour au menu">‹</button><h2>${title}</h2></div>`); top.querySelector(".back").onclick = () => { location.hash = "" }; app.append(top); const body = h("<div></div>"); app.append(body); window.scrollTo(0, 0); return body }
+function bar(el) { const b = h('<div class="bar"><i></i></div>'); el.prepend(b); return p => b.firstChild.style.width = (p * 100) + "%" }
+function tabs(el, items, onPick) { const t = h(`<div class="tabs">${items.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join("")}</div>`); el.append(t); const set = k => { arreter(); t.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); onPick(k) }; t.querySelectorAll("button").forEach(b => b.onclick = () => set(b.dataset.k)); set(items[0][0]); return t }
+function nextBtn(el, onDone, label) { const nx = h(`<button class="main-btn">${label}</button>`); nx.onclick = onDone; el.append(nx); return nx }
+function serie(zone, n, gen) {
+  zone.innerHTML = ""; let k = 0, good = 0; const setP = bar(zone); const inner = h("<div></div>"); zone.append(inner);
+  const step = () => { setP(k / n); window.scrollTo(0, 0);
+    if (k === n) { inner.innerHTML = ""; inner.append(h(`<div class="score"><div class="n">${good}/${n}</div><p class="prompt">${good === n ? "Sans faute !" : good >= n * .7 ? "Très bien !" : "Continue, ça rentre !"}</p></div>`)); nextBtn(inner, () => serie(zone, n, gen), "Une autre série"); return }
+    gen().run(inner, `Question ${k + 1} sur ${n}`, ok => { arreter(); if (ok) good++; k++; step() }) }; step();
+}
+
+/* ===== son : un « tic » de métronome, plus fort et plus aigu sur le premier temps ===== */
+let ctx = null, minuteur = null, anim = null;
+function audio() { if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)() } catch (e) {} } if (ctx && ctx.state === "suspended") ctx.resume(); return ctx }
+function tic(t, fort) {
+  if (!ctx) return; const o = ctx.createOscillator(), g = ctx.createGain();
+  o.frequency.value = fort ? 1560 : 880; o.connect(g); g.connect(ctx.destination);
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(fort ? .9 : .4, t + .002); g.gain.exponentialRampToValueAtTime(.001, t + .07);
+  o.start(t); o.stop(t + .08);
+}
+function arreter() { clearInterval(minuteur); minuteur = null; cancelAnimationFrame(anim); anim = null }
+// Joue `combien` pulsations au tempo `bpm` ; accent sur le 1 tous les `n` temps (n = 0 : pas d'accent).
+function jouer(bpm, n, combien) { arreter(); const c = audio(); if (!c) return; const d = 60 / bpm, t0 = c.currentTime + .1; for (let i = 0; i < combien; i++) tic(t0 + i * d, n ? i % n === 0 : false) }
+
+/* ===== 1. COURS EN CARTES ===== */
+function cours() {
+  const body = chrome("Le cours en cartes"); const zone = h("<div></div>"); body.append(zone); start();
+  function start() {
+    const C = B.definir.cartes; let queue = shuffle(C.map((c, i) => i)), done = 0; next();
+    function next() { zone.innerHTML = "";
+      if (!queue.length) { zone.append(h(`<div class="score"><div class="n">✓</div><p class="prompt">Toutes les cartes sont sues !</p></div>`)); nextBtn(zone, start, "Recommencer"); return }
+      const c = C[queue[0]];
+      zone.append(h(`<div class="counter"><span>Que veut dire…</span><span>${done} / ${C.length} sues</span></div>`));
+      const card = h(`<div class="fcard" role="button" tabindex="0" aria-label="Retourner la carte"><div class="face front"><span class="w">${esc(c[0])}</span><span class="hint">Touche la carte pour voir la réponse</span></div><div class="face back"><span class="lab">${esc(c[0])}</span><span class="def">${esc(c[1])}</span></div></div>`); zone.append(card);
+      const btns = h(`<div class="two" style="visibility:hidden"><button class="b-bad">À revoir</button><button class="b-ok">Je savais</button></div>`); zone.append(btns);
+      const flip = () => { card.classList.toggle("on"); btns.style.visibility = "visible" }; card.onclick = flip; card.onkeydown = e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip() } };
+      btns.children[0].onclick = () => { const x = queue.shift(); queue.splice(Math.min(queue.length, 3), 0, x); next() };
+      btns.children[1].onclick = () => { queue.shift(); done++; next() };
+    }
+  }
+}
+
+/* ===== 2. LES EXTRAITS ÉCOUTÉS ===== */
+function extraits() {
+  const body = chrome("Les extraits écoutés"); const zone = h("<div></div>");
+  tabs(body, [["voir", "La correction"], ["quiz", "Me tester"]], k => {
+    zone.innerHTML = "";
+    if (k === "quiz") return serie(zone, 8, B.extraits);
+    zone.append(h(`<div class="extbox"><table class="ext"><tr><th>Extrait</th><th>Tempo</th><th>Mesure</th></tr>${B.extraits.liste.map(e => `<tr><td>${esc(e.nom.replace(/^le /, "").replace(/^./, c => c.toUpperCase()))}</td><td>${esc(e.tempo || "—")}</td><td>${e.mesure ? e.mesure + " temps" : "—"}</td></tr>`).join("")}</table></div>`));
+    zone.append(h(`<p class="muted small" style="margin-top:12px">C'est la correction faite en classe. Réécoute les extraits sur Pronote : frappe la pulsation, dis si elle est lente, modérée ou rapide, puis cherche le 1 (le temps le plus fort) et compte jusqu'au 1 suivant.</p>`));
+  }); body.append(zone);
+}
+
+/* ===== 3. LE CHEF D'ORCHESTRE ===== */
+function chef() {
+  const body = chrome("Battre la mesure");
+  body.append(h(`<p class="muted">Lance le métronome et suis le point avec ta main, comme un chef d'orchestre. Le <b style="color:var(--red)">1</b>, le temps le plus fort, se bat toujours vers le bas.</p>`));
+  let n = 3, bpm = 80;
+  const scene = h('<div class="fig chef"></div>'), compte = h('<div class="compte" aria-live="off"></div>');
+  const regl = h(`<div class="reglage"><label>Tempo <input type="range" min="40" max="160" step="4" value="${bpm}" aria-label="Tempo en BPM"><span class="bpm">${bpm} BPM</span></label></div>`);
+  const go = h('<button class="main-btn">▶ Lancer le métronome</button>');
+  const zone = h("<div></div>");
+  tabs(body, [["3", "À 3 temps"], ["2", "À 2 temps"], ["4", "À 4 temps"]], k => { n = +k; dessiner(); if (minuteur) lancer() });
+  zone.append(scene, compte, go, regl, h(`<p class="foot">Le geste est dessiné pour la main droite. Vérifie qu'il est fait comme en classe.<br>Devoir : savoir diriger les mesures à 2, 3 et 4 temps avec les trois œuvres de Brahms (Symphonie n° 3, Symphonie n° 4 et Danse hongroise n° 4). Écoute-les sur Pronote et bats la mesure.</p>`));
+  body.append(zone);
+  const range = regl.querySelector("input"), lab = regl.querySelector(".bpm");
+  range.oninput = () => { bpm = +range.value; lab.textContent = bpm + " BPM"; if (minuteur) lancer() };
+  go.onclick = () => minuteur ? (arreter(), dessiner(), go.textContent = "▶ Lancer le métronome", compte.textContent = "") : lancer();
+  function dessiner() { scene.innerHTML = B.mesure.figure(n).replace("</svg>", '<circle class="dot" r="9" cx="-20" cy="-20"/></svg>') }
+  // Le point part du temps précédent et arrive sur le temps k pile au « tic ». Il suit l'horloge de la page
+  // (il bouge même si le son est coupé) ; chaque « tic » est programmé un peu à l'avance sur l'horloge du son.
+  function lancer() {
+    arreter(); dessiner(); const c = audio();
+    go.textContent = "■ Arrêter"; const d = 60 / bpm, debut = performance.now() / 1000 + .15, son0 = c ? c.currentTime + .15 : 0; let prochain = 0;
+    const prog = () => { const ecoule = performance.now() / 1000 - debut; while (prochain * d < ecoule + .2) { tic(son0 + prochain * d, prochain % n === 0); prochain++ } }; prog(); minuteur = setInterval(prog, 40);
+    const svg = scene.querySelector("svg"), dot = svg.querySelector(".dot");
+    const frame = () => {
+      const x = (performance.now() / 1000 - debut) / d; if (x >= 0) {
+        const k = (Math.floor(x) + 1) % n, f = x - Math.floor(x), [a, m, b] = B.mesure.courbe(n, k), u = 1 - f;
+        dot.setAttribute("cx", u * u * a[0] + 2 * u * f * m[0] + f * f * b[0]); dot.setAttribute("cy", u * u * a[1] + 2 * u * f * m[1] + f * f * b[1]);
+        const cur = Math.floor(x) % n; svg.querySelectorAll("circle[class^=t]").forEach((el, i) => el.classList.toggle("on", i === cur && f < .35));
+        compte.textContent = cur + 1; compte.classList.toggle("fort", cur === 0);
+      }
+      anim = requestAnimationFrame(frame);
+    }; frame();
+  }
+  dessiner();
+}
+
+/* ===== 4. À L'OREILLE ===== */
+function ecoute(gen) { return () => { const x = gen(); return { cat: x.q.cat, run(el, sub, done) { x.q.run(el, sub, done); const b = $(".ecoute", el); b.onclick = x.joue } } } }
+const genMesureOreille = ecoute(() => { const n = one([2, 3, 4]), bpm = one([84, 96, 108]);
+  return { joue: () => jouer(bpm, n, n * 4), q: Moteur.QCM({ cat: "À l'oreille", fig: '<button class="ecoute">▶ Écouter</button>', prompt: "Écoute bien le « tic » plus fort : c'est le premier temps. La mesure est à…", options: ["2 temps", "3 temps", "4 temps"], correct: n - 2, keep: true, explain: `Le tic fort revient tous les ${n} temps : on compte ${Array.from({ length: n }, (_, i) => i + 1).join(", ")}. Tu peux réécouter.` }) } });
+const genTempoOreille = ecoute(() => { const t = one([["lent", 52], ["modéré", 96], ["rapide", 160]]);
+  return { joue: () => jouer(t[1], 0, 10), q: Moteur.QCM({ cat: "À l'oreille", fig: '<button class="ecoute">▶ Écouter</button>', prompt: "Écoute la pulsation. Le tempo est…", options: ["lent", "modéré", "rapide"], correct: ["lent", "modéré", "rapide"].indexOf(t[0]), keep: true, grid: false, explain: `C'était ${t[1]} BPM : ${t[1]} battements par minute.` }) } });
+function oreille() { const body = chrome("À l'oreille"); body.append(h(`<p class="muted">Mets le son. Touche « Écouter » autant de fois que tu veux avant de répondre.</p>`)); const zone = h("<div></div>");
+  tabs(body, [["mesure", "Trouver la mesure"], ["tempo", "Trouver le tempo"]], k => serie(zone, 6, k === "mesure" ? genMesureOreille : genTempoOreille)); body.append(zone) }
+
+/* ===== 5. EXERCICES PAR THÈME ===== */
+const THEMES = [["definir", "Définitions"], ["motJuste", "Mot juste"], ["mesure", "Mesure"], ["bpm", "BPM"], ["orchestre", "Orchestre"], ["connaitre", "À savoir"]];
+function exercices() { const body = chrome("Exercices par thème"); const zone = h("<div></div>"); tabs(body, THEMES, k => serie(zone, 8, B[k])); body.append(zone) }
+
+/* ===== EXAMEN BLANC ===== */
+function examen() { const body = chrome("Examen blanc");
+  const g = ["definir", "definir", "definir", "definir", "motJuste", "motJuste", "motJuste", "extraits", "extraits", "extraits", "extraits", "mesure", "mesure", "mesure", "bpm", "bpm", "orchestre", "orchestre", "connaitre", "connaitre"];
+  const list = shuffle(g).map(k => B[k]()); let k = 0, good = 0; const miss = []; const setP = bar(body); const inner = h("<div></div>"); body.append(inner);
+  const step = () => { setP(k / 20); window.scrollTo(0, 0);
+    if (k === 20) { const best = store.get("best", null); if (best === null || good > best) store.set("best", good); inner.innerHTML = "";
+      inner.append(h(`<div class="score"><div class="n">${good}/20</div><p class="prompt">${good >= 18 ? "Excellent, tu es prête pour l'évaluation !" : good >= 14 ? "Très bien ! Revois les quelques erreurs." : good >= 10 ? "En bonne voie. Refais les cartes du cours, puis retente." : "Courage : relis les cartes du cours, puis retente."}</p></div>`));
+      if (miss.length) { const r = h('<div class="recap"><p class="prompt">À revoir</p></div>'); miss.forEach(m => r.append(h(`<div class="it"><b>${m.cat}</b>Réponse : ${m.a}</div>`))); inner.append(r) }
+      nextBtn(inner, examen, "Refaire un examen"); const hm = h('<button class="ghost-btn">Retour au menu</button>'); hm.onclick = () => location.hash = ""; inner.append(hm); return }
+    const q = list[k]; q.run(inner, `Question ${k + 1} sur 20`, (ok, ans) => { if (ok) good++; else miss.push({ cat: q.cat, a: ans }); k++; step() }) }; step() }
+
+/* ===== ACCUEIL ===== */
+const ACTS = [
+  { id: "cours", ic: "?", t: "Le cours en cartes", d: "Pulsation, tempo, mesure, BPM, métronome, concerto…" },
+  { id: "extraits", ic: "♪", t: "Les extraits écoutés", d: "Tempo et mesure de chaque extrait" },
+  { id: "chef", ic: "↓", t: "Battre la mesure", d: "Le geste du chef d'orchestre, avec le métronome" },
+  { id: "oreille", ic: "♫", t: "À l'oreille", d: "Trouver la mesure et le tempo en écoutant" },
+  { id: "exercices", ic: "✓", t: "Exercices par thème", d: "Définitions, mesure, BPM, orchestre" },
+];
+function home() { arreter(); app.innerHTML = ""; const best = store.get("best", null);
+  const pts = Array.from({ length: 12 }, (_, i) => { const x = 24 + i * 33 + Math.floor(i / 3) * 6, f = i % 3 === 0; return `<circle cx="${x}" cy="34" r="${f ? 12 : 7}" fill="${f ? "var(--red)" : "var(--blue)"}"/><text x="${x}" y="68" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="${f ? 700 : 500}" font-size="${f ? 17 : 14}" fill="${f ? "var(--red)" : "var(--ink-soft)"}">${i % 3 + 1}</text>` }).join("");
+  const barres = [1, 2, 3].map(j => { const x = 24 + j * 3 * 33 + (j - 1) * 6 - 14; return `<line x1="${x}" y1="14" x2="${x}" y2="54" stroke="var(--line)" stroke-width="2.5"/>` }).join("");
+  app.append(h(`<header class="hero"><h1>Pulsation, <span>tempo et mesure</span></h1><p class="sub">Éducation musicale, 6e : l'évaluation de la demi-séquence</p><svg viewBox="0 0 420 76" aria-hidden="true">${barres}${pts}</svg></header>`));
+  const ul = h('<ul class="menu"></ul>'); ACTS.forEach(a => { const li = h(`<li><button><span class="ic">${a.ic}</span><span><span class="t">${a.t}</span><span class="d">${a.d}</span></span><span class="chev">›</span></button></li>`); li.firstChild.onclick = () => location.hash = a.id; ul.append(li) }); app.append(ul);
+  const ex = h(`<button class="exam-btn"><span class="t">Examen blanc</span><span class="d">20 questions mélangées, comme l'évaluation écrite${best !== null ? ` · meilleur score : ${best}/20` : ""}</span></button>`); ex.onclick = () => location.hash = "examen"; app.append(ex);
+  app.append(h(`<p class="foot">Les définitions de pulsation, tempo, mesure, BPM et métronome ne sont pas sur la feuille du professeur : compare-les avec ton cahier et garde les mots de ton cours le jour de l'évaluation.</p>`));
+  app.append(h(`<p class="foot"><a href="../" style="color:inherit">← Toutes les révisions</a></p>`));
+}
+const ROUTES = { cours, extraits, chef, oreille, exercices, examen };
+function route() { const r = location.hash.slice(1); (ROUTES[r] || home)() }
+window.addEventListener("hashchange", route); route();
+</script>
+</body>
+</html>

@@ -16,6 +16,10 @@ que dit l'utilisateur (matière, date du contrôle). Lire aussi le `CLAUDE.md` d
 - Lister à l'utilisateur, en quelques lignes, les points relevés sur la feuille, et ce qui était
   illisible. **Ne rien inventer** : un point illisible se demande, il ne se devine pas. Le niveau,
   le vocabulaire et les exemples sont ceux de la feuille et du cahier, pas ceux d'un manuel.
+- Une définition absente de la feuille (« je sais définir… » sans la définition) : la demander, ou
+  la chercher sur internet si l'utilisateur le dit. Dans ce cas, la **recouper** sur plusieurs sources
+  (fiches d'enseignants de préférence) et l'**écrire pour une élève de 6e** : phrase courte, mots
+  simples, un exemple concret. Le dire sur la page, pour qu'elle compare avec son cahier.
 - Attendre son accord sur cette liste avant d'écrire les fichiers.
 
 ## 2. Écrire les fichiers
@@ -65,6 +69,10 @@ O=http://localhost:8765/.claude/skills/nouvelle-revision/outils
 - Captures en clair et en sombre (`--blink-settings=preferredColorScheme=1`, puis `=0`) :
   `"$CH" --headless=new --disable-gpu --hide-scrollbars --window-size=1222,780 --virtual-time-budget=5000 --screenshot=<scratchpad>/x.png "$O/captures.html?page=revisions/<nom>.html"`
   puis les regarder. Ouvrir aussi la page elle-même et faire un tour des activités.
+- Une animation (`requestAnimationFrame`) ne tourne presque pas dans Chrome sans fenêtre, et l'horloge
+  du son (`AudioContext`) n'y avance pas : pour tester, remplacer `requestAnimationFrame` de l'iframe
+  par un `setTimeout`. Une animation calée sur le son doit suivre `performance.now()`, sinon elle reste
+  figée quand le son est en pause (téléphone).
 - Arrêter le serveur à la fin.
 
 ## 4. Montrer et publier
