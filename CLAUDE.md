@@ -52,6 +52,6 @@ Le README explique la marche à suivre et contient le modèle de demande pour cl
 
 - [x] Renseigner les dates des deux contrôles dans `catalogue.js`.
 - [x] Défi du jour : 5 questions qui mélangent les matières, avec un compteur de jours d'affilée.
-- [ ] Première révision faite avec `/nouvelle-revision` : ajuster la commande d'après ce qu'on apprend.
+- [x] Première révision faite avec `/nouvelle-revision` : ajuster la commande d'après ce qu'on apprend.
 - [ ] Après deux ou trois révisions de plus : voir ce qui revient tout le temps et en faire une page
   commune à laquelle on donne seulement le contenu (le sur-mesure reste possible).
