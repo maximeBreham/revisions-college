@@ -11,15 +11,23 @@ que dit l'utilisateur (matière, date du contrôle). Lire aussi le `CLAUDE.md` d
 ## 1. Lire et cadrer
 
 - Lire **toutes** les images de `a-traiter/` (pas celles de `a-traiter/traite/`, déjà utilisées).
+  Un PDF se lit directement. Une photo de travers se redresse dans le scratchpad (`sips -r 90`) ;
+  un passage petit ou flou s'agrandit en le recadrant (`sips -c`, puis `sips -Z`).
 - Demander ce qui manque, en une seule question : la date du contrôle si elle n'est pas donnée
   (format `AAAA-MM-JJ` ; une date relative se calcule depuis aujourd'hui).
 - Lister à l'utilisateur, en quelques lignes, les points relevés sur la feuille, et ce qui était
   illisible. **Ne rien inventer** : un point illisible se demande, il ne se devine pas. Le niveau,
   le vocabulaire et les exemples sont ceux de la feuille et du cahier, pas ceux d'un manuel.
-- Une définition absente de la feuille (« je sais définir… » sans la définition) : la demander, ou
-  la chercher sur internet si l'utilisateur le dit. Dans ce cas, la **recouper** sur plusieurs sources
-  (fiches d'enseignants de préférence) et l'**écrire pour une élève de 6e** : phrase courte, mots
-  simples, un exemple concret. Le dire sur la page, pour qu'elle compare avec son cahier.
+- **Il manque des données** (une définition absente, un passage coupé entre deux photos, un
+  événement sans date sur la frise…) : chercher d'abord un équivalent en ligne pour compléter, sans
+  attendre qu'on le demande. Ça ne vaut pas pour un mot illisible : on ne peut pas savoir ce qui était
+  écrit, donc on le demande.
+  - **Recouper** sur plusieurs sources fiables : fiches d'enseignants, sites éducatifs ou
+    institutionnels de préférence. Une info trouvée sur une seule source ne se garde pas.
+  - L'**écrire pour une élève de 6e** : phrase courte, mots simples, un exemple concret.
+  - Si une source contredit la feuille, c'est la feuille qui compte.
+  - Dans la liste montrée à l'utilisateur, séparer ce qui vient de la feuille de ce qui a été complété,
+    avec les sources. Le dire aussi sur la page, pour qu'elle compare avec son cahier.
 - Attendre son accord sur cette liste avant d'écrire les fichiers.
 
 ## 2. Écrire les fichiers
@@ -64,6 +72,8 @@ O=http://localhost:8765/.claude/skills/nouvelle-revision/outils
 ```
 
 - `test-questions.html` doit dire `"ok":true` : chaque générateur tourne 30 fois, sans variable globale.
+  Il ne teste que les fichiers du catalogue : pour une page à part (hors catalogue), ajouter un bloc
+  le temps du test, puis remettre `catalogue.js` comme avant.
 - `test-defi.html` doit finir sur `TERMINÉ`. S'il dit `BLOQUÉ`, c'est souvent une question d'un
   type que le test ne sait pas jouer : compléter la fonction `joue` du test plutôt que la question.
 - Captures en clair et en sombre (`--blink-settings=preferredColorScheme=1`, puis `=0`) :
