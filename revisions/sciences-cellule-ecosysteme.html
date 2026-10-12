@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La cellule et l'écosystème · Révisions 6e</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../exercices/moteur.css">
+<style>
+/* la couleur des sciences remplace le bleu du moteur */
+:root{--blue:#1E7A4C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--blue:#6BCB97}}
+:root[data-theme="dark"]{--blue:#6BCB97}
+
+/* accueil */
+.hero{padding:26px 2px 14px}
+.hero h1{font-size:clamp(34px,10vw,52px);font-weight:700;letter-spacing:-.01em}
+.hero h1 span{background:linear-gradient(transparent 62%,var(--hl) 62%,var(--hl) 92%,transparent 92%)}
+.hero .sub{color:var(--ink-soft);margin-top:8px}
+.hero svg{display:block;width:100%;max-width:420px;height:auto;margin-top:14px}
+.menu{list-style:none;margin:8px 0 0;padding:0;background:var(--card);border-radius:var(--r-lg);border:2px solid var(--line);overflow:hidden}
+.menu li+li{border-top:2px solid var(--line)}
+.menu button{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;width:100%;padding:14px;background:none;border:0;text-align:left;cursor:pointer}
+.menu .ic{font-family:var(--head);font-weight:700;font-size:18px;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--paper);color:var(--blue);border:2px solid var(--line)}
+.menu .t{font-family:var(--head);font-weight:600;font-size:19px;display:block}
+.menu .d{font-size:14px;color:var(--ink-soft);display:block}
+.menu .chev{font-size:22px;color:var(--ink-soft)}
+.exam-btn{display:block;width:100%;margin-top:18px;padding:18px 20px;border:0;border-radius:var(--r-lg);background:var(--blue);color:var(--on-ink);text-align:left;cursor:pointer}
+.exam-btn .t{font-family:var(--head);font-weight:700;font-size:25px;display:block}
+.exam-btn .d{font-size:14px;opacity:.9}
+.foot{margin-top:22px;font-size:14px;color:var(--ink-soft)}
+
+/* cartes du classeur */
+.face{display:block;width:100%;min-height:230px;border-radius:var(--r-lg);padding:26px 20px;text-align:center;border:2px solid var(--line);cursor:pointer}
+.face.front{background:var(--card);padding-top:44px}
+.face.back{display:none;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fcard.on .front{display:none}.fcard.on .back{display:block}
+.face .w{display:block;font-family:var(--head);font-weight:600;font-size:23px;line-height:1.3}
+.face .hint{display:block;margin-top:30px;font-size:14px;opacity:.7}
+.face .lab{display:block;font-family:var(--head);font-weight:600;font-size:17px;margin-bottom:12px;opacity:.8;text-align:left}
+.face .def{display:block;font-size:19px;line-height:1.5;text-align:left}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.two button{padding:14px;border-radius:var(--r-md);border:0;font-family:var(--head);font-weight:600;font-size:19px;cursor:pointer}
+.b-bad{background:var(--bad-bg);color:var(--red)} .b-ok{background:var(--ok-bg);color:var(--green)}
+.counter{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+
+/* tableaux (outils, tri) */
+.tab{width:100%;border-collapse:collapse;background:var(--card);font-size:15px}
+.tab th,.tab td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tab th{font-family:var(--head);font-weight:600;font-size:15px;color:var(--ink-soft)}
+.tab td+td,.tab th+th{border-left:1px solid var(--line)}
+.tab td:first-child{font-weight:600}
+.tabbox{border:2px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+.titre{margin-top:8px;font-size:15px;text-decoration:underline;text-underline-offset:3px}
+.legende{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+.legende li{display:flex;gap:10px;align-items:center;font-size:18px}
+.legende b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:2.5px solid var(--ink);font-family:var(--head);flex:none}
+
+/* tri du jardin */
+.mot{text-align:center;font-family:var(--head);font-weight:700;font-size:34px;padding:24px 10px;background:var(--card);border:2px solid var(--line);border-radius:var(--r-lg)}
+.tri{display:grid;gap:10px;margin-top:14px}
+.tri button{padding:13px 15px;border-radius:var(--r-md);border:2px solid var(--line);background:var(--card);font-size:17px;text-align:left;cursor:pointer}
+.tri button small{display:block;color:var(--ink-soft);font-size:13px}
+.tri button.ok{background:var(--ok-bg);border-color:var(--green)} .tri button.bad{background:var(--bad-bg);border-color:var(--red)}
+.tri button:disabled{cursor:default}
+.cols td{width:33%;font-weight:400!important}
+.cols td span{display:block}
+.cols td span.faux{color:var(--red);text-decoration:line-through}
+.recap .it{padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.recap .it b{display:block}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icones/icone-180.png">
+<meta name="apple-mobile-web-app-title" content="Révisions">
+</head>
+<body>
+<main class="wrap" id="app"></main>
+<script src="../exercices/moteur.js"></script>
+<script src="../exercices/sciences-cellule-ecosysteme.js"></script>
+<script>
+const { h, esc, shuffle } = Moteur;
+const B = Moteur.banques["sciences-cellule-ecosysteme"];
+const $ = (s, el = document) => el.querySelector(s);
+const app = $("#app");
+const store = { get(k, d) { try { const v = localStorage.getItem("sv6:" + k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem("sv6:" + k, JSON.stringify(v)) } catch (e) {} } };
+const Maj = s => s.replace(/^(le |la |l')/, "").replace(/^./, c => c.toUpperCase());
+
+function chrome(title) { app.innerHTML = ""; const top = h(`<div class="top"><button class="back" aria-label="Retour au menu">‹</button><h2>${title}</h2></div>`); top.querySelector(".back").onclick = () => { location.hash = "" }; app.append(top); const body = h("<div></div>"); app.append(body); window.scrollTo(0, 0); return body }
+function bar(el) { const b = h('<div class="bar"><i></i></div>'); el.prepend(b); return p => b.firstChild.style.width = (p * 100) + "%" }
+function tabs(el, items, onPick) { const t = h(`<div class="tabs">${items.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join("")}</div>`); el.append(t); const set = k => { t.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); onPick(k) }; t.querySelectorAll("button").forEach(b => b.onclick = () => set(b.dataset.k)); set(items[0][0]); return t }
+function nextBtn(el, onDone, label) { const nx = h(`<button class="main-btn">${label}</button>`); nx.onclick = onDone; el.append(nx); return nx }
+function serie(zone, n, gen) {
+  zone.innerHTML = ""; let k = 0, good = 0; const setP = bar(zone); const inner = h("<div></div>"); zone.append(inner);
+  const step = () => { setP(k / n); window.scrollTo(0, 0);
+    if (k === n) { inner.innerHTML = ""; inner.append(h(`<div class="score"><div class="n">${good}/${n}</div><p class="prompt">${good === n ? "Sans faute !" : good >= n * .7 ? "Très bien !" : "Continue, ça rentre !"}</p></div>`)); nextBtn(inner, () => serie(zone, n, gen), "Une autre série"); return }
+    gen().run(inner, `Question ${k + 1} sur ${n}`, ok => { if (ok) good++; k++; step() }) }; step();
+}
+
+/* ===== 1. LES QUESTIONS DU CLASSEUR, EN CARTES ===== */
+const THEMES_CLASSEUR = [["tout", "Tout"], ["demarche", "Démarche et méthode"], ["cellule", "Cellule"], ["ecosysteme", "Écosystème"]];
+function classeur() {
+  const body = chrome("Les questions du classeur");
+  body.append(h(`<p class="muted">Comme la fiche « Testing » pliée en deux : lis la question, réponds dans ta tête (ou à voix haute), puis retourne la carte.</p>`));
+  const zone = h("<div></div>");
+  tabs(body, THEMES_CLASSEUR, k => start(B.classeur.liste.filter(c => k === "tout" || c[0] === k))); body.append(zone);
+  function start(C) {
+    let queue = shuffle(C.map((c, i) => i)), done = 0; next();
+    function next() { zone.innerHTML = "";
+      if (!queue.length) { zone.append(h(`<div class="score"><div class="n">✓</div><p class="prompt">Toutes les cartes sont sues !</p></div>`)); nextBtn(zone, () => start(C), "Recommencer"); return }
+      const c = C[queue[0]];
+      zone.append(h(`<div class="counter"><span>Question</span><span>${done} / ${C.length} sues</span></div>`));
+      const card = h(`<div class="fcard" role="button" tabindex="0" aria-label="Retourner la carte"><div class="face front"><span class="w">${esc(c[1])}</span><span class="hint">Touche la carte pour voir la réponse</span></div><div class="face back"><span class="lab">${esc(c[1])}</span><span class="def">${esc(c[2])}</span></div></div>`); zone.append(card);
+      const btns = h(`<div class="two" style="visibility:hidden"><button class="b-bad">À revoir</button><button class="b-ok">Je savais</button></div>`); zone.append(btns);
+      const flip = () => { card.classList.toggle("on"); btns.style.visibility = "visible" }; card.onclick = flip; card.onkeydown = e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip() } };
+      btns.children[0].onclick = () => { const x = queue.shift(); queue.splice(Math.min(queue.length, 3), 0, x); next() };
+      btns.children[1].onclick = () => { queue.shift(); done++; next() };
+    }
+  }
+}
+
+/* ===== 2. LA CELLULE ===== */
+function cellule() {
+  const body = chrome("La cellule"); const zone = h("<div></div>");
+  tabs(body, [["voir", "Le cours"], ["quiz", "Me tester"]], k => {
+    zone.innerHTML = "";
+    if (k === "quiz") return serie(zone, 8, B.cellule);
+    zone.append(h(`<div class="fig">${B.cellule.figure([1, 2, 3])}</div>`));
+    zone.append(h(`<ul class="legende">${B.cellule.parties.map((p, i) => `<li><b>${i + 1}</b>${esc(Maj(p))}</li>`).join("")}</ul>`));
+    zone.append(h(`<p class="prompt" style="margin-top:18px">Cellule = membrane plasmique + cytoplasme + noyau</p>`));
+    zone.append(h(`<p>Les êtres humains sont tous composés de cellules à l'échelle microscopique. Même si ces cellules ont des formes différentes, elles sont toutes bordées d'une <b>membrane plasmique</b> contenant un <b>cytoplasme</b> dans lequel baigne, la plupart du temps, un <b>noyau</b>.</p>`));
+    zone.append(h(`<p>Dans une goutte de sang, on a vu <b>3 types de cellules</b> : c'est la diversité cellulaire. Une des trois n'a pas de noyau.</p>`));
+    zone.append(h(`<p>Notre bilan est-il complet ? Non : il faut observer si d'autres êtres vivants, comme les végétaux, sont aussi composés de cellules.</p>`));
+    zone.append(h(`<p class="muted small">Le schéma est simplifié. Sur la photographie du classeur (« Photographie de cellules d'un frottis sanguin humain au microscope optique »), entraîne-toi à placer les trois mots sans regarder les légendes.</p>`));
+  }); body.append(zone);
+}
+
+/* ===== 3. TRIER LE JARDIN ===== */
+function tri() {
+  const body = chrome("Trier le jardin"); const C = B.composantes.liste;
+  body.append(h(`<p class="muted">Range chaque élément observé au jardin du collège dans sa composante.</p>`));
+  const zone = h("<div></div>"); body.append(zone); start();
+  function tableau(places) {
+    return `<div class="tabbox"><table class="tab cols"><tr>${C.map(c => `<th>${esc(c.nom)}</th>`).join("")}</tr><tr>${C.map((c, i) => `<td>${places[i].map(p => `<span class="${p.ok ? "" : "faux"}">${esc(p.x)}</span>`).join("")}</td>`).join("")}</tr></table></div><p class="titre">Tableau des composantes de notre environnement</p>`;
+  }
+  function start() {
+    const items = shuffle(C.flatMap((c, i) => c.x.map(x => ({ x, i })))), places = C.map(() => []); let k = 0, good = 0;
+    next();
+    function next() {
+      zone.innerHTML = ""; const setP = bar(zone); setP(k / items.length);
+      if (k === items.length) {
+        zone.append(h(`<div class="score"><div class="n">${good}/${items.length}</div><p class="prompt">${good === items.length ? "Sans faute !" : "Les erreurs sont barrées en rouge dans le tableau."}</p></div>`));
+        zone.append(h(tableau(places.map((p, i) => C[i].x.map(x => ({ x, ok: true }))))));
+        nextBtn(zone, start, "Recommencer"); return }
+      const it = items[k];
+      zone.append(h(`<p class="muted small">Élément ${k + 1} sur ${items.length}</p>`), h(`<div class="mot">${esc(Maj(it.x))}</div>`));
+      const box = h(`<div class="tri">${C.map(c => `<button>${esc(c.nom)}<small>${esc(c.d)}</small></button>`).join("")}</div>`); zone.append(box);
+      [...box.children].forEach((b, i) => b.onclick = () => {
+        const ok = i === it.i; if (ok) good++; places[i].push({ x: it.x, ok }); if (!ok) places[it.i].push({ x: it.x, ok: true });
+        [...box.children].forEach(x => x.disabled = true); b.classList.add(ok ? "ok" : "bad"); if (!ok) box.children[it.i].classList.add("ok");
+        k++; nextBtn(zone, next, k === items.length ? "Voir le tableau" : "Élément suivant").focus({ preventScroll: true });
+        zone.append(h(`<div style="margin-top:16px">${tableau(places)}</div>`));
+      });
+    }
+  }
+}
+
+/* ===== 4. LES OUTILS DE MESURE ===== */
+function outils() {
+  const body = chrome("Les outils de mesure"); const zone = h("<div></div>");
+  tabs(body, [["voir", "Le tableau"], ["quiz", "Me tester"]], k => {
+    zone.innerHTML = "";
+    if (k === "quiz") return serie(zone, 8, B.outils);
+    zone.append(h(`<div class="tabbox"><table class="tab"><tr><th>Outil</th><th>Paramètre mesuré</th><th>Unité</th></tr>${B.outils.liste.map(o => `<tr><td>${esc(Maj(o.o))}</td><td>${esc(Maj(o.p))}</td><td>${esc(o.u)}</td></tr>`).join("")}</table></div>`));
+    zone.append(h(`<p class="titre">Tableau explicatif de quelques outils de mesures</p>`));
+    zone.append(h(`<p style="margin-top:14px"><b>Attention au vocabulaire :</b> l'outil (le thermomètre) mesure un paramètre (la température), exprimé dans une unité (le °C). On ne dit pas « le thermomètre mesure les degrés Celsius ».</p>`));
+    zone.append(h(`<p>Ces conditions physico-chimiques peuvent être stables, mais elles peuvent aussi varier selon le jour, le lieu de la mesure, la saison, l'heure de la journée…</p>`));
+    zone.append(h(`<p><b>L'air se compose de gaz :</b> diazote N₂ 78 %, dioxygène O₂ 20,9 %, dioxyde de carbone CO₂ 0,04 %, eau H₂O en proportion variable.</p>`));
+  }); body.append(zone);
+}
+
+/* ===== 5. EXERCICES PAR THÈME ===== */
+const THEMES = [["demarche", "Démarche"], ["methode", "Méthode"], ["cellule", "Cellule"], ["composantes", "Composantes"], ["outils", "Outils"], ["air", "Air"], ["motJuste", "Mot juste"], ["classeur", "Fiche Testing"]];
+function exercices() { const body = chrome("Exercices par thème"); const zone = h("<div></div>"); tabs(body, THEMES, k => serie(zone, 8, B[k])); body.append(zone) }
+
+/* ===== EXAMEN BLANC ===== */
+function examen() { const body = chrome("Examen blanc");
+  const g = ["demarche", "demarche", "demarche", "methode", "methode", "methode", "cellule", "cellule", "cellule", "cellule", "composantes", "composantes", "composantes", "outils", "outils", "outils", "outils", "air", "air", "motJuste"];
+  const list = shuffle(g).map(k => B[k]()); let k = 0, good = 0; const miss = []; const setP = bar(body); const inner = h("<div></div>"); body.append(inner);
+  const step = () => { setP(k / 20); window.scrollTo(0, 0);
+    if (k === 20) { const best = store.get("best", null); if (best === null || good > best) store.set("best", good); inner.innerHTML = "";
+      inner.append(h(`<div class="score"><div class="n">${good}/20</div><p class="prompt">${good >= 18 ? "Excellent, tu es prête pour le contrôle !" : good >= 14 ? "Très bien ! Revois les quelques erreurs." : good >= 10 ? "En bonne voie. Refais les cartes du classeur, puis retente." : "Courage : relis les cartes du classeur, puis retente."}</p></div>`));
+      if (miss.length) { const r = h('<div class="recap"><p class="prompt">À revoir</p></div>'); miss.forEach(m => r.append(h(`<div class="it"><b>${m.cat}</b>Réponse : ${m.a}</div>`))); inner.append(r) }
+      nextBtn(inner, examen, "Refaire un examen"); const hm = h('<button class="ghost-btn">Retour au menu</button>'); hm.onclick = () => location.hash = ""; inner.append(hm); return }
+    const q = list[k]; q.run(inner, `Question ${k + 1} sur 20`, (ok, ans) => { if (ok) good++; else miss.push({ cat: q.cat, a: ans }); k++; step() }) }; step() }
+
+/* ===== ACCUEIL ===== */
+const ACTS = [
+  { id: "classeur", ic: "?", t: "Les questions du classeur", d: "La fiche « Testing » en cartes, à retourner" },
+  { id: "cellule", ic: "◉", t: "La cellule", d: "Membrane plasmique, cytoplasme, noyau" },
+  { id: "tri", ic: "⇶", t: "Trier le jardin", d: "Composante vivante, minérale ou technique" },
+  { id: "outils", ic: "°", t: "Les outils de mesure", d: "Outil, paramètre, unité · la composition de l'air" },
+  { id: "exercices", ic: "✓", t: "Exercices par thème", d: "Démarche, méthode, cellule, composantes, outils, air" },
+];
+function home() { app.innerHTML = ""; const best = store.get("best", null);
+  const hero = `<svg viewBox="0 0 420 90" aria-hidden="true"><ellipse cx="62" cy="45" rx="54" ry="38" fill="var(--ok-bg)" stroke="var(--green)" stroke-width="4"/><circle cx="54" cy="42" r="15" fill="var(--blue)" opacity=".85"/>`
+    + `<g fill="none" stroke="var(--line)" stroke-width="2.5"><rect x="140" y="10" width="270" height="72" rx="4"/><line x1="140" y1="32" x2="410" y2="32"/><line x1="230" y1="10" x2="230" y2="82"/><line x1="320" y1="10" x2="320" y2="82"/></g>`
+    + ["vivante", "minérale", "technique"].map((t, i) => `<text x="${185 + i * 90}" y="26" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="600" font-size="13" fill="var(--ink-soft)">${t}</text>`).join("")
+    + [["fourmi", "arbre"], ["eau", "roche"], ["banc", "mur"]].map((c, i) => c.map((t, j) => `<text x="${185 + i * 90}" y="${52 + j * 20}" text-anchor="middle" font-family="Lexend,sans-serif" font-size="13" fill="var(--ink)">${t}</text>`).join("")).join("") + `</svg>`;
+  app.append(h(`<header class="hero"><h1>La cellule <span>et l'écosystème</span></h1><p class="sub">SVT, 6e : la fiche « Testing » du classeur</p>${hero}</header>`));
+  const ul = h('<ul class="menu"></ul>'); ACTS.forEach(a => { const li = h(`<li><button><span class="ic">${a.ic}</span><span><span class="t">${a.t}</span><span class="d">${a.d}</span></span><span class="chev">›</span></button></li>`); li.firstChild.onclick = () => location.hash = a.id; ul.append(li) }); app.append(ul);
+  const ex = h(`<button class="exam-btn"><span class="t">Examen blanc</span><span class="d">20 questions mélangées${best !== null ? ` · meilleur score : ${best}/20` : ""}</span></button>`); ex.onclick = () => location.hash = "examen"; app.append(ex);
+  app.append(h(`<p class="foot">Les réponses sont celles de la fiche du classeur. Pour le contrôle, apprends-les avec les mots exacts du cours : la professeure demande d'être rigoureux sur le vocabulaire.</p>`));
+  app.append(h(`<p class="foot"><a href="../" style="color:inherit">← Toutes les révisions</a></p>`));
+}
+const ROUTES = { classeur, cellule, tri, outils, exercices, examen };
+function route() { const r = location.hash.slice(1); (ROUTES[r] || home)() }
+window.addEventListener("hashchange", route); route();
+</script>
+</body>
+</html>

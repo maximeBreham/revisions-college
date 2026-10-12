@@ -53,4 +53,13 @@ window.REVISIONS = [
     score: { cle: "mu6:best", sur: 20 },
     exercices: "musique-pulsation-tempo-mesure.js",
   },
+  {
+    matiere: "sciences",
+    titre: "La cellule et l'écosystème",
+    description: "Fiche « Testing » : démarche, cellule, composantes du jardin, outils de mesure, air",
+    fichier: "sciences-cellule-ecosysteme.html",
+    date: "2026-10-15",
+    score: { cle: "sv6:best", sur: 20 },
+    exercices: "sciences-cellule-ecosysteme.js",
+  },
 ];
