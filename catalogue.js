@@ -67,7 +67,7 @@ window.REVISIONS = [
     titre: "Les débuts de l'humanité · pour Mimi",
     description: "Frise de Toumaï à l'agriculture, peuplement de la Terre, vie des premiers humains",
     fichier: "histoire-debuts-humanite-2.html",
-    date: "",
+    date: "2026-10-31",
     score: { cle: "rh6b:best", sur: 20 },
     exercices: "histoire-debuts-humanite-2.js",
   },
