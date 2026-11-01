@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Le vivant et l'écosystème · Révisions 6e</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../exercices/moteur.css">
+<style>
+/* la couleur des sciences remplace le bleu du moteur */
+:root{--blue:#1E7A4C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--blue:#6BCB97}}
+:root[data-theme="dark"]{--blue:#6BCB97}
+
+/* accueil */
+.hero{padding:26px 2px 14px}
+.hero h1{font-size:clamp(34px,10vw,52px);font-weight:700;letter-spacing:-.01em}
+.hero h1 span{background:linear-gradient(transparent 62%,var(--hl) 62%,var(--hl) 92%,transparent 92%)}
+.hero .sub{color:var(--ink-soft);margin-top:8px}
+.hero svg{display:block;width:100%;max-width:420px;height:auto;margin-top:14px}
+.menu{list-style:none;margin:8px 0 0;padding:0;background:var(--card);border-radius:var(--r-lg);border:2px solid var(--line);overflow:hidden}
+.menu li+li{border-top:2px solid var(--line)}
+.menu button{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;width:100%;padding:14px;background:none;border:0;text-align:left;cursor:pointer}
+.menu .ic{font-family:var(--head);font-weight:700;font-size:18px;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--paper);color:var(--blue);border:2px solid var(--line)}
+.menu .t{font-family:var(--head);font-weight:600;font-size:19px;display:block}
+.menu .d{font-size:14px;color:var(--ink-soft);display:block}
+.menu .chev{font-size:22px;color:var(--ink-soft)}
+.exam-btn{display:block;width:100%;margin-top:18px;padding:18px 20px;border:0;border-radius:var(--r-lg);background:var(--blue);color:var(--on-ink);text-align:left;cursor:pointer}
+.exam-btn .t{font-family:var(--head);font-weight:700;font-size:25px;display:block}
+.exam-btn .d{font-size:14px;opacity:.9}
+.foot{margin-top:22px;font-size:14px;color:var(--ink-soft)}
+
+/* le fil de la leçon */
+.bloc{background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin-top:12px}
+.bloc>.lab{display:block;font-family:var(--head);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+.bloc p{margin:6px 0 0}.bloc p:first-of-type{margin-top:0}
+.bloc ul,.bloc ol{margin:6px 0 0;padding-left:22px}.bloc li{margin:3px 0}
+.bloc .fig{margin-top:10px}
+.bloc.cle{border-color:var(--blue)}
+.plus{border-style:dashed}
+.plus>.lab{color:var(--ink-soft)}
+.plus>.lab::before{content:"＋ "}
+h3.act{font-size:20px;margin:26px 0 0}
+h3.act:first-child{margin-top:16px}
+h3.act small{display:block;font-family:var(--body);font-weight:400;font-size:14px;color:var(--ink-soft)}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.mini figure{margin:0}
+.mini figcaption{text-align:center;font-family:var(--head);font-weight:600;font-size:15px;margin-top:4px}
+.titre-ex{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.titre-ex span{padding:3px 8px;border-radius:8px;font-size:15px}
+.titre-ex small{display:block;font-size:12px;opacity:.75}
+.t1{background:var(--ok-bg)}.t2{background:var(--hl);color:#1d2433}.t3{background:var(--bad-bg)}
+
+/* tableaux */
+.tab{width:100%;border-collapse:collapse;background:var(--card);font-size:15px}
+.tab th,.tab td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tab th{font-family:var(--head);font-weight:600;font-size:15px;color:var(--ink-soft)}
+.tab td+td,.tab th+th{border-left:1px solid var(--line)}
+.tab td:first-child{font-weight:600}
+.tabbox{border:2px solid var(--line);border-radius:var(--r-md);overflow:hidden;margin-top:10px}
+.cols td{font-weight:400!important}
+.serre{font-size:13.5px}.serre th,.serre td{padding:8px 7px;-webkit-hyphens:auto;hyphens:auto}
+.cols td span{display:block}
+.titre{margin-top:8px;font-size:15px;text-decoration:underline;text-underline-offset:3px}
+.legende{list-style:none;padding:0!important;margin:10px 0 0;display:grid;gap:6px}
+.legende li{display:flex;gap:10px;align-items:center;font-size:17px}
+.legende b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:2.5px solid var(--ink);font-family:var(--head);flex:none}
+
+/* la clé en arbre */
+.arbre{list-style:none;padding-left:0!important}
+.arbre ul{list-style:none;padding-left:16px;border-left:2px solid var(--line);margin-left:6px}
+.arbre li{margin:5px 0}
+.arbre .c{font-weight:600}
+.arbre .a{color:var(--blue);font-family:var(--head);font-weight:600}
+.arbre .a i{font-family:var(--body);font-weight:400;font-size:13px;color:var(--ink-soft)}
+
+/* cartes */
+.face{display:block;width:100%;min-height:230px;border-radius:var(--r-lg);padding:26px 20px;text-align:center;border:2px solid var(--line);cursor:pointer}
+.face.front{background:var(--card);padding-top:44px}
+.face.back{display:none;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fcard.on .front{display:none}.fcard.on .back{display:block}
+.face .w{display:block;font-family:var(--head);font-weight:600;font-size:23px;line-height:1.3}
+.face .hint{display:block;margin-top:30px;font-size:14px;opacity:.7}
+.face .lab{display:block;font-family:var(--head);font-weight:600;font-size:17px;margin-bottom:12px;opacity:.8;text-align:left}
+.face .def{display:block;font-size:19px;line-height:1.5;text-align:left}
+.face .aj{display:block;margin-top:14px;font-size:13px;opacity:.75;text-align:left}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.two button{padding:14px;border-radius:var(--r-md);border:0;font-family:var(--head);font-weight:600;font-size:19px;cursor:pointer}
+.b-bad{background:var(--bad-bg);color:var(--red)} .b-ok{background:var(--ok-bg);color:var(--green)}
+.counter{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+
+/* le jeu de la clé */
+.indices{background:var(--card);border:2px solid var(--line);border-radius:var(--r-lg);padding:16px 18px}
+.indices .lab{font-family:var(--head);font-weight:600;font-size:15px;color:var(--ink-soft)}
+.indices ul{margin:8px 0 0;padding-left:20px;font-size:18px}
+.chemin{margin-top:12px;font-size:15px;color:var(--ink-soft)}
+.chemin b{color:var(--ink)}
+.choix{display:grid;gap:10px;margin-top:12px}
+.choix button{padding:13px 15px;border-radius:var(--r-md);border:2px solid var(--line);background:var(--card);font-size:17px;text-align:left;cursor:pointer}
+.choix button.ok{background:var(--ok-bg);border-color:var(--green)} .choix button.bad{background:var(--bad-bg);border-color:var(--red)}
+.choix button:disabled{cursor:default}
+.recap .it{padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.recap .it b{display:block}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icones/icone-180.png">
+<meta name="apple-mobile-web-app-title" content="Révisions">
+</head>
+<body>
+<main class="wrap" id="app"></main>
+<script src="../exercices/moteur.js"></script>
+<script src="../exercices/sciences-cellule-ecosysteme.js"></script>
+<script src="../exercices/sciences-lecon-vivant-ecosysteme.js"></script>
+<script>
+const { h, esc, shuffle } = Moteur;
+// B : ce que la leçon ajoute ; T : la fiche « Testing », déjà dans la première révision de SVT.
+const B = Moteur.banques["sciences-lecon-vivant-ecosysteme"];
+const T = Moteur.banques["sciences-cellule-ecosysteme"];
+const $ = (s, el = document) => el.querySelector(s);
+const app = $("#app");
+const store = { get(k, d) { try { const v = localStorage.getItem("sv6b:" + k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem("sv6b:" + k, JSON.stringify(v)) } catch (e) {} } };
+const Maj = s => s.replace(/^(le |la |l')/, "").replace(/^./, c => c.toUpperCase());
+
+function chrome(title) { app.innerHTML = ""; const top = h(`<div class="top"><button class="back" aria-label="Retour au menu">‹</button><h2>${title}</h2></div>`); top.querySelector(".back").onclick = () => { location.hash = "" }; app.append(top); const body = h("<div></div>"); app.append(body); window.scrollTo(0, 0); return body }
+function bar(el) { const b = h('<div class="bar"><i></i></div>'); el.prepend(b); return p => b.firstChild.style.width = (p * 100) + "%" }
+function tabs(el, items, onPick) { const t = h(`<div class="tabs">${items.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join("")}</div>`); el.append(t); const set = k => { t.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); onPick(k) }; t.querySelectorAll("button").forEach(b => b.onclick = () => set(b.dataset.k)); set(items[0][0]); return t }
+function nextBtn(el, onDone, label) { const nx = h(`<button class="main-btn">${label}</button>`); nx.onclick = onDone; el.append(nx); return nx }
+function serie(zone, n, gen) {
+  zone.innerHTML = ""; let k = 0, good = 0; const setP = bar(zone); const inner = h("<div></div>"); zone.append(inner);
+  const step = () => { setP(k / n); window.scrollTo(0, 0);
+    if (k === n) { inner.innerHTML = ""; inner.append(h(`<div class="score"><div class="n">${good}/${n}</div><p class="prompt">${good === n ? "Sans faute !" : good >= n * .7 ? "Très bien !" : "Continue, ça rentre !"}</p></div>`)); nextBtn(inner, () => serie(zone, n, gen), "Une autre série"); return }
+    gen().run(inner, `Question ${k + 1} sur ${n}`, ok => { if (ok) good++; k++; step() }) }; step();
+}
+const bloc = (lab, html, cls = "") => `<div class="bloc ${cls}"><span class="lab">${lab}</span>${html}</div>`;
+const plus = html => bloc("En plus du cours", html, "plus");
+
+/* ===== 1. LE FIL DE LA LEÇON ===== */
+function arbreCle(n) { return `<ul${n === B.cle.arbre ? ' class="arbre"' : ""}>${n.c.map(c => `<li><span class="c">${esc(c.t)}</span>${c.a ? ` → <span class="a">${esc(Maj(c.a.n))} <i>(${esc(c.a.l)})</i></span>` : arbreCle(c.s)}</li>`).join("")}</ul>` }
+
+const COURS = {
+  vivant: () => `
+    <h3 class="act">Activité 1 du thème 1<small>Le vivant à l'échelle microscopique</small></h3>
+    ${bloc("Problème", "<p><b>Comment définir les êtres vivants à l'échelle microscopique ?</b> Quelle est l'unité du vivant ? Qu'est-ce qu'un être vivant ?</p>", "cle")}
+    ${bloc("Hypothèse", "<p>Un être vivant respire.</p>")}
+    ${bloc("1re observation : une goutte de sang", `<p>« Photographie de cellules d'un frottis sanguin humain au microscope optique ». On y voit <b>3 types de cellules</b> différentes : c'est la diversité cellulaire. L'une d'elles n'a pas de noyau.</p>
+      <div class="fig">${T.cellule.figure([1, 2, 3])}</div><ul class="legende">${T.cellule.parties.map((p, i) => `<li><b>${i + 1}</b>${esc(Maj(p))}</li>`).join("")}</ul>`)}
+    ${bloc("Bilan", `<p>Les êtres humains sont tous composés de cellules à l'échelle microscopique. Même si ces cellules ont des formes différentes, elles sont toutes bordées d'une <b>membrane plasmique</b> contenant un <b>cytoplasme</b> dans lequel baigne, la plupart du temps, un <b>noyau</b>.</p><p class="prompt">Cellule = membrane plasmique + cytoplasme + noyau</p>`, "cle")}
+    ${bloc("Notre bilan est-il complet ?", "<p>Non : on n'a regardé que du sang humain. Il faut observer si d'autres êtres vivants, comme les végétaux, sont aussi composés de cellules.</p>")}
+    <h3 class="act">La suite : qu'est-ce qu'un être vivant ?<small>Chercher des preuves chez d'autres êtres vivants</small></h3>
+    ${bloc("2e observation : d'autres êtres vivants au microscope", `<div class="tabbox"><table class="tab"><tr><th>Être vivant</th><th>Ce qu'on voit</th></tr>
+      <tr><td>Grenouille (peau)</td><td>Beaucoup de cellules : membrane plasmique, cytoplasme, noyau. <b>Pas de paroi</b> : c'est un animal.</td></tr>
+      <tr><td>Paramécie (×200)</td><td><b>Une seule cellule</b> = un organisme entier. Elle est unicellulaire et vit en eau douce.</td></tr>
+      <tr><td>Euglène (×700)</td><td>Une seule cellule, avec des <b>chloroplastes</b> qui la rendent verte.</td></tr>
+      <tr><td>Oignon (épiderme, ×600)</td><td>Beaucoup de cellules : c'est un <b>tissu</b>. Chaque cellule est entourée d'une <b>paroi</b> rigide, dessinée par un double trait. La membrane plasmique est collée à la paroi.</td></tr>
+      </table></div>`)}
+    ${plus(`<p>Ce que montrent ces observations : <b>tous les êtres vivants sont composés de cellules</b>. C'est pour ça qu'on dit que la cellule est <b>l'unité du vivant</b>. Ce bilan n'est pas écrit sur la feuille : compare avec ton cahier.</p>`)}
+    ${bloc("Cellule animale ou végétale ?", `<div class="fig">${B.vivant.cellules(false)}</div>
+      <p><b>A : cellule animale</b> (grenouille, être humain) : membrane plasmique, cytoplasme, noyau.</p>
+      <p><b>B : cellule végétale</b> : en plus, une <b>paroi</b> (double trait) et souvent des <b>chloroplastes</b> verts.</p>`)}
+    ${plus(`<p><b>Unicellulaire</b> : fait d'une seule cellule (paramécie, euglène). <b>Pluricellulaire</b> : fait de nombreuses cellules (grenouille, oignon, nous). « Uni » veut dire un, « pluri » veut dire plusieurs.</p>
+      <p><b>Pourquoi l'oignon n'est pas vert ?</b> L'oignon qu'on mange est un bulbe qui pousse sous terre, sans lumière : ses cellules n'ont pas de chloroplastes.</p>`)}
+    ${bloc("Le grossissement", `<p>Grossissement = <b>objectif × oculaire</b>.</p><p>Exemple : objectif ×40 et oculaire ×10 → 40 × 10 = <b>×400</b>. On multiplie, on n'additionne pas. Les deux nombres sont écrits sur les lentilles du microscope.</p>`)}`,
+  biodiv: () => `
+    <h3 class="act">Activité 2 du thème 1<small>La biodiversité</small></h3>
+    ${bloc("Problème", "<p><b>Comment découvrir rigoureusement et scientifiquement la biodiversité ?</b></p>", "cle")}
+    ${bloc("Les mots", "<p><b>Bio</b> = nature, naturel, êtres vivants.<br><b>Diversité</b> = plein, plusieurs, différents.</p><p>La biodiversité, c'est donc plein d'êtres vivants différents.</p>")}
+    ${bloc("Tâches", "<ul><li>Identifier le nom des arbres et arbustes du jardin du collège grâce à un « outil mystère » : la <b>clé de détermination</b>.</li><li>Placer le nom des arbres identifiés sur le plan du collège.</li></ul>")}
+    ${bloc("Schéma simplifié d'une feuille", `<div class="fig">${B.feuille.figure([1, 2, 3, 4, 5])}</div><ul class="legende">${B.feuille.parties.map((p, i) => `<li><b>${i + 1}</b>${esc(Maj(p))}</li>`).join("")}</ul>`)}
+    ${plus("<p>Le <b>limbe</b> est la partie plate de la feuille. La <b>nervation</b>, ce sont les nervures qui la parcourent. Le <b>pétiole</b> est la petite tige qui attache la feuille au <b>rameau</b> (une petite branche). Le <b>bourgeon</b> est à la base du pétiole.</p>")}
+    ${bloc("Décrire une feuille", `
+      <p><b>Disposition</b> sur le rameau :</p><div class="mini"><figure><div class="fig">${B.feuille.rameau({ disp: "opposees" })}</div><figcaption>Opposées</figcaption></figure><figure><div class="fig">${B.feuille.rameau({ disp: "alternes" })}</div><figcaption>Alternes</figcaption></figure></div>
+      <p style="margin-top:12px"><b>Bord</b> :</p><div class="mini"><figure><div class="fig">${B.feuille.rameau({ bord: "lisse" })}</div><figcaption>Lisse</figcaption></figure><figure><div class="fig">${B.feuille.rameau({ bord: "dente" })}</div><figcaption>Denté</figcaption></figure></div>
+      <div class="mini"><figure><div class="fig">${B.feuille.rameau({ bord: "lobe" })}</div><figcaption>Lobé</figcaption></figure></div>
+      <p style="margin-top:12px"><b>Nervation</b> :</p><div class="mini"><figure><div class="fig">${B.feuille.rameau({ nerv: "pennee" })}</div><figcaption>Pennée</figcaption></figure><figure><div class="fig">${B.feuille.rameau({ nerv: "palmee" })}</div><figcaption>Palmée</figcaption></figure></div>
+      <p style="margin-top:12px"><b>Simple ou composée</b> : une feuille simple a un seul limbe. Une feuille composée a plusieurs petites folioles, rangées de chaque côté (<b>pennée</b>, comme une plume) ou qui partent du même point (<b>digitée</b>, comme les doigts).</p>`)}
+    ${bloc("La clé de détermination des arbres du collège", `<p>On part de la gauche et on choisit une case à chaque étape, jusqu'au nom de l'arbre.</p>${arbreCle(B.cle.arbre)}<p class="muted small">Duveteuse : couverte de « poils ». Nervures arquées : courbées en arc. Nervures palmées : comme une palme.</p>`, "cle")}
+    ${plus("<p>Une <b>clé de détermination</b> est un outil pour trouver le nom d'un être vivant : à chaque étape, on observe un caractère (ici, la feuille) et on choisit entre plusieurs cases.</p>")}`,
+  eco: () => `
+    <h3 class="act">Activité 1 du thème 2<small>L'écosystème du jardin du collège</small></h3>
+    ${bloc("1re étape : formuler un problème", "<p><b>Comment découvrir un écosystème tel que le jardin du collège ?</b></p>", "cle")}
+    ${bloc("2e étape : formuler une ou des hypothèses", "<p><b>Hypothèse</b> : réponse provisoire (temporaire) à un problème posé.</p>")}
+    ${bloc("Sur le terrain, on va…", "<ul><li>se déplacer sur le terrain (le jardin du collège) ;</li><li>observer ;</li><li>recenser ;</li><li>utiliser des outils d'observation et de mesure ;</li><li>prélever, échantillonner <b>sans dégrader l'environnement</b> ;</li><li>s'orienter ;</li><li>avoir du matériel pour écrire, pour garder une trace.</li></ul>")}
+    ${bloc("1er bilan réflexif", "<p>Pour découvrir l'écosystème du jardin du collège, nous nous sommes engagés dans le travail en observant, en prenant des mesures à l'aide d'outils, en prenant des notes le plus précisément possible et en respectant les règles de sécurité.</p>")}
+    ${bloc("Nouveau problème", "<p><b>Comment définir ce qu'est un écosystème ? De quoi se compose-t-il ?</b></p><p class=\"muted small\">Sur la fiche « Testing » : « Comment s'organise un écosystème ? », avec les hypothèses « un écosystème se compose d'insectes » et « un écosystème se compose d'arbres ».</p>", "cle")}
+    ${bloc("Trier ce qu'on a observé en 3 groupes", `<div class="tabbox"><table class="tab cols"><tr>${T.composantes.liste.map(c => `<th>${esc(c.nom)}</th>`).join("")}</tr><tr>${T.composantes.liste.map(c => `<td>${c.x.map(x => `<span>${esc(x)}</span>`).join("")}</td>`).join("")}</tr></table></div><p class="titre">Tableau des composantes de notre environnement</p>`)}
+    ${bloc("Mesurer", `<div class="tabbox"><table class="tab serre"><tr><th>Outil</th><th>Paramètre</th><th>Unité</th></tr>${T.outils.liste.map(o => `<tr><td>${esc(Maj(o.o))}</td><td>${esc(Maj(o.p))}</td><td>${esc(o.u)}</td></tr>`).join("")}</table></div><p class="titre">Tableau explicatif de quelques outils de mesures</p>`)}
+    ${bloc("Bilan", `<p>Un environnement ou un <b>écosystème</b> comme le jardin du collège s'organise en <b>3 grandes catégories</b> :</p><ol><li>la composante vivante (les êtres vivants et leurs restes) ;</li><li>la composante minérale ;</li><li>la composante liée aux activités humaines (technique).</li></ol>
+      <p>D'autre part, grâce aux outils de mesure, on se rend compte que dans un écosystème il y a des <b>conditions physico-chimiques mesurables</b>. Elles peuvent être stables, mais elles peuvent aussi <b>varier</b> selon le jour, le lieu de la mesure, la saison, l'heure de la journée…</p>`, "cle")}
+    ${bloc("À connaître : la composition de l'air", "<p>L'air se compose de gaz : diazote N₂ 78 %, dioxygène O₂ 20,9 %, dioxyde de carbone CO₂ 0,04 %, eau H₂O en proportion variable.</p>")}
+    ${bloc("Pour la suite", "<p>Comment les êtres vivants <b>interagissent</b>-ils entre eux ? Et avec la composante minérale ?</p>")}
+    <p class="foot">Pour t'entraîner au tri du jardin et aux outils de mesure : <a href="sciences-cellule-ecosysteme.html" style="color:inherit">la première révision de SVT</a>.</p>`,
+  methode: () => `
+    <h3 class="act">La démarche scientifique</h3>
+    ${bloc("Les étapes, dans l'ordre", `<ol><li><b>Problème</b> : une question (synonyme), qui finit par un point d'interrogation.</li><li><b>Hypothèse</b> : une réponse provisoire au problème.</li><li><b>Expériences</b> : au moins <b>deux</b>, avec une <b>seule différence</b> entre elles.</li><li><b>Description</b> des résultats : « On observe que… ».</li><li><b>Conclusion</b> : « On conclut que… ».</li></ol>`, "cle")}
+    ${plus("<p>Pourquoi une seule différence ? Pour tester « les graines ont besoin d'eau pour germer », on prend deux pots identiques au même endroit : l'un arrosé, l'autre non. Si on changeait aussi la lumière, on ne saurait plus si c'est l'eau ou la lumière qui a joué.</p>")}
+    <h3 class="act">Les documents</h3>
+    ${bloc("Un titre en 4 parties", `<ol type="a"><li>le type (la nature) du document ;</li><li>quoi ?</li><li>avec quels outils ?</li><li>avec quel colorant ?</li></ol>
+      <div class="titre-ex"><span class="t1"><small>nature</small>Photographie</span><span class="t2"><small>quoi ?</small>de cellules d'épiderme d'oignon</span><span class="t3"><small>avec quel outil ?</small>au microscope optique</span></div>
+      <p class="muted small">Le 1er mot, la nature du document, est le plus important.</p>`)}
+    ${bloc("Les natures de documents", "<p>Schéma, graphique, extrait d'un texte, photographie, dessin, tableau, carte, planisphère.</p>")}
+    ${bloc("Un graphique", `<div class="mini"><figure><div class="fig">${axesFig(true)}</div><figcaption>Axe des ordonnées : vertical</figcaption></figure><figure><div class="fig">${axesFig(false)}</div><figcaption>Axe des abscisses : horizontal</figcaption></figure></div>`)}
+    ${bloc("Les 3 types de tableau", "<ul><li>à simple entrée en lignes ;</li><li>à simple entrée en colonnes ;</li><li>à double entrée (penser à +1 colonne et +1 ligne pour les titres).</li></ul>")}
+    ${bloc("Étapes pour réussir mon tableau", `<ol>${["J'utilise un crayon de papier.", "Je l'organise d'abord sur une feuille de brouillon.", "Je respecte l'orientation : ligne, colonne ou double entrée.", "Je compte les lignes et les colonnes à construire.", "Je choisis les informations à mettre dans les titres.", "Au propre, je trace les traits verticaux et horizontaux.", "Je prends ma feuille dans le bon sens.", "Je prends la place demandée (feuille entière, demi-page).", "Mon tableau est bien fermé de tous les côtés.", "Je fais de grandes cases pour écrire lisiblement.", "J'écris avec des mots-clés, pas de phrases.", "J'écris les titres de chaque colonne et/ou ligne.", "Les unités vont entre parenthèses.", "Je formule un titre qui commence par « Tableau… ».", "Je souligne le titre.", "Je complète les cases avec ce que j'ai récolté ou mesuré."].map(e => `<li>${esc(e)}</li>`).join("")}</ol>`)}`,
+};
+const axesFig = v => B.experience.axes(v);
+
+function cours() {
+  const body = chrome("Le fil de la leçon"); const zone = h("<div></div>");
+  body.append(h(`<p class="muted">Toute la leçon, dans l'ordre du classeur. Les encadrés en pointillés « En plus du cours » ne sont pas sur ta feuille : ils t'aident à comprendre.</p>`));
+  tabs(body, [["vivant", "Le vivant"], ["biodiv", "Biodiversité"], ["eco", "Écosystème"], ["methode", "Méthode"]], k => { zone.innerHTML = COURS[k](); window.scrollTo(0, 0) });
+  body.append(zone);
+}
+
+/* ===== 2. LES CARTES DE LA LEÇON ===== */
+const CARTES = [...B.vivant.cartes, ...T.classeur.liste.map(c => ["testing", c[1], c[2]])];
+function cartes() {
+  const body = chrome("Les cartes de la leçon");
+  body.append(h(`<p class="muted">Cache la réponse, comme le demande ta professeure : lis la question, réponds dans ta tête ou à voix haute, puis retourne la carte.</p>`));
+  const zone = h("<div></div>");
+  tabs(body, [["tout", "Tout"], ["vivant", "Le vivant"], ["biodiv", "Biodiversité"], ["eco", "Écosystème"], ["methode", "Méthode"], ["testing", "Fiche Testing"]], k => start(CARTES.filter(c => k === "tout" || c[0] === k))); body.append(zone);
+  function start(C) {
+    let queue = shuffle(C.map((c, i) => i)), done = 0; next();
+    function next() { zone.innerHTML = "";
+      if (!queue.length) { zone.append(h(`<div class="score"><div class="n">✓</div><p class="prompt">Toutes les cartes sont sues !</p></div>`)); nextBtn(zone, () => start(C), "Recommencer"); return }
+      const c = C[queue[0]];
+      zone.append(h(`<div class="counter"><span>Question</span><span>${done} / ${C.length} sues</span></div>`));
+      const card = h(`<div class="fcard" role="button" tabindex="0" aria-label="Retourner la carte"><div class="face front"><span class="w">${esc(c[1])}</span><span class="hint">Touche la carte pour voir la réponse</span></div><div class="face back"><span class="lab">${esc(c[1])}</span><span class="def">${esc(c[2])}</span>${c[3] ? '<span class="aj">En plus du cours : ce n\'est pas écrit tel quel sur ta feuille.</span>' : ""}</div></div>`); zone.append(card);
+      const btns = h(`<div class="two" style="visibility:hidden"><button class="b-bad">À revoir</button><button class="b-ok">Je savais</button></div>`); zone.append(btns);
+      const flip = () => { card.classList.toggle("on"); btns.style.visibility = "visible" }; card.onclick = flip; card.onkeydown = e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip() } };
+      btns.children[0].onclick = () => { const x = queue.shift(); queue.splice(Math.min(queue.length, 3), 0, x); next() };
+      btns.children[1].onclick = () => { queue.shift(); done++; next() };
+    }
+  }
+}
+
+/* ===== 3. LE JEU DE LA CLÉ ===== */
+function jeuCle() {
+  const body = chrome("Jouer avec la clé");
+  body.append(h(`<p class="muted">Une feuille ramassée au jardin du collège : suis la clé de détermination, une case à la fois, pour trouver l'arbre.</p>`));
+  const zone = h("<div></div>"); body.append(zone);
+  let ordre = shuffle(B.cle.arbres), k = 0, good = 0; partie();
+  function partie() {
+    zone.innerHTML = "";
+    if (k === ordre.length) { zone.append(h(`<div class="score"><div class="n">${good}/${ordre.length}</div><p class="prompt">${good === ordre.length ? "Tous les arbres trouvés du premier coup !" : "Les 8 arbres du collège sont passés."}</p></div>`)); nextBtn(zone, () => { ordre = shuffle(B.cle.arbres); k = 0; good = 0; partie() }, "Recommencer"); return }
+    const a = ordre[k]; let noeud = B.cle.arbre, i = 0, sansFaute = true;
+    const setP = bar(zone); setP(k / ordre.length);
+    zone.append(h(`<p class="muted small">Feuille ${k + 1} sur ${ordre.length}</p>`));
+    zone.append(h(`<div class="indices"><span class="lab">Ce que tu observes sur la feuille</span><ul>${shuffle(a.chemin).map(t => `<li>${esc(t)}</li>`).join("")}</ul></div>`));
+    const chemin = h(`<p class="chemin"></p>`); zone.append(chemin);
+    const etape = h("<div></div>"); zone.append(etape); pas();
+    function pas() {
+      etape.innerHTML = "";
+      etape.append(h(`<p class="prompt" style="margin-top:12px">${esc(noeud.q)}</p>`));
+      const box = h(`<div class="choix">${noeud.c.map(c => `<button>${esc(c.t)}</button>`).join("")}</div>`); etape.append(box);
+      [...box.children].forEach((b, j) => b.onclick = () => {
+        const c = noeud.c[j];
+        if (c.t !== a.chemin[i]) { sansFaute = false; b.classList.add("bad"); b.disabled = true; return }
+        b.classList.add("ok"); [...box.children].forEach(x => x.disabled = true);
+        chemin.innerHTML = a.chemin.slice(0, i + 1).map(t => `<b>${esc(t)}</b>`).join(" → ");
+        i++;
+        if (c.a) { if (sansFaute) good++;
+          etape.append(h(`<div class="fb"><b>C'est ${esc(c.a.n)} !</b>Son nom scientifique : <i>${esc(c.a.l)}</i>.</div>`));
+          k++; nextBtn(etape, partie, k === ordre.length ? "Voir le score" : "Feuille suivante").focus({ preventScroll: true }); return }
+        noeud = c.s; setTimeout(pas, 350);
+      });
+    }
+  }
+}
+
+/* ===== 4. EXERCICES PAR THÈME ===== */
+const THEMES = [["vivant", "Le vivant", B], ["microscope", "Microscope", B], ["feuille", "Feuille", B], ["cle", "Clé", B], ["experience", "Démarche", B], ["titre", "Titre", B], ["ecosysteme", "Écosystème", B], ["cellule", "Cellule", T], ["composantes", "Composantes", T], ["outils", "Outils", T], ["air", "Air", T]];
+function exercices() { const body = chrome("Exercices par thème"); const zone = h("<div></div>"); tabs(body, THEMES.map(([k, l]) => [k, l]), k => { const [, , b] = THEMES.find(t => t[0] === k); serie(zone, 8, b[k]) }); body.append(zone) }
+
+/* ===== EXAMEN BLANC ===== */
+function examen() { const body = chrome("Examen blanc");
+  const g = [B.vivant, B.vivant, B.vivant, B.microscope, B.microscope, B.feuille, B.feuille, B.cle, B.cle, B.experience, B.experience, B.titre, B.titre, B.ecosysteme, B.ecosysteme, T.cellule, T.composantes, T.outils, T.outils, T.air];
+  const list = shuffle(g).map(f => f()); let k = 0, good = 0; const miss = []; const setP = bar(body); const inner = h("<div></div>"); body.append(inner);
+  const step = () => { setP(k / 20); window.scrollTo(0, 0);
+    if (k === 20) { const best = store.get("best", null); if (best === null || good > best) store.set("best", good); inner.innerHTML = "";
+      inner.append(h(`<div class="score"><div class="n">${good}/20</div><p class="prompt">${good >= 18 ? "Excellent, tu as compris toute la leçon !" : good >= 14 ? "Très bien ! Revois les quelques erreurs." : good >= 10 ? "En bonne voie. Relis le fil de la leçon, puis retente." : "Courage : relis le fil de la leçon et les cartes, puis retente."}</p></div>`));
+      if (miss.length) { const r = h('<div class="recap"><p class="prompt">À revoir</p></div>'); miss.forEach(m => r.append(h(`<div class="it"><b>${m.cat}</b>Réponse : ${m.a}</div>`))); inner.append(r) }
+      nextBtn(inner, examen, "Refaire un examen"); const hm = h('<button class="ghost-btn">Retour au menu</button>'); hm.onclick = () => location.hash = ""; inner.append(hm); return }
+    const q = list[k]; q.run(inner, `Question ${k + 1} sur 20`, (ok, ans) => { if (ok) good++; else miss.push({ cat: q.cat, a: ans }); k++; step() }) }; step() }
+
+/* ===== ACCUEIL ===== */
+const ACTS = [
+  { id: "cours", ic: "≡", t: "Le fil de la leçon", d: "Tout le classeur dans l'ordre, pour comprendre" },
+  { id: "cartes", ic: "?", t: "Les cartes de la leçon", d: "Questions-réponses à retourner, fiche Testing comprise" },
+  { id: "cle", ic: "⇢", t: "Jouer avec la clé", d: "Trouver les 8 arbres du collège" },
+  { id: "exercices", ic: "✓", t: "Exercices par thème", d: "Vivant, microscope, feuille, clé, démarche, titre, écosystème…" },
+];
+function home() { app.innerHTML = ""; const best = store.get("best", null);
+  const hero = `<svg viewBox="0 0 420 100" aria-hidden="true"><rect x="8" y="14" width="96" height="74" rx="3" fill="none" stroke="var(--ink-soft)" stroke-width="3"/><rect x="14" y="20" width="84" height="62" fill="var(--ok-bg)" stroke="var(--ink-soft)" stroke-width="3"/><circle cx="72" cy="44" r="11" fill="var(--blue)" opacity=".85"/>`
+    + [[30, 34], [34, 68], [58, 70], [86, 70]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="6" ry="4" fill="var(--green)"/>`).join("")
+    + `<rect x="160" y="6" width="7" height="90" rx="2" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><path d="M167 60 L184 50" stroke="var(--ink)" stroke-width="3"/><path d="M184 50 C192 22 236 8 262 12 C254 42 220 62 184 50 Z" fill="var(--ok-bg)" stroke="var(--green)" stroke-width="3"/><path d="M184 50 Q222 30 260 14" stroke="var(--green)" stroke-width="2" fill="none"/>`
+    + `<g font-family="Fredoka,sans-serif" font-weight="600" font-size="19" fill="var(--ink-soft)"><text x="292" y="30">cellule</text><text x="292" y="58">biodiversité</text><text x="292" y="86">écosystème</text></g></svg>`;
+  app.append(h(`<header class="hero"><h1>Le vivant <span>et l'écosystème</span></h1><p class="sub">SVT, 6e : toute la leçon du classeur</p>${hero}</header>`));
+  const ul = h('<ul class="menu"></ul>'); ACTS.forEach(a => { const li = h(`<li><button><span class="ic">${a.ic}</span><span><span class="t">${a.t}</span><span class="d">${a.d}</span></span><span class="chev">›</span></button></li>`); li.firstChild.onclick = () => location.hash = a.id; ul.append(li) }); app.append(ul);
+  const ex = h(`<button class="exam-btn"><span class="t">Examen blanc</span><span class="d">20 questions sur toute la leçon${best !== null ? ` · meilleur score : ${best}/20` : ""}</span></button>`); ex.onclick = () => location.hash = "examen"; app.append(ex);
+  app.append(h(`<p class="foot">Les réponses sont celles du classeur. Ce qui est marqué « En plus du cours » a été ajouté pour t'aider à comprendre, après vérification : compare avec ton cahier, et pour une évaluation, apprends les mots exacts du cours.</p>`));
+  app.append(h(`<p class="foot"><a href="../" style="color:inherit">← Toutes les révisions</a></p>`));
+}
+const ROUTES = { cours, cartes, cle: jeuCle, exercices, examen };
+function route() { const r = location.hash.slice(1); (ROUTES[r] || home)() }
+window.addEventListener("hashchange", route); route();
+</script>
+</body>
+</html>

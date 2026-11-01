@@ -71,4 +71,13 @@ window.REVISIONS = [
     score: { cle: "rh6b:best", sur: 20 },
     exercices: "histoire-debuts-humanite-2.js",
   },
+  {
+    matiere: "sciences",
+    titre: "Le vivant et l'écosystème · toute la leçon",
+    description: "Cellules des êtres vivants, biodiversité et clé des arbres, écosystème, méthode",
+    fichier: "sciences-lecon-vivant-ecosysteme.html",
+    date: "",
+    score: { cle: "sv6b:best", sur: 20 },
+    exercices: "sciences-lecon-vivant-ecosysteme.js",
+  },
 ];
