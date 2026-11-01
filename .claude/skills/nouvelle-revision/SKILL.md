@@ -12,7 +12,12 @@ que dit l'utilisateur (matière, date du contrôle). Lire aussi le `CLAUDE.md` d
 
 - Lire **toutes** les images de `a-traiter/` (pas celles de `a-traiter/traite/`, déjà utilisées).
   Un PDF se lit directement. Une photo de travers se redresse dans le scratchpad (`sips -r 90`) ;
-  un passage petit ou flou s'agrandit en le recadrant (`sips -c`, puis `sips -Z`).
+  un passage petit ou flou s'agrandit en le recadrant (`sips -c`, puis `sips -Z`). Pour agrandir une page
+  de PDF (il n'y a ni `pdftoppm` ni `magick`) : la rendre en PNG avec un petit script `swift` et PDFKit
+  (`PDFDocument`, `page(at:)`, `draw(with:to:)`) dans le scratchpad, puis la recadrer de la même façon.
+- **Une leçon complète qui reprend une révision déjà faite** (le classeur entier après la fiche d'un
+  contrôle) : la nouvelle page charge aussi l'ancien fichier de questions pour les parties communes, et le
+  nouveau fichier ne contient que ce qui est nouveau. Le défi du jour ne pose ainsi pas deux fois la même chose.
 - Demander ce qui manque, en une seule question : la date du contrôle si elle n'est pas donnée
   (format `AAAA-MM-JJ` ; une date relative se calcule depuis aujourd'hui).
 - Lister à l'utilisateur, en quelques lignes, les points relevés sur la feuille, et ce qui était
