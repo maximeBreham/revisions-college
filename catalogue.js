@@ -80,4 +80,13 @@ window.REVISIONS = [
     score: { cle: "sv6b:best", sur: 20 },
     exercices: "sciences-lecon-vivant-ecosysteme.js",
   },
+  {
+    matiere: "maths",
+    titre: "Multiplication et calculs astucieux",
+    description: "Produit et facteurs, calculs astucieux, multiplier deux décimaux",
+    fichier: "maths-multiplication-calcul-astucieux.html",
+    date: "2026-11-12",
+    score: { cle: "m6b:best", sur: 20 },
+    exercices: "maths-multiplication-calcul-astucieux.js",
+  },
 ];

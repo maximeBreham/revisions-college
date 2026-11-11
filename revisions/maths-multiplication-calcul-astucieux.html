@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Multiplication et calculs astucieux · Révisions 6e</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../exercices/moteur.css">
+<style>
+/* accueil */
+.hero{padding:26px 2px 14px}
+.hero h1{font-size:clamp(32px,9.5vw,50px);font-weight:700;letter-spacing:-.01em}
+.hero h1 span{background:linear-gradient(transparent 62%,var(--hl) 62%,var(--hl) 92%,transparent 92%)}
+.hero .sub{color:var(--ink-soft);margin-top:8px}
+.hero svg{display:block;width:100%;max-width:420px;height:auto;margin-top:14px}
+.menu{list-style:none;margin:8px 0 0;padding:0;background:var(--card);border-radius:var(--r-lg);border:2px solid var(--line);overflow:hidden}
+.menu li+li{border-top:2px solid var(--line)}
+.menu button{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;width:100%;padding:14px;background:none;border:0;text-align:left;cursor:pointer}
+.menu .ic{font-family:var(--head);font-weight:700;font-size:18px;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--paper);color:var(--blue);border:2px solid var(--line)}
+.menu .t{font-family:var(--head);font-weight:600;font-size:19px;display:block}
+.menu .d{font-size:14px;color:var(--ink-soft);display:block}
+.menu .chev{font-size:22px;color:var(--ink-soft)}
+.exam-btn{display:block;width:100%;margin-top:18px;padding:18px 20px;border:0;border-radius:var(--r-lg);background:var(--blue);color:var(--on-ink);text-align:left;cursor:pointer}
+.exam-btn .t{font-family:var(--head);font-weight:700;font-size:25px;display:block}
+.exam-btn .d{font-size:14px;opacity:.9}
+.foot{margin-top:22px;font-size:14px;color:var(--ink-soft)}
+
+/* cours */
+.bloc{background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin-top:12px}
+.bloc>.lab{display:block;font-family:var(--head);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+.bloc p{margin:6px 0 0}.bloc p:first-of-type{margin-top:0}
+.bloc ul,.bloc ol{margin:6px 0 0;padding-left:22px}.bloc li{margin:4px 0}
+.bloc.cle{border-color:var(--blue)}
+.plus{border-style:dashed}
+.plus>.lab{color:var(--ink-soft)}
+.plus>.lab::before{content:"＋ "}
+.calc{font-family:var(--head);font-weight:600;font-size:20px;line-height:1.6;margin:8px 0 0;font-variant-numeric:tabular-nums}
+.calc .k{color:var(--blue)}
+.calc .r{background:var(--hl);color:#1d2433;border-radius:6px;padding:0 5px}
+.tab{width:100%;border-collapse:collapse;font-size:15px}
+.tab th,.tab td{padding:8px 7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tab th{font-family:var(--head);font-weight:600;font-size:14px;color:var(--ink-soft)}
+.tab .sg{display:block;font-family:var(--head);font-weight:700;font-size:22px;color:var(--blue);line-height:1.1}
+.tabbox{border:2px solid var(--line);border-radius:var(--r-md);overflow:hidden;margin-top:10px}
+.paires{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.paires span{background:var(--paper);border-radius:8px;padding:5px 8px;font-family:var(--head);font-weight:600;font-size:17px;text-align:center}
+/* les flèches facteur / produit */
+.fleches{display:flex;justify-content:center;gap:10px;margin:14px 0 4px;font-family:var(--head);font-weight:700;font-size:30px}
+.fleches>span{display:flex;flex-direction:column;align-items:center}
+.fleches small{font-family:var(--body);font-weight:600;font-size:13px;margin-top:2px;padding:1px 7px;border-radius:99px}
+.f1 small{background:var(--ok-bg)}.f2 small{background:var(--hl);color:#1d2433}
+/* l'opération posée */
+.posee{margin:12px auto 4px;border-collapse:collapse;font-family:var(--head);font-weight:600;font-size:26px;font-variant-numeric:tabular-nums}
+.posee td{width:1.05em;height:1.35em;text-align:center;padding:0;position:relative}
+.posee tr.trait td{border-top:3px solid var(--ink)}
+.posee .g{color:var(--ink-soft);opacity:.6}
+.posee .res{color:var(--blue)}
+.vg{position:absolute;right:-.2em;bottom:.02em;color:var(--red);font-weight:700}
+.etapes{counter-reset:e;list-style:none;padding:0!important}
+.etapes li{counter-increment:e;position:relative;padding-left:38px!important;margin:10px 0!important}
+.etapes li::before{content:counter(e);position:absolute;left:0;top:-1px;width:27px;height:27px;border-radius:50%;background:var(--blue);color:var(--on-ink);font-family:var(--head);font-weight:700;display:grid;place-items:center}
+
+/* jeu des paires */
+.plateau{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.tuile{min-height:66px;border-radius:var(--r-md);border:2px solid var(--line);background:var(--card);font-family:var(--head);font-weight:700;font-size:27px;cursor:pointer;box-shadow:0 3px 0 var(--line);transition:transform .12s,opacity .3s}
+.tuile.sel{border-color:var(--blue);box-shadow:0 3px 0 var(--blue);transform:translateY(-2px)}
+.tuile.ok{background:var(--ok-bg);border-color:var(--green);box-shadow:none;opacity:.55;cursor:default}
+.tuile.bad{background:var(--bad-bg);border-color:var(--red)}
+.journal{min-height:30px;margin-top:12px;font-family:var(--head);font-weight:600;font-size:19px;text-align:center}
+.journal .num{color:var(--green)}
+.etoiles{font-size:44px;letter-spacing:6px;text-align:center}
+
+/* jeu de la virgule */
+.operation{font-family:var(--head);font-weight:700;font-size:34px;text-align:center;margin:6px 0}
+.indice{text-align:center;color:var(--ink-soft)}
+.chiffres{display:flex;justify-content:center;align-items:stretch;margin:16px 0 4px;flex-wrap:nowrap}
+.chiffres .c{font-family:var(--head);font-weight:700;font-size:44px;width:.75em;text-align:center;line-height:1.3}
+.chiffres .c.apres{color:var(--blue)}
+.slot{width:30px;border:0;background:none;cursor:pointer;position:relative;padding:0}
+.slot::after{content:"";position:absolute;left:50%;bottom:10px;width:12px;height:12px;margin-left:-6px;border-radius:50%;border:2.5px dashed var(--ink-soft)}
+.slot:hover::after,.slot:focus-visible::after{border-color:var(--blue);border-style:solid}
+.slot.mis::after{content:",";border:0;width:auto;height:auto;margin:0;transform:translateX(-50%);bottom:-2px;font-family:var(--head);font-weight:700;font-size:44px;color:var(--red)}
+.slot.vrai::after{content:",";border:0;width:auto;height:auto;margin:0;transform:translateX(-50%);bottom:-2px;font-family:var(--head);font-weight:700;font-size:44px;color:var(--green)}
+.slot:disabled{cursor:default}
+.slot:disabled:not(.mis):not(.vrai)::after{visibility:hidden}
+
+/* chrono */
+.chrono-top{display:flex;justify-content:space-between;font-family:var(--head);font-weight:600;font-size:19px;margin-bottom:6px}
+.expr{font-family:var(--head);font-weight:700;font-size:30px;text-align:center;margin:18px 0;line-height:1.3}
+.expr .num{color:inherit}
+.vite .opt{transition:background .15s}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icones/icone-180.png">
+<meta name="apple-mobile-web-app-title" content="Révisions">
+</head>
+<body>
+<main class="wrap" id="app"></main>
+<script src="../exercices/moteur.js"></script>
+<script src="../exercices/maths-multiplication-calcul-astucieux.js"></script>
+<script>
+const { h, esc, shuffle } = Moteur;
+const B = Moteur.banques["maths-multiplication-calcul-astucieux"];
+const O = B.facteurs.outils; const { F, N, mul, add, sub, decale, lire, ecrire } = O;
+const R = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const one = a => a[Math.floor(Math.random() * a.length)];
+const $ = (s, el = document) => el.querySelector(s);
+const app = $("#app");
+const store = { get(k, d) { try { const v = localStorage.getItem("m6b:" + k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem("m6b:" + k, JSON.stringify(v)) } catch (e) {} } };
+
+function chrome(title) { app.innerHTML = ""; const top = h(`<div class="top"><button class="back" aria-label="Retour au menu">‹</button><h2>${title}</h2></div>`); top.querySelector(".back").onclick = () => { location.hash = "" }; app.append(top); const body = h("<div></div>"); app.append(body); window.scrollTo(0, 0); return body }
+function bar(el) { const b = h('<div class="bar"><i></i></div>'); el.prepend(b); return p => b.firstChild.style.width = (p * 100) + "%" }
+function tabs(el, items, onPick) { const t = h(`<div class="tabs">${items.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join("")}</div>`); el.append(t); const set = k => { t.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); onPick(k) }; t.querySelectorAll("button").forEach(b => b.onclick = () => set(b.dataset.k)); set(items[0][0]); return t }
+function nextBtn(el, onDone, label) { const nx = h(`<button class="main-btn">${label}</button>`); nx.onclick = onDone; el.append(nx); return nx }
+function serie(zone, n, gen) {
+  zone.innerHTML = ""; let k = 0, good = 0; const setP = bar(zone); const inner = h("<div></div>"); zone.append(inner);
+  const step = () => { setP(k / n); window.scrollTo(0, 0);
+    if (k === n) { inner.innerHTML = ""; inner.append(h(`<div class="score"><div class="n">${good}/${n}</div><p class="prompt">${good === n ? "Sans faute !" : good >= n * .7 ? "Très bien !" : "Continue, ça rentre !"}</p></div>`)); nextBtn(inner, () => serie(zone, n, gen), "Une autre série"); return }
+    gen().run(inner, `Question ${k + 1} sur ${n}`, ok => { if (ok) good++; k++; step() }) }; step();
+}
+const bloc = (lab, html, cls = "") => `<div class="bloc ${cls}"><span class="lab">${lab}</span>${html}</div>`;
+const plus = (html, lab = "En plus") => bloc(lab, html, "plus");
+
+/* ===== Une multiplication posée, comme sur le cahier ===== */
+function posee(a, b) {
+  const [na, ka] = lire(a), [nb, kb] = lire(b); const sa = String(na), sb = String(nb), res = String(na * nb);
+  const parts = [...sb].reverse().map((d, j) => ({ s: String(na * +d), z: j }));
+  const W = Math.max(sa.length, sb.length + 1, res.length, ...parts.map(p => p.s.length + p.z)) ;
+  const ligne = (chiffres, { virg = -1, signe = "", cls = "", zeros = 0, trait = false } = {}) => {
+    const cells = Array(W).fill("<td></td>"); const all = chiffres + "0".repeat(zeros);
+    [...all].forEach((c, i) => { const col = W - all.length + i; const z = i >= chiffres.length; cells[col] = `<td class="${z ? "g" : cls}">${c}${i === virg ? '<span class="vg">,</span>' : ""}</td>` });
+    if (signe) cells[0] = `<td>${signe}</td>`;
+    return `<tr class="${trait ? "trait" : ""}">${cells.join("")}</tr>`;
+  };
+  const k = ka + kb;
+  return `<table class="posee" aria-label="${esc(F(a))} fois ${esc(F(b))} posée">${ligne(sa, { virg: sa.length - ka - 1 })}${ligne(sb, { virg: sb.length - kb - 1, signe: "×" })}`
+    + parts.map((p, i) => ligne(p.s, { zeros: p.z, trait: i === 0 })).join("")
+    + (parts.length > 1 ? ligne(res, { virg: res.length - k - 1, cls: "res", trait: true }) : "") + `</table>`;
+}
+
+/* ===== 1. LE COURS ===== */
+const ex = (...l) => `<p class="calc">${l.join("<br>")}</p>`;
+const COURS = {
+  vocab: () => `
+    ${bloc("Le produit et les facteurs", `<p>Le résultat d'une <b>multiplication</b> s'appelle le <b>produit</b>. Les nombres que l'on multiplie s'appellent les <b>facteurs</b>.</p>
+      <div class="fleches"><span class="f1">7<small>facteur</small></span><span>×</span><span class="f1">8<small>facteur</small></span><span>=</span><span class="f2">56<small>produit</small></span></div>
+      <p>On dit : « 56 est <b>le produit de</b> 7 par 8 ». Le mot « produit » désigne aussi l'écriture 7 × 8 elle-même.</p>`, "cle")}
+    ${bloc("Les quatre opérations", `<div class="tabbox"><table class="tab"><tr><th>Opération</th><th>Les nombres</th><th>Le résultat</th></tr>
+      <tr><td>Addition <span class="sg">+</span></td><td>les <b>termes</b></td><td>la <b>somme</b></td></tr>
+      <tr><td>Soustraction <span class="sg">−</span></td><td>les <b>termes</b></td><td>la <b>différence</b></td></tr>
+      <tr><td>Multiplication <span class="sg">×</span></td><td>les <b>facteurs</b></td><td>le <b>produit</b></td></tr>
+      <tr><td>Division <span class="sg">:</span></td><td>le dividende et le diviseur</td><td>le <b>quotient</b></td></tr></table></div>
+      <p class="muted small" style="margin-top:8px">Pour ne pas se tromper : <b>facteurs</b> ↔ multiplication ; <b>termes</b> ↔ addition et soustraction.</p>`)}
+    ${bloc("Savoir lire une phrase", `<ul><li>« Le produit de 6 par 4 » → 6 × 4 = 24</li><li>« La somme de 6 et 4 » → 6 + 4 = 10</li><li>« La différence de 6 et 4 » → 6 − 4 = 2</li><li>« Le quotient de 12 par 4 » → 12 : 4 = 3</li></ul>`)}
+    ${plus("<p>Petit truc : <b>p</b>roduit et multi<b>p</b>lication ont tous les deux un « p ». Et une <b>s</b>omme, c'est quand on additionne : on « met en<b>s</b>emble ».</p>", "Pour retenir")}`,
+  astuce: () => `
+    ${bloc("Règle 1 · Dans un produit", `<p>On peut <b>changer l'ordre des facteurs</b> et les <b>regrouper</b> comme on veut : le produit ne change pas.</p>
+      ${ex("4 × 7,3 × 25", "= <span class=\"k\">(4 × 25)</span> × 7,3", "= 100 × 7,3", "= <span class=\"r\">730</span>")}`, "cle")}
+    ${bloc("La méthode", `<ol class="etapes"><li>Je cherche deux facteurs qui donnent un nombre « rond » : <b>1, 10, 100 ou 1 000</b>.</li><li>Je les regroupe entre parenthèses et je les calcule en premier.</li><li>Je finis le calcul : c'est souvent une multiplication par 10, 100 ou 1 000.</li></ol>`)}
+    ${bloc("Les paires à connaître par cœur", `<div class="paires">${[["2", "5"], ["4", "25"], ["2", "50"], ["20", "5"], ["4", "2.5"], ["8", "125"], ["0.5", "2"], ["0.25", "4"]].map(([a, b]) => `<span>${F(a)} × ${F(b)} = ${F(mul(a, b))}</span>`).join("")}</div>`)}
+    ${bloc("Règle 2 · Dans une somme", `<p>Pareil : on peut changer l'ordre des <b>termes</b> et les regrouper. On regroupe ceux dont les <b>parties décimales</b> font ensemble un nombre entier.</p>
+      ${ex("21,26 + 3,12 + 78,74 + 6,88", "= <span class=\"k\">(21,26 + 78,74)</span> + <span class=\"k\">(3,12 + 6,88)</span>", "= 100 + 10", "= <span class=\"r\">110</span>")}
+      <p>0,26 + 0,74 = 1 et 0,12 + 0,88 = 1 : c'est pour ça que ça tombe juste.</p>`, "cle")}
+    ${bloc("Règle 3 · Dans une différence", `<p><b>Attention : on ne change pas l'ordre</b> des deux nombres. 7 − 3 = 4, mais 3 − 7 ne se calcule pas en 6e.</p>
+      <p>Astuce : quand les deux nombres ont <b>la même partie décimale</b>, elle disparaît et le résultat est entier.</p>
+      ${ex("15,7 − 3,7 = <span class=\"r\">12</span>", "48,25 − 6,25 = <span class=\"r\">42</span>")}`, "cle")}
+    ${plus(`<p>Quand on <b>retire plusieurs nombres</b>, on peut choisir lequel retirer d'abord : on retire d'abord celui qui a la même partie décimale.</p>
+      ${ex("17,8 − 5,3 − 2,8", "= <span class=\"k\">(17,8 − 2,8)</span> − 5,3", "= 15 − 5,3", "= <span class=\"r\">9,7</span>")}`)}`,
+  mult: () => `
+    ${bloc("Multiplier deux nombres décimaux", `<ol class="etapes"><li>Je pose et je calcule <b>sans m'occuper des virgules</b>, comme avec des nombres entiers.</li><li>Je compte les <b>chiffres après la virgule</b> dans les deux facteurs, et je les additionne.</li><li>Je place la virgule dans le résultat pour avoir <b>autant de chiffres après la virgule</b>.</li></ol>`, "cle")}
+    ${bloc("Exemple : 2,3 × 4,5", `${posee("2.3", "4.5")}
+      <p>23 × 45 = 1 035. Il y a <b>1</b> chiffre après la virgule dans 2,3 et <b>1</b> dans 4,5 : 1 + 1 = <b>2</b>.</p><p class="calc">2,3 × 4,5 = <span class="r">10,35</span></p>`)}
+    ${bloc("Attention", `<ul><li>On <b>n'aligne pas les virgules</b> : on aligne les chiffres à droite. (Aligner les virgules, c'est pour l'addition.)</li>
+      <li>S'il manque des chiffres, on ajoute des <b>0 devant</b> : 0,4 × 0,2 → 4 × 2 = 8, il faut 2 chiffres après la virgule → <b>0,08</b>.</li>
+      <li>Les <b>0 à la fin</b>, après la virgule, ne servent à rien : 1,25 × 3,4 → 125 × 34 = 4 250 → 4,250 = <b>4,25</b>.</li></ul>`)}
+    ${bloc("Vérifier avec un ordre de grandeur", `<p>Avant de répondre, on arrondit les facteurs pour savoir à peu près combien on doit trouver.</p>${ex("2,3 × 4,5 ≈ 2 × 5 = 10", "→ 10,35 est proche de 10 ✓", "→ 103,5 ou 1,035 : virgule mal placée ✗")}`)}
+    ${plus(`<p><b>Pourquoi ça marche ?</b> 2,3, c'est 23 : 10. Et 4,5, c'est 45 : 10. Donc 2,3 × 4,5 = 23 × 45 : 100 = 1 035 : 100 = 10,35. Diviser par 100 donne bien 2 chiffres après la virgule.</p>
+      <p><b>Surprise :</b> quand on multiplie par un nombre plus petit que 1, le résultat devient plus petit ! 8 × 0,5 = 4 (la moitié de 8).</p>`)}`,
+  dix: () => `
+    ${bloc("Multiplier par 10, 100, 1 000", `<p>Chaque chiffre <b>avance</b> de 1, 2 ou 3 rangs vers la gauche. On voit la virgule se décaler vers la droite.</p>
+      ${ex("3,47 × 10 = 34,7", "3,47 × 100 = 347", "3,47 × 1 000 = 3 470")}<p>On ajoute des 0 si besoin, comme dans 3 470.</p>`, "cle")}
+    ${bloc("Multiplier par 0,1 ou 0,01", `<p>Multiplier par 0,1, c'est <b>diviser par 10</b>. Multiplier par 0,01, c'est <b>diviser par 100</b>. Chaque chiffre <b>recule</b> vers la droite.</p>
+      ${ex("3,47 × 0,1 = 0,347", "3,47 × 0,01 = 0,0347", "52 × 0,1 = 5,2")}`, "cle")}
+    ${plus("<p>Ça sert dans les calculs astucieux : après avoir regroupé 4 × 25 = 100, il reste souvent à multiplier par 100.</p>")}`,
+};
+function cours() {
+  const body = chrome("Le cours"); const zone = h("<div></div>");
+  body.append(h(`<p class="muted">Les encadrés en pointillés ne sont peut-être pas dans ton cahier : ils t'aident à comprendre.</p>`));
+  tabs(body, [["vocab", "Vocabulaire"], ["astuce", "Calcul astucieux"], ["mult", "× décimaux"], ["dix", "× 10, × 0,1"]], k => { zone.innerHTML = COURS[k](); window.scrollTo(0, 0) });
+  body.append(zone);
+}
+
+/* ===== 2. LES PAIRES MAGIQUES ===== */
+function tiragePaires(mode) {
+  if (mode === "+") {
+    const cs = shuffle(O.COMPLEMENTS).slice(0, 4);
+    return cs.map(([p, q]) => [ecrire(R(0, 9) * 100 + p, 2), ecrire(R(0, 9) * 100 + q, 2)]);
+  }
+  return shuffle(one(PLATEAUX_X));
+}
+// Les plateaux possibles : 4 paires, 8 nombres différents, et aucune autre paire qui tombe juste par hasard
+// (sinon une paire « fausse » serait juste). Il y en a 84 avec cette liste.
+const PAIRES_JEU = [["2", "5"], ["4", "25"], ["2", "50"], ["4", "2.5"], ["20", "5"], ["8", "125"], ["0.5", "2"], ["0.25", "4"], ["5", "0.2"], ["2.5", "40"], ["0.5", "20"], ["25", "0.4"], ["50", "0.2"], ["0.8", "125"], ["1.25", "8"], ["12.5", "8"], ["0.4", "2.5"], ["0.5", "200"], ["250", "4"], ["0.2", "500"]];
+const PLATEAUX_X = (() => { const J = PAIRES_JEU, n = J.length, res = [];
+  for (let a = 0; a < n; a++) for (let b = a + 1; b < n; b++) for (let c = b + 1; c < n; c++) for (let d = c + 1; d < n; d++) {
+    const ps = [J[a], J[b], J[c], J[d]], all = ps.flat(); if (new Set(all).size < 8) continue;
+    let croise = false; for (let i = 0; i < 8 && !croise; i++) for (let j = i + 1; j < 8; j++) if ((i >> 1) !== (j >> 1) && O.rond(mul(all[i], all[j]))) { croise = true; break }
+    if (!croise) res.push(ps) }
+  return res })();
+function paires() {
+  const body = chrome("Les paires magiques"); const zone = h("<div></div>");
+  body.append(h(`<p class="muted">Touche deux nombres qui vont ensemble. En multiplication, leur produit est <b>1, 10, 100 ou 1 000</b>. En addition, leur somme est un <b>nombre entier</b>.</p>`));
+  tabs(body, [["×", "Produits ×"], ["+", "Sommes +"]], m => partie(m)); body.append(zone);
+  function partie(mode) {
+    let manche = 0, erreurs = 0; const MANCHES = 3; jouer();
+    function jouer() {
+      zone.innerHTML = ""; const setP = bar(zone); setP(manche / MANCHES);
+      if (manche === MANCHES) { const et = erreurs === 0 ? 3 : erreurs <= 2 ? 2 : 1;
+        zone.append(h(`<div class="score"><div class="etoiles">${"★".repeat(et)}${"☆".repeat(3 - et)}</div><p class="prompt">${erreurs === 0 ? "Aucune erreur, bravo !" : erreurs === 1 ? "Une seule erreur !" : `${erreurs} erreurs : rejoue pour faire mieux !`}</p></div>`));
+        nextBtn(zone, () => partie(mode), "Rejouer"); return }
+      zone.append(h(`<p class="muted small">Manche ${manche + 1} sur ${MANCHES} · ${mode === "×" ? "trouve les produits ronds" : "trouve les sommes entières"}</p>`));
+      const ps = tiragePaires(mode); const nombres = shuffle(ps.flat());
+      const plateau = h('<div class="plateau"></div>'); zone.append(plateau); const journal = h('<p class="journal"></p>'); zone.append(journal);
+      let choisi = null, trouves = 0;
+      nombres.forEach(n => { const b = h(`<button class="tuile">${F(n)}</button>`); b.dataset.n = n; plateau.append(b);
+        b.onclick = () => {
+          if (b.classList.contains("ok")) return;
+          if (!choisi) { choisi = b; b.classList.add("sel"); return }
+          if (choisi === b) { b.classList.remove("sel"); choisi = null; return }
+          const x = choisi.dataset.n, y = b.dataset.n; const r = mode === "×" ? mul(x, y) : add(x, y);
+          const bon = mode === "×" ? O.rond(r) : !r.includes(".");
+          const a = choisi; choisi = null; a.classList.remove("sel");
+          if (bon) { [a, b].forEach(t => { t.classList.add("ok"); t.disabled = true }); trouves++;
+            journal.innerHTML = `${F(x)} ${mode} ${F(y)} = <span class="num">${F(r)}</span> ✓`;
+            if (trouves === 4) { manche++; setTimeout(jouer, 900) } }
+          else { erreurs++; [a, b].forEach(t => { t.classList.add("bad", "shake"); setTimeout(() => t.classList.remove("bad", "shake"), 450) });
+            journal.innerHTML = `${F(x)} ${mode} ${F(y)} = ${F(r)} : pas ${mode === "×" ? "rond" : "entier"}`; }
+        } });
+    }
+  }
+}
+
+/* ===== 3. PLACE LA VIRGULE ===== */
+function virgule() {
+  const body = chrome("Place la virgule"); const zone = h("<div></div>"); body.append(zone);
+  const TOUR = 10; let k = 0, good = 0; tour();
+  function tour() {
+    zone.innerHTML = ""; const setP = bar(zone); setP(k / TOUR);
+    if (k === TOUR) { zone.append(h(`<div class="score"><div class="n">${good}/${TOUR}</div><p class="prompt">${good === TOUR ? "Toutes les virgules à la bonne place !" : good >= 7 ? "Très bien !" : "Compte bien les chiffres après la virgule, et rejoue !"}</p></div>`)); nextBtn(zone, () => { k = 0; good = 0; tour() }, "Rejouer"); return }
+    const d = O.deuxDecimaux({ sansZeroDevant: true }); const s = String(d.p);
+    zone.append(h(`<p class="muted small">Multiplication ${k + 1} sur ${TOUR}</p>`));
+    zone.append(h(`<p class="operation">${F(d.a)} × ${F(d.b)}</p>`));
+    zone.append(h(`<p class="indice">Sans les virgules : ${d.n1} × ${d.n2} = ${F(s)}.<br>Touche l'endroit où va la virgule.</p>`));
+    const row = h('<div class="chiffres"></div>'); zone.append(row);
+    [...s].forEach((c, i) => { row.append(h(`<span class="c">${c}</span>`)); if (i < s.length - 1) { const sl = h(`<button class="slot" aria-label="Virgule après le chiffre ${i + 1}"></button>`); sl.dataset.i = i + 1; row.append(sl) } });
+    const juste = s.length - d.k; // nombre de chiffres avant la virgule
+    row.querySelectorAll(".slot").forEach(sl => sl.onclick = () => {
+      const i = +sl.dataset.i, ok = i === juste; row.querySelectorAll(".slot").forEach(x => x.disabled = true);
+      sl.classList.add(ok ? "vrai" : "mis"); if (!ok) row.querySelector(`.slot[data-i="${juste}"]`).classList.add("vrai");
+      row.querySelectorAll(".c").forEach((c, j) => { if (j >= juste) c.classList.add("apres") });
+      if (ok) good++;
+      zone.append(h(`<div class="fb ${ok ? "" : "bad"}"><b>${ok ? "Bravo !" : "Pas tout à fait."}</b>${O.lire(d.a)[1]} chiffre${O.lire(d.a)[1] > 1 ? "s" : ""} après la virgule dans ${F(d.a)} + ${O.lire(d.b)[1]} dans ${F(d.b)} = <b>${d.k}</b> chiffres après la virgule.<br>${F(d.a)} × ${F(d.b)} = <b>${F(d.r)}</b></div>`));
+      k++; nextBtn(zone, tour, k === TOUR ? "Voir le score" : "Multiplication suivante").focus({ preventScroll: true });
+    });
+  }
+}
+
+/* ===== 4. LE CHRONO ===== */
+function questionVite() {
+  const t = R(0, 3);
+  if (t === 0) { const s = O.suiteX(); return { e: s.facteurs.map(F).join(" × "), r: s.r, f: [decale(s.r, 1), decale(s.r, -1), add(s.paire, s.x)] } }
+  if (t === 1) { const [a, b] = O.paireSomme(); const c = O.unDecimal(1, 20, 1); const r = add(add(a, b), c); return { e: shuffle([a, b, c]).map(F).join(" + "), r, f: [add(r, "1"), add(r, "0.1"), sub(r, "1")] } }
+  if (t === 2) { const b = O.unDecimal(1, 20, R(1, 2)); const a = add(b, String(R(3, 30))); const r = sub(a, b); return { e: `${F(a)} − ${F(b)}`, r, f: [add(r, "1"), sub(r, "1"), add(r, "0.5")] } }
+  const m = one([["10", 1], ["100", 2], ["1000", 3], ["0.1", -1], ["0.01", -2]]); const x = O.unDecimal(1, 99, R(1, 2)); const r = decale(x, m[1]);
+  return { e: `${F(x)} × ${F(m[0])}`, r, f: [decale(x, -m[1]), decale(x, m[1] + 1), decale(x, m[1] - 1)] };
+}
+function chrono() {
+  const body = chrome("Le chrono"); const zone = h("<div></div>"); body.append(zone); let timer = null;
+  accueil();
+  function accueil() { zone.innerHTML = ""; const best = store.get("chrono", null);
+    zone.append(h(`<p class="muted">60 secondes pour réussir le plus de calculs astucieux possible. Pas besoin de poser : cherche l'astuce !</p>`));
+    zone.append(h(`<div class="score"><div class="n">60 s</div><p class="prompt">${best !== null ? `Ton record : ${best}` : "Pas encore de record"}</p></div>`));
+    nextBtn(zone, partie, "C'est parti !") }
+  function partie() {
+    zone.innerHTML = ""; const fin = Date.now() + 60000; let good = 0, faux = 0, bloque = false;
+    const top = h(`<div class="chrono-top"><span>✓ <b class="g">0</b></span><span class="t">60 s</span></div>`); zone.append(top); const setP = bar(zone);
+    const expr = h('<p class="expr"></p>'); zone.append(expr); const box = h('<div class="opts grid2 vite"></div>'); zone.append(box);
+    clearInterval(timer); timer = setInterval(() => { if (!document.body.contains(zone)) return clearInterval(timer); const reste = Math.max(0, fin - Date.now()); top.querySelector(".t").textContent = Math.ceil(reste / 1000) + " s"; setP(reste / 60000); if (!reste) { clearInterval(timer); fini() } }, 100);
+    suivante();
+    function suivante() { bloque = false; let q; do q = questionVite(); while (new Set([q.r, ...q.f]).size < 4);
+      expr.innerHTML = `${q.e} = ?`; box.innerHTML = "";
+      shuffle([q.r, ...q.f]).forEach(v => { const b = h(`<button class="opt c">${F(v)}</button>`); box.append(b);
+        b.onclick = () => { if (bloque) return; bloque = true; const ok = v === q.r; ok ? good++ : faux++; top.querySelector(".g").textContent = good;
+          b.classList.add(ok ? "ok" : "bad"); if (!ok) [...box.children].find(x => x.textContent === F(q.r)).classList.add("ok");
+          setTimeout(() => { if (Date.now() < fin) suivante() }, ok ? 300 : 1100) } }) }
+    function fini() { const best = store.get("chrono", null); const record = best === null || good > best; if (record) store.set("chrono", good);
+      zone.innerHTML = ""; zone.append(h(`<div class="score"><div class="n">${good}</div><p class="prompt">${record && good > 0 ? "Nouveau record !" : `Record : ${best}`}</p><p class="muted">${faux} erreur${faux > 1 ? "s" : ""}</p></div>`));
+      nextBtn(zone, partie, "Rejouer") }
+  }
+}
+
+/* ===== 5. EXERCICES PAR THÈME ===== */
+const THEMES = [["vocabulaire", "Vocabulaire"], ["facteurs", "Produits astucieux"], ["termes", "Sommes et différences"], ["virgule", "La virgule"], ["produit", "Calculer un produit"], ["dix", "× 10, × 0,1"], ["grandeur", "Ordre de grandeur"]];
+function exercices() { const body = chrome("Exercices par thème"); const zone = h("<div></div>"); tabs(body, THEMES, k => serie(zone, 8, B[k])); body.append(zone) }
+
+/* ===== EXAMEN BLANC ===== */
+function examen() { const body = chrome("Examen blanc");
+  const g = [B.vocabulaire, B.vocabulaire, B.vocabulaire, B.vocabulaire, B.facteurs, B.facteurs, B.facteurs, B.facteurs, B.termes, B.termes, B.termes, B.virgule, B.virgule, B.virgule, B.produit, B.produit, B.produit, B.dix, B.dix, B.grandeur];
+  const list = shuffle(g).map(f => f()); let k = 0, good = 0; const miss = []; const setP = bar(body); const inner = h("<div></div>"); body.append(inner);
+  const step = () => { setP(k / 20); window.scrollTo(0, 0);
+    if (k === 20) { const best = store.get("best", null); if (best === null || good > best) store.set("best", good); inner.innerHTML = "";
+      inner.append(h(`<div class="score"><div class="n">${good}/20</div><p class="prompt">${good >= 18 ? "Excellent, tu es prête pour l'évaluation !" : good >= 14 ? "Très bien ! Revois les quelques erreurs." : good >= 10 ? "En bonne voie. Relis le cours, puis retente." : "Courage : relis le cours et joue aux paires, puis retente."}</p></div>`));
+      if (miss.length) { const r = h('<div class="recap"><p class="prompt">À revoir</p></div>'); miss.forEach(m => r.append(h(`<div class="it"><b>${m.cat}</b>Réponse : ${m.a}</div>`))); inner.append(r) }
+      nextBtn(inner, examen, "Refaire un examen"); const hm = h('<button class="ghost-btn">Retour au menu</button>'); hm.onclick = () => location.hash = ""; inner.append(hm); return }
+    const q = list[k]; q.run(inner, `Question ${k + 1} sur 20`, (ok, ans) => { if (ok) good++; else miss.push({ cat: q.cat, a: ans }); k++; step() }) }; step() }
+
+/* ===== ACCUEIL ===== */
+const ACTS = [
+  { id: "cours", ic: "≡", t: "Le cours", d: "Vocabulaire, calcul astucieux, multiplier des décimaux" },
+  { id: "paires", ic: "◇", t: "Les paires magiques", d: "Trouver les nombres qui vont ensemble" },
+  { id: "virgule", ic: ",", t: "Place la virgule", d: "Où va la virgule dans le produit ?" },
+  { id: "chrono", ic: "⏱", t: "Le chrono", d: "60 secondes de calculs astucieux, bats ton record" },
+  { id: "exercices", ic: "✓", t: "Exercices par thème", d: "Vocabulaire, astuces, virgule, × 10, ordre de grandeur…" },
+];
+function home() { app.innerHTML = ""; const best = store.get("best", null), rec = store.get("chrono", null);
+  const hero = `<svg viewBox="0 0 420 92" aria-hidden="true"><g font-family="Fredoka,sans-serif" font-weight="700" font-size="34" fill="var(--ink)">
+    <text x="4" y="40">4</text><text x="30" y="40" fill="var(--ink-soft)">×</text><text x="58" y="40">7,3</text><text x="114" y="40" fill="var(--ink-soft)">×</text><text x="142" y="40">25</text>
+    <text x="196" y="40" fill="var(--ink-soft)">=</text><text x="226" y="40" fill="var(--blue)">730</text></g>
+    <path d="M14 50 Q 84 88 156 50" fill="none" stroke="var(--blue)" stroke-width="3" stroke-dasharray="5 5"/><text x="85" y="86" text-anchor="middle" font-family="Lexend,sans-serif" font-size="15" fill="var(--blue)">4 × 25 = 100</text>
+    <g font-family="Fredoka,sans-serif" font-weight="700" font-size="22" fill="var(--ink-soft)"><text x="300" y="30">2,3</text><text x="290" y="56">× 4,5</text><path d="M288 64 H352" stroke="var(--ink-soft)" stroke-width="3"/><text x="290" y="86" fill="var(--red)">10,35</text></g></svg>`;
+  app.append(h(`<header class="hero"><h1>Multiplication <span>et calculs astucieux</span></h1><p class="sub">Maths, 6e : le produit, les facteurs, les astuces et la virgule</p>${hero}</header>`));
+  const ul = h('<ul class="menu"></ul>'); ACTS.forEach(a => { const li = h(`<li><button><span class="ic">${a.ic}</span><span><span class="t">${a.t}</span><span class="d">${a.d}${a.id === "chrono" && rec !== null ? ` · record : ${rec}` : ""}</span></span><span class="chev">›</span></button></li>`); li.firstChild.onclick = () => location.hash = a.id; ul.append(li) }); app.append(ul);
+  const exb = h(`<button class="exam-btn"><span class="t">Examen blanc</span><span class="d">20 questions sur tout le chapitre${best !== null ? ` · meilleur score : ${best}/20` : ""}</span></button>`); exb.onclick = () => location.hash = "examen"; app.append(exb);
+  app.append(h(`<p class="foot">Cette révision a été préparée sans la leçon du professeur, à partir de ce qui est au programme et vérifié sur des sites de maths. Compare avec ton cahier : pour l'évaluation, ce sont les mots et les méthodes de ton cours qui comptent.</p>`));
+  app.append(h(`<p class="foot"><a href="../" style="color:inherit">← Toutes les révisions</a></p>`));
+}
+const ROUTES = { cours, paires, virgule, chrono, exercices, examen };
+function route() { const r = location.hash.slice(1); (ROUTES[r] || home)() }
+window.addEventListener("hashchange", route); route();
+</script>
+</body>
+</html>

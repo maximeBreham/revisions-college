@@ -18,6 +18,8 @@ que dit l'utilisateur (matière, date du contrôle). Lire aussi le `CLAUDE.md` d
 - **Une leçon complète qui reprend une révision déjà faite** (le classeur entier après la fiche d'un
   contrôle) : la nouvelle page charge aussi l'ancien fichier de questions pour les parties communes, et le
   nouveau fichier ne contient que ce qui est nouveau. Le défi du jour ne pose ainsi pas deux fois la même chose.
+- **Pas de feuille du tout** (le parent décrit le chapitre de vive voix) : partir de sa description,
+  compléter en ligne comme ci-dessous, et dire sur l'accueil de la page qu'elle a été faite sans la leçon.
 - Demander ce qui manque, en une seule question : la date du contrôle si elle n'est pas donnée
   (format `AAAA-MM-JJ` ; une date relative se calcule depuis aujourd'hui).
 - Lister à l'utilisateur, en quelques lignes, les points relevés sur la feuille, et ce qui était
@@ -84,6 +86,9 @@ O=http://localhost:8765/.claude/skills/nouvelle-revision/outils
 - Captures en clair et en sombre (`--blink-settings=preferredColorScheme=1`, puis `=0`) :
   `"$CH" --headless=new --disable-gpu --hide-scrollbars --window-size=1222,780 --virtual-time-budget=5000 --screenshot=<scratchpad>/x.png "$O/captures.html?page=revisions/<nom>.html"`
   puis les regarder. Ouvrir aussi la page elle-même et faire un tour des activités.
+- Un tirage au hasard sous conditions (`do … while`, `for (;;)`) doit avoir des solutions : sinon la page
+  se fige, et Chrome sans fenêtre ne rend jamais la main. En maths, tester chaque générateur quelques
+  milliers de fois dans `node` (en remplaçant `Moteur` par un objet simple) : doublons d'options, réponses fausses.
 - Une animation (`requestAnimationFrame`) ne tourne presque pas dans Chrome sans fenêtre, et l'horloge
   du son (`AudioContext`) n'y avance pas : pour tester, remplacer `requestAnimationFrame` de l'iframe
   par un `setTimeout`. Une animation calée sur le son doit suivre `performance.now()`, sinon elle reste
