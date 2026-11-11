@@ -89,4 +89,13 @@ window.REVISIONS = [
     score: { cle: "m6b:best", sur: 20 },
     exercices: "maths-multiplication-calcul-astucieux.js",
   },
+  {
+    matiere: "sciences",
+    titre: "Les bilans du thème 1",
+    description: "Textes à trous à recopier, schéma de la cellule, mémo avec la biodiversité",
+    fichier: "sciences-bilans-unite-biodiversite.html",
+    date: "2026-11-12",
+    score: { cle: "sv6c:best", sur: 20 },
+    exercices: "sciences-bilans-unite-biodiversite.js",
+  },
 ];

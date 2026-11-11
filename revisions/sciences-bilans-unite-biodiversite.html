@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Les bilans du thème 1 · Révisions 6e</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../exercices/moteur.css">
+<style>
+/* la couleur des sciences remplace le bleu du moteur */
+:root{--blue:#1E7A4C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--blue:#6BCB97}}
+:root[data-theme="dark"]{--blue:#6BCB97}
+
+/* accueil */
+.hero{padding:26px 2px 14px}
+.hero h1{font-size:clamp(34px,10vw,52px);font-weight:700;letter-spacing:-.01em}
+.hero h1 span{background:linear-gradient(transparent 62%,var(--hl) 62%,var(--hl) 92%,transparent 92%)}
+.hero .sub{color:var(--ink-soft);margin-top:8px}
+.menu{list-style:none;margin:14px 0 0;padding:0;background:var(--card);border-radius:var(--r-lg);border:2px solid var(--line);overflow:hidden}
+.menu li+li{border-top:2px solid var(--line)}
+.menu button{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;width:100%;padding:14px;background:none;border:0;text-align:left;cursor:pointer}
+.menu .ic{font-family:var(--head);font-weight:700;font-size:18px;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--paper);color:var(--blue);border:2px solid var(--line)}
+.menu .t{font-family:var(--head);font-weight:600;font-size:19px;display:block}
+.menu .d{font-size:14px;color:var(--ink-soft);display:block}
+.menu .chev{font-size:22px;color:var(--ink-soft)}
+.exam-btn{display:block;width:100%;margin-top:18px;padding:18px 20px;border:0;border-radius:var(--r-lg);background:var(--blue);color:var(--on-ink);text-align:left;cursor:pointer}
+.exam-btn .t{font-family:var(--head);font-weight:700;font-size:25px;display:block}
+.exam-btn .d{font-size:14px;opacity:.9}
+.foot{margin-top:22px;font-size:14px;color:var(--ink-soft)}
+.devoir{background:var(--card);border:2px solid var(--line);border-left:6px solid var(--blue);border-radius:var(--r-md);padding:12px 14px;margin-top:12px;font-size:15px}
+.devoir b{font-family:var(--head);font-size:17px}
+.devoir ol{margin:6px 0 0;padding-left:20px}
+
+/* blocs */
+.bloc{background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin-top:12px}
+.bloc>.lab{display:block;font-family:var(--head);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+.bloc p{margin:6px 0 0}.bloc p:first-of-type{margin-top:0}
+.bloc ul,.bloc ol{margin:6px 0 0;padding-left:22px}.bloc li{margin:3px 0}
+.plus{border-style:dashed}
+.plus>.lab{color:var(--ink-soft)}
+.plus>.lab::before{content:"＋ "}
+.mode{display:flex;gap:0;margin:2px 0 12px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+.mode button{flex:1;border:0;background:none;padding:9px 4px;font-family:var(--head);font-weight:600;font-size:15px;cursor:pointer}
+.mode button[aria-pressed="true"]{background:var(--blue);color:var(--on-ink)}
+.probleme{font-family:var(--head);font-weight:600;font-size:19px;line-height:1.3;background:var(--hl);color:#1d2433;border-radius:8px;padding:6px 10px;margin:4px 0 10px}
+
+/* texte à trous */
+.texte{background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);padding:14px 14px 6px;font-size:17px;line-height:2.05}
+.texte p{margin:0 0 10px}
+.trou{display:inline-block;min-width:4.2em;padding:0 8px;margin:0 1px;border:0;border-bottom:3px dotted var(--ink-soft);background:var(--paper);border-radius:6px 6px 0 0;font:inherit;font-weight:600;line-height:1.5;cursor:pointer;color:var(--ink-soft)}
+.trou.actif{background:var(--hl);color:#1d2433;border-bottom-color:#1d2433}
+.trou.ok{background:var(--ok-bg);border-bottom:3px solid var(--green);color:var(--ink);cursor:default}
+.trou small{font-size:11px;vertical-align:super;margin-right:2px;opacity:.7}
+.banque{position:sticky;bottom:0;z-index:4;background:var(--paper);padding:6px 0 calc(6px + env(safe-area-inset-bottom,0px));margin-top:8px;border-top:2px solid var(--line);box-shadow:0 -6px 12px -8px rgba(0,0,0,.25)}
+.banque .info{font-size:12px;color:var(--ink-soft);margin:0 0 5px;line-height:1.3}
+.mots{display:flex;flex-wrap:wrap;gap:5px;max-height:21vh;overflow-y:auto}
+.mot{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:4px 10px;font-size:14px;cursor:pointer}
+.mot:disabled{display:none}
+.mot.bad{background:var(--bad-bg);border-color:var(--red)}
+.mot:disabled{opacity:.3;cursor:default;text-decoration:line-through}
+.compteur{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+
+/* recopier */
+.recopie{background:var(--card);border:2px solid var(--line);border-radius:var(--r-lg);padding:22px 18px;font-size:22px;line-height:1.6;min-height:200px}
+.recopie mark,.verif mark{background:var(--hl);color:#1d2433;border-radius:4px;padding:0 4px;font-weight:600}
+.recopie .avant{font-size:15px;color:var(--ink-soft);margin-bottom:12px;line-height:1.4}
+.nav2{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:12px}
+.nav2 button{padding:14px;border-radius:var(--r-md);border:0;font-family:var(--head);font-weight:600;font-size:18px;cursor:pointer}
+.nav2 .prec{background:var(--card);border:2px solid var(--line)}
+.nav2 .suiv{background:var(--ink);color:var(--paper)}
+.nav2 button:disabled{opacity:.35;cursor:default}
+
+/* vérifier */
+.verif{font-size:17px;line-height:1.9}
+.verif mark small{font-size:11px;vertical-align:super;opacity:.7;margin-right:2px}
+.doute{font-size:14px}
+
+/* le tableau des cellules */
+.tscroll{overflow-x:auto;border:2px solid var(--line);border-radius:var(--r-md);background:var(--card);margin-top:10px}
+.cel{border-collapse:collapse;font-size:12.5px;min-width:100%}
+.cel th,.cel td{border:1px solid var(--line);padding:5px 4px;text-align:center}
+.cel th{font-family:var(--head);font-weight:600;font-size:12px;color:var(--ink-soft)}
+.cel td:first-child{text-align:left;font-weight:600}
+.cel .commun{background:color-mix(in srgb,var(--red) 12%,transparent)}
+.unite-vivant{text-align:center;font-family:var(--head);font-weight:700;color:var(--red);font-size:19px;margin-top:8px}
+
+/* schéma */
+.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.check input{width:24px;height:24px;flex:none;margin-top:2px;accent-color:var(--green)}
+.check small{display:block;color:var(--ink-soft);font-size:13px}
+
+/* cartes */
+.face{display:block;width:100%;min-height:230px;border-radius:var(--r-lg);padding:26px 20px;text-align:center;border:2px solid var(--line);cursor:pointer}
+.face.front{background:var(--card);padding-top:44px}
+.face.back{display:none;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fcard.on .front{display:none}.fcard.on .back{display:block}
+.face .w{display:block;font-family:var(--head);font-weight:600;font-size:23px;line-height:1.3}
+.face .hint{display:block;margin-top:30px;font-size:14px;opacity:.7}
+.face .lab{display:block;font-family:var(--head);font-weight:600;font-size:17px;margin-bottom:12px;opacity:.8;text-align:left}
+.face .def{display:block;font-size:19px;line-height:1.5;text-align:left}
+.face .aj{display:block;margin-top:14px;font-size:13px;opacity:.75;text-align:left}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.two button{padding:14px;border-radius:var(--r-md);border:0;font-family:var(--head);font-weight:600;font-size:19px;cursor:pointer}
+.b-bad{background:var(--bad-bg);color:var(--red)} .b-ok{background:var(--ok-bg);color:var(--green)}
+.counter{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icones/icone-180.png">
+<meta name="apple-mobile-web-app-title" content="Révisions">
+</head>
+<body>
+<main class="wrap" id="app"></main>
+<script src="../exercices/moteur.js"></script>
+<script src="../exercices/sciences-cellule-ecosysteme.js"></script>
+<script src="../exercices/sciences-lecon-vivant-ecosysteme.js"></script>
+<script src="../exercices/sciences-bilans-unite-biodiversite.js"></script>
+<script>
+const { h, esc, shuffle } = Moteur;
+// N : les bilans (nouveau) ; L : la leçon complète ; T : la fiche « Testing ».
+const N = Moteur.banques["sciences-bilans-unite-biodiversite"];
+const L = Moteur.banques["sciences-lecon-vivant-ecosysteme"];
+const T = Moteur.banques["sciences-cellule-ecosysteme"];
+const TEXTES = N.unite.textes;
+const $ = (s, el = document) => el.querySelector(s);
+const app = $("#app");
+const store = { get(k, d) { try { const v = localStorage.getItem("sv6c:" + k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem("sv6c:" + k, JSON.stringify(v)) } catch (e) {} } };
+
+function chrome(title) { app.innerHTML = ""; const top = h(`<div class="top"><button class="back" aria-label="Retour au menu">‹</button><h2>${title}</h2></div>`); top.querySelector(".back").onclick = () => { location.hash = "" }; app.append(top); const body = h("<div></div>"); app.append(body); window.scrollTo(0, 0); return body }
+function bar(el) { const b = h('<div class="bar"><i></i></div>'); el.prepend(b); return p => b.firstChild.style.width = (p * 100) + "%" }
+function tabs(el, items, onPick) { const t = h(`<div class="tabs">${items.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join("")}</div>`); el.append(t); const set = k => { t.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); onPick(k) }; t.querySelectorAll("button").forEach(b => b.onclick = () => set(b.dataset.k)); set(items[0][0]); return t }
+function modes(el, items, onPick) { const t = h(`<div class="mode">${items.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join("")}</div>`); el.append(t); const set = k => { t.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); onPick(k) }; t.querySelectorAll("button").forEach(b => b.onclick = () => set(b.dataset.k)); set(items[0][0]); return t }
+function nextBtn(el, onDone, label) { const nx = h(`<button class="main-btn">${label}</button>`); nx.onclick = onDone; el.append(nx); return nx }
+function serie(zone, n, gen) {
+  zone.innerHTML = ""; let k = 0, good = 0; const setP = bar(zone); const inner = h("<div></div>"); zone.append(inner);
+  const step = () => { setP(k / n); window.scrollTo(0, 0);
+    if (k === n) { inner.innerHTML = ""; inner.append(h(`<div class="score"><div class="n">${good}/${n}</div><p class="prompt">${good === n ? "Sans faute !" : good >= n * .7 ? "Très bien !" : "Continue, ça rentre !"}</p></div>`)); nextBtn(inner, () => serie(zone, n, gen), "Une autre série"); return }
+    gen().run(inner, `Question ${k + 1} sur ${n}`, ok => { if (ok) good++; k++; step() }) }; step();
+}
+const bloc = (lab, html, cls = "") => `<div class="bloc ${cls}"><span class="lab">${lab}</span>${html}</div>`;
+const norm = s => s.toLowerCase().replace(/’/g, "'").trim();
+
+// Ce qui, dans chaque texte, ne vient pas de la feuille : à comparer avec la correction de la professeure.
+const DOUTES = {
+  unite: `<p>Il n'y a pas de liste de mots sur la feuille : les réponses viennent du cours (tableau comparatif, cellules observées) et ont été vérifiées sur des sites de SVT.</p>
+    <ul><li><b>une origine commune</b> : on peut aussi écrire « parenté ».</li><li><b>transformations</b> : on peut aussi écrire « évolutions ».</li>
+    <li><b>3,8 Ga</b> : les premières traces de vie. Certains livres disent 3,5 Ga. Si ta professeure a donné un autre nombre en classe, c'est le sien qui compte.</li>
+    <li><b>4,6 Ga</b> : l'âge de la Terre (4,55 Ga pour être très précis).</li></ul>`,
+  biodiv: `<p>Tous les mots viennent de la liste de la feuille : chacun sert une seule fois. « La présence », « l'abondance » et « la variabilité » peuvent être dans n'importe quel ordre.</p>`,
+  museum: `<p>Réponses vérifiées sur la page du Muséum « Qu'est-ce que la biodiversité ? ». Le Muséum parle de « trois niveaux » ; il dit « diversité écologique (ou écosystémique) », « le nombre de différentes espèces » et « les variations entre individus d'une même espèce ».</p>`,
+};
+
+/* ===== 1. LES TEXTES À TROUS ===== */
+// Découpe un paragraphe en phrases pour recopier petit à petit (en gardant les trous entiers).
+function phrases(t) {
+  const out = [];
+  t.paras.forEach(p => p.split(/(?<=[.!?:])\s+(?=[A-ZÀÂÉÈÊÎÔÛÇ«(-])/).forEach(s => out.push(s)));
+  return out;
+}
+const rempli = (para, rendu) => { let i = 0; return esc(para).replace(/\[([^\]]+)\]/g, (m, x) => rendu(x.split("@")[0].split("|")[0], i++)) };
+
+function textes() {
+  const body = chrome("Les textes à trous"); const zone = h("<div></div>");
+  body.append(h(`<p class="muted">Les textes du classeur à compléter et à recopier sur ta feuille. Choisis un texte, puis : <b>compléter</b> pour t'entraîner, <b>recopier</b> pour l'écrire phrase par phrase, <b>vérifier</b> pour comparer avec ta feuille.</p>`));
+  tabs(body, TEXTES.map((t, i) => [String(i), ["L'unité du vivant", "La biodiversité", "Les 3 niveaux"][i]]), k => montre(TEXTES[+k])); body.append(zone);
+  function montre(t) { zone.innerHTML = ""; const z = h("<div></div>");
+    modes(zone, [["completer", "Compléter"], ["recopier", "Recopier"], ["verifier", "Vérifier"]], m => { z.innerHTML = ""; ({ completer, recopier, verifier })[m](z, t) }); zone.append(z) }
+}
+
+function completer(z, t) {
+  z.append(h(`<p class="probleme">${esc(t.probleme)}</p>`));
+  const cpt = h(`<div class="compteur"><span>Touche un trou, puis le bon mot</span><span class="c"></span></div>`); z.append(cpt);
+  const box = h('<div class="texte"></div>'); z.append(box);
+  let n = 0; const trous = [];
+  t.morceaux.forEach(mor => { const p = h("<p></p>");
+    mor.forEach(x => { if (typeof x === "string") p.append(document.createTextNode(x)); else { const b = h(`<button class="trou"><small>${n + 1}</small>……</button>`); b.t = x; b.num = n++; trous.push(b); p.append(b) } });
+    box.append(p) });
+  const ban = h(`<div class="banque"><p class="info">${t.id === "biodiv" ? "La liste de mots de ta feuille. Chaque mot sert une fois." : "Sur ta feuille, il n'y a pas de liste : celle-ci est faite par la révision."}</p><div class="mots"></div></div>`); z.append(ban);
+  const mots = ban.querySelector(".mots"); let actif = null, erreurs = 0;
+  shuffle(t.liste).forEach(w => { const b = h(`<button class="mot">${esc(w)}</button>`); b.w = w; mots.append(b);
+    b.onclick = () => { if (!actif) return;
+      const x = actif.t; let bon;
+      if (x.g) { const groupe = trous.filter(tr => tr.t.g === x.g), places = groupe.filter(tr => tr.place).map(tr => tr.place);
+        bon = groupe.map(tr => norm(tr.t.r[0])).filter(r => !places.includes(r)).includes(norm(w)) }
+      else bon = x.r.some(r => norm(r) === norm(w));
+      if (!bon) { erreurs++; b.classList.add("bad", "shake"); setTimeout(() => b.classList.remove("bad", "shake"), 450); return }
+      actif.place = norm(w); actif.innerHTML = `<small>${actif.num + 1}</small>${esc(x.g ? w : x.r[0])}`; actif.classList.remove("actif"); actif.classList.add("ok"); actif.disabled = true; b.disabled = true;
+      choisir(trous.find(tr => !tr.classList.contains("ok"))); maj() } });
+  trous.forEach(tr => tr.onclick = () => choisir(tr));
+  function choisir(tr) { trous.forEach(x => x.classList.remove("actif")); actif = tr || null; if (actif) { actif.classList.add("actif"); const r = actif.getBoundingClientRect(); if (r.top < 60 || r.bottom > innerHeight * .6) window.scrollBy({ top: r.top - innerHeight * .3, behavior: "smooth" }) } }
+  function maj() { const f = trous.filter(x => x.classList.contains("ok")).length; cpt.querySelector(".c").textContent = `${f} / ${trous.length}`;
+    if (f === trous.length) { ban.remove(); const best = store.get("trous-" + t.id, null); if (best === null || erreurs < best) store.set("trous-" + t.id, erreurs);
+      z.append(h(`<div class="score"><div class="n">${erreurs === 0 ? "✓" : erreurs}</div><p class="prompt">${erreurs === 0 ? "Texte complété sans erreur !" : `Texte complété, avec ${erreurs} erreur${erreurs > 1 ? "s" : ""}.`}</p></div>`));
+      nextBtn(z, () => { z.innerHTML = ""; completer(z, t) }, "Recommencer") } }
+  choisir(trous[0]); maj();
+}
+
+function recopier(z, t) {
+  const ps = phrases(t); let k = 0;
+  z.append(h(`<p class="muted small">Prends ta feuille. Écris d'abord le titre du bilan, puis recopie une phrase à la fois. Les mots surlignés sont ceux des trous.</p>`));
+  const carte = h('<div class="recopie"></div>'); z.append(carte);
+  const nav = h('<div class="nav2"><button class="prec">←</button><button class="suiv">J\'ai recopié ✓</button></div>'); z.append(nav);
+  const setP = bar(z);
+  const voir = () => { setP(k / ps.length);
+    if (k === ps.length) { carte.innerHTML = `<div class="score"><div class="n">✓</div><p class="prompt">Tout le texte est recopié !</p><p class="muted">Relis ta feuille avec « Vérifier » : chaque mot surligné doit y être.</p></div>`; nav.children[1].disabled = true; nav.children[0].disabled = false; return }
+    carte.innerHTML = `<div class="avant">Phrase ${k + 1} sur ${ps.length}${k === 0 ? ` · titre : ${esc(t.probleme)}` : ""}</div>${rempli(ps[k], w => `<mark>${esc(w)}</mark>`)}`;
+    nav.children[0].disabled = k === 0; nav.children[1].disabled = false };
+  nav.children[0].onclick = () => { k = Math.max(0, k - 1); voir() };
+  nav.children[1].onclick = () => { k++; voir(); window.scrollTo(0, 0) };
+  voir();
+}
+
+function verifier(z, t) {
+  let n = 0;
+  z.append(h(`<p class="probleme">${esc(t.probleme)}</p>`));
+  z.append(h(`<div class="texte verif">${t.paras.map(p => `<p>${rempli(p, w => `<mark><small>${++n}</small>${esc(w)}</mark>`)}</p>`).join("")}</div>`));
+  z.append(h(bloc("D'où viennent ces réponses", `<div class="doute">${DOUTES[t.id]}</div>`, "plus")));
+  if (t.id === "unite") z.append(h(bloc("Sur la feuille, juste au-dessus du bilan", tableauCellules())));
+}
+
+/* Le tableau comparatif de la feuille, avec les 3 colonnes entourées en rouge. */
+function tableauCellules() {
+  const COLS = [["m", "Membrane plasmique", 1], ["c", "Chloro&shy;plaste"], ["p", "Paroi"], ["n", "Noyau", 1], ["y", "Cyto&shy;plasme", 1], ["u", "Uni&shy;cellulaire"], ["P", "Pluri&shy;cellulaire"]];
+  return `<div class="tscroll"><table class="cel"><tr><th></th>${COLS.map(c => `<th class="${c[2] ? "commun" : ""}">${c[1]}</th>`).join("")}</tr>${N.unite.cellules.map(r => `<tr><td>${esc(r.nom)}</td>${COLS.map(c => `<td class="${c[2] ? "commun" : ""}">${r[c[0]] === 1 ? "+" : r[c[0]] ? `<small>${esc(r[c[0]])}</small>` : ""}</td>`).join("")}</tr>`).join("")}</table></div>
+    <p class="titre" style="text-decoration:underline;font-size:14px;margin-top:6px">Tableau comparatif des cellules entre êtres vivants.</p><p class="unite-vivant">CELLULE = UNITÉ DU VIVANT</p>`;
+}
+
+/* ===== 2. LE SCHÉMA DE LA CELLULE (l'interrogation) ===== */
+const schemaCellule = () => `<svg viewBox="0 0 360 210" role="img" aria-label="Schéma d'une cellule : membrane plasmique, cytoplasme, noyau">
+  <ellipse cx="120" cy="105" rx="100" ry="78" fill="var(--ok-bg)" stroke="var(--ink)" stroke-width="3"/>
+  <circle cx="135" cy="95" r="26" fill="color-mix(in srgb,var(--blue) 35%,var(--card))" stroke="var(--ink)" stroke-width="2.5"/>
+  <g stroke="var(--ink)" stroke-width="1.8"><line x1="214" y1="80" x2="248" y2="50"/><line x1="248" y1="50" x2="256" y2="50"/><line x1="80" y1="140" x2="248" y2="160"/><line x1="248" y1="160" x2="256" y2="160"/><line x1="152" y1="105" x2="256" y2="105"/></g>
+  <g font-family="Lexend,sans-serif" font-size="15" fill="var(--ink)"><text x="260" y="55">membrane</text><text x="260" y="72">plasmique</text><text x="260" y="110">noyau</text><text x="260" y="165">cytoplasme</text></g></svg>`;
+const CHECK = [
+  ["Le contour de la cellule : la <b>membrane plasmique</b>.", ""],
+  ["L'intérieur : le <b>cytoplasme</b>.", ""],
+  ["Le <b>noyau</b>, dans le cytoplasme.", ""],
+  ["Les 3 légendes, bien écrites : membrane plasmique, cytoplasme, noyau.", "Attention à l'orthographe : cytoplasme avec un y."],
+  ["Pas de paroi ni de chloroplaste.", "Ils ne sont pas chez tous les êtres vivants : ils ne font pas partie de la structure commune."],
+  ["Un <b>titre</b> sous le schéma, qui commence par sa nature : « Schéma… ».", "Un titre a 4 parties : la nature du document, quoi ?, avec quels outils ?, avec quel colorant ?"],
+  ["Les traits de légende tirés à la règle, sans se croiser, au crayon de papier.", "En plus du cours : c'est la règle habituelle pour un schéma."],
+];
+function schema() {
+  const body = chrome("Le schéma de la cellule");
+  body.append(h(`<p class="muted">C'était l'interrogation en auto-correction : <b>réalise le schéma de la structure microscopique commune à tous les êtres vivants</b>.</p>`));
+  body.append(h(bloc("1 · Sans regarder", "<p>Prends une feuille et un crayon de papier. Dessine le schéma <b>de mémoire</b>, avec ses légendes et son titre. Quand tu as fini, touche le bouton.</p>")));
+  const suite = h("<div></div>"); const go = nextBtn(body, () => { go.remove(); montre() }, "J'ai fini mon dessin"); body.append(suite);
+  function montre() {
+    suite.append(h(bloc("2 · Compare avec le modèle", `<div class="fig" style="margin-top:6px">${schemaCellule()}</div><p class="titre" style="margin-top:8px;text-decoration:underline">Schéma de la structure commune des cellules observées au microscope optique</p><p class="muted small">Exemple de titre : ta professeure peut en accepter d'autres, s'il commence par « Schéma » et dit ce qu'on voit.</p>`)));
+    const liste = h(bloc("3 · Coche ce qui est juste sur ton dessin", "")); suite.append(liste);
+    const res = h('<p class="prompt" style="margin-top:12px"></p>');
+    CHECK.forEach(([t, s]) => { const l = h(`<label class="check"><input type="checkbox"><span>${t}${s ? `<small>${s}</small>` : ""}</span></label>`); liste.append(l); l.querySelector("input").onchange = maj });
+    liste.append(res); maj();
+    function maj() { const n = liste.querySelectorAll("input:checked").length; res.textContent = n === CHECK.length ? "Tout est juste, bravo !" : `${n} / ${CHECK.length} : corrige ce qui manque en vert sur ta feuille.` }
+    suite.append(h(bloc("Pourquoi cette structure ?", `<p>Toutes les cellules du tableau ont une membrane plasmique, un cytoplasme et un noyau. C'est la structure commune : la cellule est l'unité du vivant.</p>${tableauCellules()}`)));
+    nextBtn(suite, schema, "Recommencer");
+  }
+}
+
+/* ===== 3. LE MÉMO ===== */
+// Le mémo « Testing » entier : la fiche déjà vue, la méthodologie et les nouvelles questions sur la biodiversité.
+const CARTES = [
+  ...N.biodiv.cartes.map(c => ["biodiv", c[1], c[2], false, true]),
+  ...T.classeur.liste.map(c => [c[0] === "cellule" ? "vivant" : c[0] === "ecosysteme" ? "eco" : "methode", c[1], c[2]]),
+  ...L.vivant.cartes.filter(c => c[0] === "methode"),
+];
+function memo() {
+  const body = chrome("Le mémo");
+  body.append(h(`<p class="muted">« Se tester / apprendre à l'aide du mémo » : cache la réponse, réponds dans ta tête ou à voix haute, puis retourne la carte.</p>`));
+  const zone = h("<div></div>");
+  tabs(body, [["biodiv", "Nouveau : biodiversité"], ["vivant", "Le vivant"], ["eco", "Écosystème"], ["methode", "Méthode"], ["tout", "Tout"]], k => start(CARTES.filter(c => k === "tout" || c[0] === k))); body.append(zone);
+  function start(C) {
+    let queue = shuffle(C.map((c, i) => i)), done = 0; next();
+    function next() { zone.innerHTML = "";
+      if (!queue.length) { zone.append(h(`<div class="score"><div class="n">✓</div><p class="prompt">Toutes les cartes sont sues !</p></div>`)); nextBtn(zone, () => start(C), "Recommencer"); return }
+      const c = C[queue[0]];
+      zone.append(h(`<div class="counter"><span>${c[4] ? "Nouvelle question du mémo" : "Question"}</span><span>${done} / ${C.length} sues</span></div>`));
+      const card = h(`<div class="fcard" role="button" tabindex="0" aria-label="Retourner la carte"><div class="face front"><span class="w">${esc(c[1])}</span><span class="hint">Touche la carte pour voir la réponse</span></div><div class="face back"><span class="lab">${esc(c[1])}</span><span class="def">${esc(c[2])}</span>${c[3] ? '<span class="aj">En plus du cours : ce n\'est pas écrit tel quel sur ta feuille.</span>' : ""}</div></div>`); zone.append(card);
+      const btns = h(`<div class="two" style="visibility:hidden"><button class="b-bad">À revoir</button><button class="b-ok">Je savais</button></div>`); zone.append(btns);
+      const flip = () => { card.classList.toggle("on"); btns.style.visibility = "visible" }; card.onclick = flip; card.onkeydown = e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip() } };
+      btns.children[0].onclick = () => { const x = queue.shift(); queue.splice(Math.min(queue.length, 3), 0, x); next() };
+      btns.children[1].onclick = () => { queue.shift(); done++; next() };
+    }
+  }
+}
+
+/* ===== 4. EXERCICES PAR THÈME ===== */
+const THEMES = [["unite", "L'unité du vivant", N], ["cellules", "Le tableau des cellules", N], ["temps", "Ga, Ma, LUCA", N], ["bilan2", "La biodiversité", N], ["niveaux", "Les 3 niveaux", N], ["biodiv", "Le mémo", N], ["cellule", "Légender une cellule", T], ["cle", "La clé", L]];
+function exercices() { const body = chrome("Exercices par thème"); const zone = h("<div></div>"); tabs(body, THEMES.map(([k, l]) => [k, l]), k => { const [, , b] = THEMES.find(t => t[0] === k); serie(zone, 8, b[k]) }); body.append(zone) }
+
+/* ===== EXAMEN BLANC ===== */
+function examen() { const body = chrome("Examen blanc");
+  const g = [N.unite, N.unite, N.unite, N.unite, N.cellules, N.cellules, N.cellules, N.temps, N.temps, N.temps, N.bilan2, N.bilan2, N.bilan2, N.niveaux, N.niveaux, N.niveaux, N.biodiv, N.biodiv, T.cellule, L.cle];
+  const list = shuffle(g).map(f => f()); let k = 0, good = 0; const miss = []; const setP = bar(body); const inner = h("<div></div>"); body.append(inner);
+  const step = () => { setP(k / 20); window.scrollTo(0, 0);
+    if (k === 20) { const best = store.get("best", null); if (best === null || good > best) store.set("best", good); inner.innerHTML = "";
+      inner.append(h(`<div class="score"><div class="n">${good}/20</div><p class="prompt">${good >= 18 ? "Excellent, tu as compris les bilans !" : good >= 14 ? "Très bien ! Revois les quelques erreurs." : good >= 10 ? "En bonne voie. Relis les textes à trous, puis retente." : "Courage : complète les textes à trous et revois le mémo, puis retente."}</p></div>`));
+      if (miss.length) { const r = h('<div class="recap"><p class="prompt">À revoir</p></div>'); miss.forEach(m => r.append(h(`<div class="it"><b>${m.cat}</b>Réponse : ${m.a}</div>`))); inner.append(r) }
+      nextBtn(inner, examen, "Refaire un examen"); const hm = h('<button class="ghost-btn">Retour au menu</button>'); hm.onclick = () => location.hash = ""; inner.append(hm); return }
+    const q = list[k]; q.run(inner, `Question ${k + 1} sur 20`, (ok, ans) => { if (ok) good++; else miss.push({ cat: q.cat, a: ans }); k++; step() }) }; step() }
+
+/* ===== ACCUEIL ===== */
+const ACTS = [
+  { id: "textes", ic: "…", t: "Les textes à trous", d: "Compléter, recopier sur ta feuille, vérifier" },
+  { id: "schema", ic: "◯", t: "Le schéma de la cellule", d: "L'interrogation : dessiner de mémoire, puis se corriger" },
+  { id: "memo", ic: "?", t: "Le mémo", d: "Les cartes « Testing », avec les nouvelles questions" },
+  { id: "exercices", ic: "✓", t: "Exercices par thème", d: "Unité du vivant, cellules, Ga et Ma, biodiversité, clé…" },
+];
+function home() { app.innerHTML = ""; const best = store.get("best", null);
+  app.append(h(`<header class="hero"><h1>Les bilans <span>du&nbsp;thème&nbsp;1</span></h1><p class="sub">SVT, 6e : l'unité du vivant et la biodiversité</p></header>`));
+  app.append(h(`<div class="devoir"><b>Le travail demandé</b><ol><li>Trouver les mots du bilan de l'activité 1 (l'unité du vivant).</li><li>Trouver les mots du bilan de l'activité 2 (la biodiversité), et le texte du Muséum.</li><li>Se tester / apprendre à l'aide du mémo.</li></ol></div>`));
+  const ul = h('<ul class="menu"></ul>'); ACTS.forEach(a => { const li = h(`<li><button><span class="ic">${a.ic}</span><span><span class="t">${a.t}</span><span class="d">${a.d}</span></span><span class="chev">›</span></button></li>`); li.firstChild.onclick = () => location.hash = a.id; ul.append(li) }); app.append(ul);
+  const ex = h(`<button class="exam-btn"><span class="t">Examen blanc</span><span class="d">20 questions sur les bilans${best !== null ? ` · meilleur score : ${best}/20` : ""}</span></button>`); ex.onclick = () => location.hash = "examen"; app.append(ex);
+  app.append(h(`<p class="foot">Pour revoir toute la leçon (le fil du classeur, le jeu de la clé des arbres) : <a href="sciences-lecon-vivant-ecosysteme.html" style="color:inherit">Le vivant et l'écosystème</a>. Les réponses du premier texte à trous ne sont pas sur la feuille : elles viennent du cours et ont été vérifiées. Compare avec la correction de ta professeure.</p>`));
+  app.append(h(`<p class="foot"><a href="../" style="color:inherit">← Toutes les révisions</a></p>`));
+}
+const ROUTES = { textes, schema, memo, exercices, examen };
+function route() { const r = location.hash.slice(1); (ROUTES[r] || home)() }
+window.addEventListener("hashchange", route); route();
+</script>
+</body>
+</html>
