@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>États de la matière, mélanges et dissolution · Révisions 6e</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../exercices/moteur.css">
+<style>
+/* la couleur de la physique-chimie remplace le bleu du moteur */
+:root{--blue:#0369A1}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--blue:#6CC3F0}}
+:root[data-theme="dark"]{--blue:#6CC3F0}
+
+/* accueil */
+.hero{padding:26px 2px 14px}
+.hero h1{font-size:clamp(32px,9vw,50px);font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.hero h1 span{background:linear-gradient(transparent 62%,var(--hl) 62%,var(--hl) 92%,transparent 92%)}
+.hero .sub{color:var(--ink-soft);margin-top:8px}
+.hero svg{display:block;width:100%;max-width:420px;height:auto;margin-top:14px}
+.menu{list-style:none;margin:8px 0 0;padding:0;background:var(--card);border-radius:var(--r-lg);border:2px solid var(--line);overflow:hidden}
+.menu li+li{border-top:2px solid var(--line)}
+.menu button{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;width:100%;padding:14px;background:none;border:0;text-align:left;cursor:pointer}
+.menu .ic{font-family:var(--head);font-weight:700;font-size:18px;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--paper);color:var(--blue);border:2px solid var(--line)}
+.menu .t{font-family:var(--head);font-weight:600;font-size:19px;display:block}
+.menu .d{font-size:14px;color:var(--ink-soft);display:block}
+.menu .chev{font-size:22px;color:var(--ink-soft)}
+.exam-btn{display:block;width:100%;margin-top:18px;padding:18px 20px;border:0;border-radius:var(--r-lg);background:var(--blue);color:var(--on-ink);text-align:left;cursor:pointer}
+.exam-btn .t{font-family:var(--head);font-weight:700;font-size:25px;display:block}
+.exam-btn .d{font-size:14px;opacity:.9}
+.foot{margin-top:22px;font-size:14px;color:var(--ink-soft)}
+
+/* le cours */
+.bloc{background:var(--card);border:2px solid var(--line);border-radius:var(--r-lg);padding:16px;margin-bottom:14px}
+.bloc h3{font-family:var(--head);font-weight:600;font-size:20px;margin:0 0 8px;color:var(--blue)}
+.bloc p{margin:8px 0}
+.bloc ul{margin:8px 0;padding-left:20px}
+.bloc li{margin:4px 0}
+.formule{font-family:var(--head);font-weight:600;font-size:19px;text-align:center;padding:10px;border-radius:var(--r-md);background:var(--paper);border:2px dashed var(--line)}
+.piege{border-color:var(--red)}
+.piege h3{color:var(--red)}
+.piege .non{color:var(--red);text-decoration:line-through}
+.piege .oui{color:var(--green);font-weight:600}
+.complement{font-size:14px;color:var(--ink-soft)}
+.trois{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}
+.trois figure{margin:0;text-align:center;font-size:14px}
+.trois svg{display:block;width:100%;height:auto}
+.trois figcaption{font-family:var(--head);font-weight:600;font-size:16px}
+
+/* tableaux */
+.tab{width:100%;border-collapse:collapse;background:var(--card);font-size:15px}
+.tab th,.tab td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tab th{font-family:var(--head);font-weight:600;font-size:15px;color:var(--ink-soft)}
+.tab td+td,.tab th+th{border-left:1px solid var(--line)}
+.tab td:first-child{font-weight:600}
+.tabbox{border:2px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+.titre{margin-top:8px;font-size:15px;text-decoration:underline;text-underline-offset:3px}
+
+/* cartes */
+.face{display:block;width:100%;min-height:230px;border-radius:var(--r-lg);padding:26px 20px;text-align:center;border:2px solid var(--line);cursor:pointer}
+.face.front{background:var(--card);padding-top:44px}
+.face.back{display:none;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fcard.on .front{display:none}.fcard.on .back{display:block}
+.face .w{display:block;font-family:var(--head);font-weight:600;font-size:23px;line-height:1.3}
+.face .hint{display:block;margin-top:30px;font-size:14px;opacity:.7}
+.face .lab{display:block;font-family:var(--head);font-weight:600;font-size:17px;margin-bottom:12px;opacity:.8;text-align:left}
+.face .def{display:block;font-size:19px;line-height:1.5;text-align:left}
+.face .ex{display:block;font-size:15px;margin-top:12px;opacity:.8;text-align:left}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.two button{padding:14px;border-radius:var(--r-md);border:0;font-family:var(--head);font-weight:600;font-size:19px;cursor:pointer}
+.b-bad{background:var(--bad-bg);color:var(--red)} .b-ok{background:var(--ok-bg);color:var(--green)}
+.counter{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+
+/* tri */
+.mot{text-align:center;font-family:var(--head);font-weight:700;font-size:28px;padding:24px 10px;background:var(--card);border:2px solid var(--line);border-radius:var(--r-lg)}
+.tri{display:grid;gap:10px;margin-top:14px}
+.tri button{padding:13px 15px;border-radius:var(--r-md);border:2px solid var(--line);background:var(--card);font-size:17px;text-align:left;cursor:pointer}
+.tri button small{display:block;color:var(--ink-soft);font-size:13px}
+.tri button.ok{background:var(--ok-bg);border-color:var(--green)} .tri button.bad{background:var(--bad-bg);border-color:var(--red)}
+.tri button:disabled{cursor:default}
+.pourquoi{margin-top:12px;font-size:15px;color:var(--ink-soft)}
+.cols td{font-weight:400!important}
+.cols td span{display:block}
+.cols td span.faux{color:var(--red);text-decoration:line-through}
+.recap .it{padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.recap .it b{display:block}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icones/icone-180.png">
+<meta name="apple-mobile-web-app-title" content="Révisions">
+</head>
+<body>
+<main class="wrap" id="app"></main>
+<script src="../exercices/moteur.js"></script>
+<script src="../exercices/physique-etats-melanges-dissolution.js"></script>
+<script>
+const { h, esc, shuffle } = Moteur;
+const B = Moteur.banques["physique-etats-melanges-dissolution"];
+const $ = (s, el = document) => el.querySelector(s);
+const app = $("#app");
+const store = { get(k, d) { try { const v = localStorage.getItem("pc6:" + k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem("pc6:" + k, JSON.stringify(v)) } catch (e) {} } };
+const Maj = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+function chrome(title) { app.innerHTML = ""; const top = h(`<div class="top"><button class="back" aria-label="Retour au menu">‹</button><h2>${title}</h2></div>`); top.querySelector(".back").onclick = () => { location.hash = "" }; app.append(top); const body = h("<div></div>"); app.append(body); window.scrollTo(0, 0); return body }
+function bar(el) { const b = h('<div class="bar"><i></i></div>'); el.prepend(b); return p => b.firstChild.style.width = (p * 100) + "%" }
+function tabs(el, items, onPick) { const t = h(`<div class="tabs">${items.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join("")}</div>`); el.append(t); const set = k => { t.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); onPick(k) }; t.querySelectorAll("button").forEach(b => b.onclick = () => set(b.dataset.k)); set(items[0][0]); return t }
+function nextBtn(el, onDone, label) { const nx = h(`<button class="main-btn">${label}</button>`); nx.onclick = onDone; el.append(nx); return nx }
+function serie(zone, n, gen) {
+  zone.innerHTML = ""; let k = 0, good = 0; const setP = bar(zone); const inner = h("<div></div>"); zone.append(inner);
+  const step = () => { setP(k / n); window.scrollTo(0, 0);
+    if (k === n) { inner.innerHTML = ""; inner.append(h(`<div class="score"><div class="n">${good}/${n}</div><p class="prompt">${good === n ? "Sans faute !" : good >= n * .7 ? "Très bien !" : "Continue, ça rentre !"}</p></div>`)); nextBtn(inner, () => serie(zone, n, gen), "Une autre série"); return }
+    gen().run(inner, `Question ${k + 1} sur ${n}`, ok => { if (ok) good++; k++; step() }) }; step();
+}
+
+/* Les trois états en petits dessins : solide (un bloc), liquide (surface horizontale), gaz (remplit tout) */
+const BOCAL = `<path d="M10 8 V70 Q10 78 18 78 H72 Q80 78 80 70 V8" fill="none" stroke="var(--ink-soft)" stroke-width="3"/>`;
+const DESSINS = {
+  solide: `<svg viewBox="0 0 90 84" aria-hidden="true">${BOCAL}<rect x="24" y="42" width="34" height="34" rx="3" fill="var(--blue)" opacity=".85" transform="rotate(-8 41 59)"/></svg>`,
+  liquide: `<svg viewBox="0 0 90 84" aria-hidden="true">${BOCAL}<path d="M12 46 H78 V70 Q78 76 72 76 H18 Q12 76 12 70 Z" fill="var(--blue)" opacity=".6"/><line x1="12" y1="46" x2="78" y2="46" stroke="var(--blue)" stroke-width="3"/></svg>`,
+  gaz: `<svg viewBox="0 0 90 84" aria-hidden="true">${BOCAL}<path d="M10 8 H80" stroke="var(--ink-soft)" stroke-width="3" stroke-dasharray="4 3"/>${[[22,18],[48,14],[68,24],[30,36],[58,42],[18,56],[44,60],[70,64],[34,72],[62,20]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="var(--blue)" opacity=".8"/>`).join("")}</svg>`,
+};
+
+/* ===== 1. LE COURS ===== */
+function cours() {
+  const body = chrome("Le cours"); const zone = h("<div></div>");
+  tabs(body, [["etats", "Les 3 états"], ["melanges", "Mélanges"], ["dissolution", "Dissolution"], ["pieges", "Pièges"]], k => {
+    zone.innerHTML = ""; zone.append(h(`<div>${COURS[k]}</div>`)); window.scrollTo(0, 0);
+  }); body.append(zone);
+}
+const COURS = {
+  etats: `
+  <div class="trois"><figure>${DESSINS.solide}<figcaption>Solide</figcaption></figure><figure>${DESSINS.liquide}<figcaption>Liquide</figcaption></figure><figure>${DESSINS.gaz}<figcaption>Gaz</figcaption></figure></div>
+  <div class="tabbox"><table class="tab"><tr><th></th><th>Solide</th><th>Liquide</th><th>Gaz</th></tr>
+  <tr><td>Forme propre ?</td><td>Oui</td><td>Non : prend la forme du récipient</td><td>Non</td></tr>
+  <tr><td>Volume propre ?</td><td>Oui</td><td>Oui</td><td>Non : occupe tout l'espace disponible</td></tr>
+  <tr><td>Se comprime ?</td><td>Non</td><td>Presque pas</td><td>Oui</td></tr>
+  <tr><td>Exemples</td><td>glace, caillou, sable, sel</td><td>eau, huile, lait</td><td>air, vapeur d'eau</td></tr></table></div>
+  <p class="titre">Tableau des propriétés des trois états de la matière</p>
+  <div class="bloc" style="margin-top:14px"><h3>À retenir</h3><ul>
+  <li>Un <b>solide</b> a une forme propre et un volume propre : on peut le prendre entre les doigts.</li>
+  <li>Le sable, le sel ou la farine semblent couler, mais ce sont des <b>solides en grains</b> : chaque grain garde sa forme.</li>
+  <li>Un <b>liquide</b> n'a pas de forme propre : il prend la forme du récipient. Il a un volume propre : 20 cL restent 20 cL dans un autre verre.</li>
+  <li>Au repos, la <b>surface libre</b> d'un liquide est <b>plane et horizontale</b>, même si on penche le verre.</li>
+  <li>Un <b>gaz</b> n'a ni forme ni volume propres : il occupe tout l'espace disponible. Il est <b>compressible</b> : dans une seringue bouchée, on peut enfoncer le piston.</li>
+  <li>L'eau existe sous les trois états : la <b>glace</b> (solide), l'<b>eau liquide</b> et la <b>vapeur d'eau</b> (gaz, invisible).</li></ul>
+  <p class="complement">Cette partie n'est pas sur les feuilles reçues : elle a été faite d'après des cours en ligne qui disent tous la même chose. Compare avec ton cahier, et c'est ton cahier qui compte.</p></div>`,
+  melanges: `
+  <div class="bloc"><h3>Bilan à retenir</h3>
+  <p>L'eau salée et (huile + sel) forment des mélanges. Un <b>mélange</b> est constitué de plusieurs espèces chimiques.</p>
+  <p>On peut classer les mélanges en deux catégories :</p><ul>
+  <li><b>Mélange hétérogène</b> : c'est un mélange dans lequel certains constituants sont <b>visibles</b> à l'œil nu (huile + sel).</li>
+  <li><b>Mélange homogène</b> : c'est un mélange dans lequel les constituants sont <b>invisibles</b> à l'œil nu (eau salée).</li></ul></div>
+  <div class="tabbox"><table class="tab cols"><tr><th>Mélanges homogènes</th><th>Mélanges hétérogènes</th></tr><tr>
+  <td>${B.melanges.liste.filter(m => !m.h).map(m => `<span>${esc(Maj(m.x))}</span>`).join("")}</td>
+  <td>${B.melanges.liste.filter(m => m.h).map(m => `<span>${esc(Maj(m.x))}</span>`).join("")}</td></tr></table></div>
+  <p class="titre">Tableau de classement de quelques mélanges</p>
+  <p class="muted small">Le jus d'orange avec pulpe, l'eau de source, la vinaigrette, l'eau sucrée, le sirop de menthe et l'eau poivrée viennent de l'exercice 3 de la feuille.</p>`,
+  dissolution: `
+  <div class="bloc"><h3>Dissoudre un solide dans un liquide</h3><ul>
+  <li>Le sel se dissout dans l'eau : on dit qu'il est <b>soluble</b> dans l'eau.</li>
+  <li>Le sel ne se dissout pas dans l'huile : on dit qu'il est <b>insoluble</b> dans l'huile. Le sable est insoluble dans l'eau.</li>
+  <li>Pour dissoudre un solide dans l'eau, il faut <b>agiter</b>. On réalise une <b>dissolution</b>.</li></ul></div>
+  <div class="bloc"><h3>Vocabulaire de chimie à connaître</h3><ul>
+  <li><b>Le soluté</b> : corps qui se dissout (le sel).</li>
+  <li><b>Le solvant</b> : corps qui permet la dissolution (l'eau).</li>
+  <li><b>Une solution</b> : mélange entre un solvant et un soluté (l'eau salée).</li>
+  <li><b>Une solution aqueuse</b> : solution dans laquelle l'eau est le solvant.</li>
+  <li><b>Une solution saturée</b> : solution dans laquelle on ne peut pas dissoudre davantage de soluté. Le soluté en trop reste au fond.</li></ul>
+  <p class="formule">solvant + soluté = solution<br><span style="font-weight:500">eau + sel = eau salée</span></p></div>
+  <div class="bloc"><h3>Remarque</h3>
+  <p>Le sel qui se dissout <b>ne disparaît pas</b> dans l'eau : il s'y <b>disperse</b>.</p>
+  <p><b>Comment le récupérer ?</b> En faisant <b>évaporer</b> l'eau (au soleil, ou en chauffant) : le sel reste au fond. C'est ce qu'on fait dans les marais salants.</p></div>
+  <div class="bloc"><h3>Pour aller plus loin</h3><ul>
+  <li><b>La masse se conserve</b> : masse de la solution = masse du solvant + masse du soluté. 200 g d'eau + 10 g de sel = 210 g d'eau salée.</li>
+  <li><b>La salinité</b> : la masse de sel dissous dans un litre d'eau (en g/L). L'océan Atlantique : 32 g/L.</li>
+  <li><b>La solubilité</b> : la masse maximale que l'on peut dissoudre dans un litre. Pour le sel dans l'eau, environ 360 g/L. Au-delà, la solution est saturée.</li></ul>
+  <p class="complement">La salinité et la solubilité sont demandées dans l'exercice 5 de la feuille. La conservation de la masse et le chiffre de 360 g/L viennent de cours en ligne, pas de la feuille.</p></div>`,
+  pieges: `
+  <p class="muted">Des erreurs repérées sur tes feuilles. Corrige-les dans ton cahier !</p>
+  <div class="bloc piege"><h3>Pour dissoudre, il faut…</h3><p><span class="non">laisser reposer</span> → <span class="oui">agiter</span></p><p>Si on laisse reposer, le solide se dissout très lentement, ou reste au fond. On remue !</p></div>
+  <div class="bloc piege"><h3>Quand on dissout un solide, on réalise une…</h3><p><span class="non">fusion</span> → <span class="oui">dissolution</span></p><p>La <b>fusion</b>, c'est un solide qui <b>fond</b> et devient liquide sous l'effet de la chaleur (la glace qui fond). Le sucre dans le thé ne fond pas : il se <b>dissout</b>.</p></div>
+  <div class="bloc piege"><h3>Comment récupérer le sel dissous dans l'eau ?</h3><p><span class="non">avec une passoire</span> → <span class="oui">en faisant évaporer l'eau</span></p><p>Le sel dissous est dispersé en morceaux minuscules : il passe à travers les trous d'une passoire, et même à travers un filtre.</p></div>
+  <div class="bloc piege"><h3>Exercice 2 : solvant et soluté</h3><p>Il faut <b>écrire les noms</b> dans les colonnes, pas mettre une croix. Pour le café d'Anna : solvant = <b>l'eau chaude</b> ; solutés = <b>le café soluble et le sucre</b>.</p></div>`,
+};
+
+/* ===== 2. LES CARTES DU VOCABULAIRE ===== */
+function cartes() {
+  const body = chrome("Les mots à connaître"); const C = B.vocabulaire.liste;
+  body.append(h(`<p class="muted">Lis le mot, dis sa définition dans ta tête (ou à voix haute), puis retourne la carte.</p>`));
+  const zone = h("<div></div>"); body.append(zone); start();
+  function start() {
+    let queue = shuffle(C.map((c, i) => i)), done = 0; next();
+    function next() { zone.innerHTML = "";
+      if (!queue.length) { zone.append(h(`<div class="score"><div class="n">✓</div><p class="prompt">Tous les mots sont sus !</p></div>`)); nextBtn(zone, start, "Recommencer"); return }
+      const c = C[queue[0]];
+      zone.append(h(`<div class="counter"><span>Mot</span><span>${done} / ${C.length} sus</span></div>`));
+      const card = h(`<div class="fcard" role="button" tabindex="0" aria-label="Retourner la carte"><div class="face front"><span class="w">${esc(Maj(c.m))}</span><span class="hint">Touche la carte pour voir la définition</span></div><div class="face back"><span class="lab">${esc(Maj(c.m))}</span><span class="def">${esc(c.d)}</span><span class="ex">Exemple : ${esc(c.ex)}</span></div></div>`); zone.append(card);
+      const btns = h(`<div class="two" style="visibility:hidden"><button class="b-bad">À revoir</button><button class="b-ok">Je savais</button></div>`); zone.append(btns);
+      const flip = () => { card.classList.toggle("on"); btns.style.visibility = "visible" }; card.onclick = flip; card.onkeydown = e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip() } };
+      btns.children[0].onclick = () => { const x = queue.shift(); queue.splice(Math.min(queue.length, 3), 0, x); next() };
+      btns.children[1].onclick = () => { queue.shift(); done++; next() };
+    }
+  }
+}
+
+/* ===== 3. TRIER ===== */
+function tri() {
+  const body = chrome("Trier"); const zone = h("<div></div>");
+  tabs(body, [["etats", "Solide, liquide ou gaz"], ["melanges", "Homogène ou hétérogène"]], k => trier(zone, k === "etats"
+    ? { cases: B.etats.liste.map(e => ({ nom: e.nom, d: e.d })), items: B.etats.liste.flatMap((e, i) => e.x.map(x => ({ x, i }))), titre: "Tableau de classement selon l'état" }
+    : { cases: [{ nom: "Homogène", d: "constituants invisibles à l'œil nu" }, { nom: "Hétérogène", d: "certains constituants visibles à l'œil nu" }], items: B.melanges.liste.map(m => ({ x: m.x, i: m.h ? 1 : 0, w: m.w })), titre: "Tableau de classement des mélanges" }));
+  body.append(zone);
+}
+function trier(zone, { cases, items, titre }) {
+  const tableau = places => `<div class="tabbox"><table class="tab cols"><tr>${cases.map(c => `<th>${esc(c.nom)}</th>`).join("")}</tr><tr>${cases.map((c, i) => `<td>${places[i].map(p => `<span class="${p.ok ? "" : "faux"}">${esc(Maj(p.x))}</span>`).join("")}</td>`).join("")}</tr></table></div><p class="titre">${titre}</p>`;
+  const L = shuffle(items), places = cases.map(() => []); let k = 0, good = 0; next();
+  function next() {
+    zone.innerHTML = ""; const setP = bar(zone); setP(k / L.length);
+    if (k === L.length) {
+      zone.append(h(`<div class="score"><div class="n">${good}/${L.length}</div><p class="prompt">${good === L.length ? "Sans faute !" : "Les erreurs sont barrées en rouge dans le tableau."}</p></div>`));
+      zone.append(h(`<div>${tableau(places)}</div>`));
+      nextBtn(zone, () => trier(zone, { cases, items, titre }), "Recommencer"); return }
+    const it = L[k];
+    zone.append(h(`<p class="muted small">${k + 1} sur ${L.length}</p>`), h(`<div class="mot">${esc(Maj(it.x))}</div>`));
+    const box = h(`<div class="tri">${cases.map(c => `<button>${esc(c.nom)}<small>${esc(c.d)}</small></button>`).join("")}</div>`); zone.append(box);
+    [...box.children].forEach((b, i) => b.onclick = () => {
+      const ok = i === it.i; if (ok) good++; places[i].push({ x: it.x, ok }); if (!ok) places[it.i].push({ x: it.x, ok: true });
+      [...box.children].forEach(x => x.disabled = true); b.classList.add(ok ? "ok" : "bad"); if (!ok) box.children[it.i].classList.add("ok");
+      if (it.w) zone.append(h(`<p class="pourquoi">${esc(it.w)}</p>`));
+      k++; nextBtn(zone, next, k === L.length ? "Voir le tableau" : "Suivant").focus({ preventScroll: true });
+      zone.append(h(`<div style="margin-top:16px">${tableau(places)}</div>`));
+    });
+  }
+}
+
+/* ===== 4. LES MERS ET LES OCÉANS ===== */
+function mers() {
+  const body = chrome("La salinité des mers"); const zone = h("<div></div>");
+  tabs(body, [["voir", "Le tableau"], ["quiz", "Me tester"]], k => {
+    zone.innerHTML = "";
+    if (k === "quiz") return serie(zone, 8, B.salinite);
+    zone.append(h(`<div class="tabbox"><table class="tab"><tr><th>Mers et océans</th><th>Salinité en grammes par litre</th></tr>${B.salinite.mers.map(m => `<tr><td>${esc(Maj(m.n))}</td><td>${m.s}</td></tr>`).join("")}</table></div>`));
+    zone.append(h(`<p class="titre">Tableau de la salinité de quelques mers et océans</p>`));
+    zone.append(h(`<div class="bloc" style="margin-top:14px"><h3>Les réponses de l'exercice 5</h3><ul>
+      <li><b>a) La salinité</b> : la masse de sel dissous dans un litre d'eau (g/L).</li>
+      <li><b>b) Salinité ou solubilité ?</b> La salinité, c'est le sel qu'il y a vraiment dans l'eau. La solubilité, c'est le maximum que l'on peut dissoudre dans un litre avant que la solution soit saturée.</li>
+      <li><b>c) Dans l'eau de mer</b>, le solvant est l'eau, le soluté est le sel.</li>
+      <li><b>d) La moins salée</b> : la mer Baltique (8 g/L).</li>
+      <li><b>e) Dans un litre d'eau de la mer Morte</b>, il y a 200 g de sel dissous : on le lit dans le tableau.</li></ul></div>`));
+  }); body.append(zone);
+}
+
+/* ===== 5. EXERCICES PAR THÈME ===== */
+const THEMES = [["etats", "Les 3 états"], ["melanges", "Mélanges"], ["vocabulaire", "Vocabulaire"], ["solvantSolute", "Solvant / soluté"], ["dissolution", "Dissolution"], ["masse", "Masse"], ["salinite", "Salinité"], ["motJuste", "Mot juste"]];
+function exercices() { const body = chrome("Exercices par thème"); const zone = h("<div></div>"); tabs(body, THEMES, k => serie(zone, 8, B[k])); body.append(zone) }
+
+/* ===== EXAMEN BLANC ===== */
+function examen() { const body = chrome("Examen blanc");
+  const g = ["etats", "etats", "etats", "etats", "melanges", "melanges", "melanges", "vocabulaire", "vocabulaire", "vocabulaire", "solvantSolute", "solvantSolute", "solvantSolute", "dissolution", "dissolution", "dissolution", "masse", "salinite", "salinite", "motJuste"];
+  const list = shuffle(g).map(k => B[k]()); let k = 0, good = 0; const miss = []; const setP = bar(body); const inner = h("<div></div>"); body.append(inner);
+  const step = () => { setP(k / 20); window.scrollTo(0, 0);
+    if (k === 20) { const best = store.get("best", null); if (best === null || good > best) store.set("best", good); inner.innerHTML = "";
+      inner.append(h(`<div class="score"><div class="n">${good}/20</div><p class="prompt">${good >= 18 ? "Excellent, tu es prête pour l'éval !" : good >= 14 ? "Très bien ! Revois les quelques erreurs." : good >= 10 ? "En bonne voie. Relis le cours et les pièges, puis retente." : "Courage : relis le cours et les cartes, puis retente."}</p></div>`));
+      if (miss.length) { const r = h('<div class="recap"><p class="prompt">À revoir</p></div>'); miss.forEach(m => r.append(h(`<div class="it"><b>${m.cat}</b>Réponse : ${m.a}</div>`))); inner.append(r) }
+      nextBtn(inner, examen, "Refaire un examen"); const hm = h('<button class="ghost-btn">Retour au menu</button>'); hm.onclick = () => location.hash = ""; inner.append(hm); return }
+    const q = list[k]; q.run(inner, `Question ${k + 1} sur 20`, (ok, ans) => { if (ok) good++; else miss.push({ cat: q.cat, a: ans }); k++; step() }) }; step() }
+
+/* ===== ACCUEIL ===== */
+const ACTS = [
+  { id: "cours", ic: "≡", t: "Le cours", d: "Les 3 états, les mélanges, la dissolution, les pièges" },
+  { id: "cartes", ic: "?", t: "Les mots à connaître", d: "Soluté, solvant, solution… en cartes à retourner" },
+  { id: "tri", ic: "⇶", t: "Trier", d: "Solide, liquide ou gaz · homogène ou hétérogène" },
+  { id: "mers", ic: "≈", t: "La salinité des mers", d: "Le tableau de l'exercice 5 et des calculs" },
+  { id: "exercices", ic: "✓", t: "Exercices par thème", d: "États, mélanges, vocabulaire, solvant et soluté, masse…" },
+];
+function home() { app.innerHTML = ""; const best = store.get("best", null);
+  const hero = `<svg viewBox="0 0 300 96" aria-hidden="true">${["solide", "liquide", "gaz"].map((d, i) => `<g transform="translate(${i * 100 + 5} 0)">${DESSINS[d].replace(/<\/?svg[^>]*>/g, "")}<text x="45" y="94" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="600" font-size="12" fill="var(--ink-soft)">${d}</text></g>`).join("")}</svg>`;
+  app.append(h(`<header class="hero"><h1>États de la matière, <span>mélanges et dissolution</span></h1><p class="sub">Physique-chimie, 6e : solide, liquide, gaz · soluté, solvant, solution</p>${hero}</header>`));
+  const ul = h('<ul class="menu"></ul>'); ACTS.forEach(a => { const li = h(`<li><button><span class="ic">${a.ic}</span><span><span class="t">${a.t}</span><span class="d">${a.d}</span></span><span class="chev">›</span></button></li>`); li.firstChild.onclick = () => location.hash = a.id; ul.append(li) }); app.append(ul);
+  const ex = h(`<button class="exam-btn"><span class="t">Examen blanc</span><span class="d">20 questions mélangées${best !== null ? ` · meilleur score : ${best}/20` : ""}</span></button>`); ex.onclick = () => location.hash = "examen"; app.append(ex);
+  app.append(h(`<p class="foot">Les mélanges et la dissolution viennent de la feuille d'exercices et du « Bilan à retenir ». Les propriétés des trois états ont été faites sans ta leçon, d'après des cours en ligne : compare avec ton cahier.</p>`));
+  app.append(h(`<p class="foot"><a href="../" style="color:inherit">← Toutes les révisions</a></p>`));
+}
+const ROUTES = { cours, cartes, tri, mers, exercices, examen };
+function route() { const r = location.hash.slice(1); (ROUTES[r] || home)() }
+window.addEventListener("hashchange", route); route();
+</script>
+</body>
+</html>

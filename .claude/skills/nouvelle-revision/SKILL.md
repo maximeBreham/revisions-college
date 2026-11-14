@@ -26,6 +26,8 @@ que dit l'utilisateur (matière, date du contrôle). Lire aussi le `CLAUDE.md` d
 - **Un texte à trous à recopier sur une feuille** : trois façons de le travailler sur la page (compléter avec la liste de
   mots, recopier phrase par phrase avec les mots surlignés, vérifier avec le texte corrigé). Des trous interchangeables
   (« la présence, l'abondance, la variabilité ») ne doivent jamais bloquer le texte : tester en le remplissant jusqu'au bout.
+- **Des exercices déjà faits par l'élève** : ses réponses (entourées, écrites à la main, même en rouge)
+  peuvent être fausses. Les vérifier, les signaler au parent et en faire un onglet « Pièges » sur la page.
 - Demander ce qui manque, en une seule question : la date du contrôle si elle n'est pas donnée
   (format `AAAA-MM-JJ` ; une date relative se calcule depuis aujourd'hui).
 - Lister à l'utilisateur, en quelques lignes, les points relevés sur la feuille, et ce qui était

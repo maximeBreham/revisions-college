@@ -23,6 +23,7 @@ window.MATIERES = {
   sciences: { nom: "Sciences",     couleur: "#1E7A4C", couleurNuit: "#6BCB97" },
   emc:      { nom: "EMC",          couleur: "#8A6A12", couleurNuit: "#E2C25E" },
   musique:  { nom: "Musique",      couleur: "#0B7A75", couleurNuit: "#5CCFC7" },
+  physique: { nom: "Physique-chimie", couleur: "#0369A1", couleurNuit: "#6CC3F0" },
 };
 
 window.REVISIONS = [
@@ -97,5 +98,14 @@ window.REVISIONS = [
     date: "2026-11-12",
     score: { cle: "sv6c:best", sur: 20 },
     exercices: "sciences-bilans-unite-biodiversite.js",
+  },
+  {
+    matiere: "physique",
+    titre: "États de la matière, mélanges et dissolution",
+    description: "Solide, liquide, gaz · mélanges homogènes et hétérogènes · soluté, solvant, solution",
+    fichier: "physique-etats-melanges-dissolution.html",
+    date: "2026-11-16",
+    score: { cle: "pc6:best", sur: 20 },
+    exercices: "physique-etats-melanges-dissolution.js",
   },
 ];
