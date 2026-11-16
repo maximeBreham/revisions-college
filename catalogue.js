@@ -108,4 +108,13 @@ window.REVISIONS = [
     score: { cle: "pc6:best", sur: 20 },
     exercices: "physique-etats-melanges-dissolution.js",
   },
+  {
+    matiere: "anglais",
+    titre: "Middle school is cool",
+    description: "Matières, fournitures, lieux du collège, daily routine · présent simple et ordre des mots",
+    fichier: "anglais-middle-school.html",
+    date: "2026-11-17",
+    score: { cle: "an6:best", sur: 20 },
+    exercices: "anglais-middle-school.js",
+  },
 ];
