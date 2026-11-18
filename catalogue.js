@@ -117,4 +117,13 @@ window.REVISIONS = [
     score: { cle: "an6:best", sur: 20 },
     exercices: "anglais-middle-school.js",
   },
+  {
+    matiere: "histoire",
+    titre: "Repères géo et population mondiale",
+    description: "Lignes, continents et océans, points cardinaux · foyers, régions vides, métropoles · Asie de l'Est",
+    fichier: "geo-reperes-population-mondiale.html",
+    date: "2026-11-19",
+    score: { cle: "geo6:best", sur: 20 },
+    exercices: "geo-reperes-population-mondiale.js",
+  },
 ];
